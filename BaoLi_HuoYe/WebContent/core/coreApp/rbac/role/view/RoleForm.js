@@ -5,6 +5,7 @@ Ext.define("core.rbac.role.view.RoleForm",{
 	align:"left",
 	frame:true,
 	title:"角色信息",
+	border:false,
 //	defaults:{
 //			selectOnFocus:true,
 //			msgTarget:"side" //提示信息现在的位置

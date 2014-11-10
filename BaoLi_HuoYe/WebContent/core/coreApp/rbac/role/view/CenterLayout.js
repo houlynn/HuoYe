@@ -3,6 +3,7 @@ Ext.define("core.rbac.role.view.CenterLayout",{
 	alias : 'widget.role.centerlayout',
 	layout:"border",
 	baseCls:"panel-border",
+	border:false,
 	frame:true,
 		defaults:{
 		split:true,

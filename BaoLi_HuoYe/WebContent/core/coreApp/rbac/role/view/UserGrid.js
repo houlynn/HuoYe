@@ -1,5 +1,6 @@
 Ext.define("core.rbac.role.view.UserGrid",{
 	extend:"Ext.grid.Panel",
+	border:false,
 	alias:"widget.role.usergrid",
 	tbar:[
 		{xtype:'button',text:'添加人员',ref:'addUser',iconCls:'table_add'},

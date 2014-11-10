@@ -7,6 +7,7 @@ Ext.define("core.sys.menu.view.MenuForm",{
 	},
 //	align:"left",
 	frame:true,
+	border:false,
 	title:"菜单信息",
 	defaults:{
 			selectOnFocus:true,

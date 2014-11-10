@@ -55,11 +55,11 @@ Ext.define("core.rbac.role.controller.RolePermController",{
 		};
 		//事件注册
 		this.control({
-			"panel[xtype=role.roletree]":{
+			"container[xtype=role.roletree]":{
 				itemclick:function(tree,record,item,index,e,eOpts){
-					var mainLayout=tree.up("panel[xtype=role.mainlayout]");
-					var roleForm=mainLayout.down("panel[xtype=role.roleform]");
-					var roleTree=mainLayout.down("panel[xtype=role.roletree]");
+					var mainLayout=tree.up("container[xtype=role.mainlayout]");
+					var roleForm=mainLayout.down("container[xtype=role.roleform]");
+					var roleTree=mainLayout.down("container[xtype=role.roletree]");
 					var formObj=roleForm.getForm();
 					formObj.findField("roleName").setValue(record.get("text"));
 					formObj.findField("roleCode").setValue(record.get("code"));
@@ -68,7 +68,7 @@ Ext.define("core.rbac.role.controller.RolePermController",{
 					var treeDel=roleTree.down("button[ref=treeDel]");
 					treeDel.setDisabled(false);
 					//加载人员信息
-					var userGrid=mainLayout.down("panel[xtype=role.usergrid]");
+					var userGrid=mainLayout.down("container[xtype=role.usergrid]");
 					var store=userGrid.getStore();
 					var proxy=store.getProxy();
 					proxy.extraParams={
@@ -78,9 +78,9 @@ Ext.define("core.rbac.role.controller.RolePermController",{
 					
 				}
 			},
-			"panel[xtype=role.roletree] button[ref=treeIns]":{
+			"container[xtype=role.roletree] button[ref=treeIns]":{
 				click:function(btn){
-					var tree=btn.up("panel[xtype=role.roletree]");
+					var tree=btn.up("container[xtype=role.roletree]");
 					var root=tree.getRootNode();
 					var params={
 						
@@ -99,17 +99,17 @@ Ext.define("core.rbac.role.controller.RolePermController",{
 					}
 				}
 			},
-			"panel[xtype=role.roleform] button[ref=submit]":{
+			"container[xtype=role.roleform] button[ref=submit]":{
 				click:function(btn){
 					alert("add!!")
-					var deptForm=btn.up("panel[xtype=role.roleform]");
+					var deptForm=btn.up("container[xtype=role.roleform]");
 					var formObj=deptForm.getForm();
 					var params=self.getFormValue(formObj);
 					if(params.roleId!=null && params.roleId!=""){
 						var resObj=self.ajax({url:"/rbacRole/doUpdate.action",params:params});						
 						if(resObj.success){
-							var mainLayout=deptForm.up("panel[xtype=role.mainlayout]");
-							var roleTree=mainLayout.down("panel[xtype=role.roletree]");
+							var mainLayout=deptForm.up("container[xtype=role.mainlayout]");
+							var roleTree=mainLayout.down("container[xtype=role.roletree]");
 							var node=roleTree.getSelectionModel().getSelection()[0];
 							var obj=resObj.obj;
 							node.set("text",obj.roleName);
@@ -131,9 +131,9 @@ Ext.define("core.rbac.role.controller.RolePermController",{
 			/**
 			 * 删除角色
 			 */
-			"panel[xtype=role.roletree] button[ref=treeDel]":{
+			"container[xtype=role.roletree] button[ref=treeDel]":{
 				click:function(btn){
-					var tree=btn.up("panel[xtype=role.roletree]");
+					var tree=btn.up("container[xtype=role.roletree]");
 					var records=tree.getSelectionModel().getSelection();
 					if(records.length<=0){
 						 Ext.MessageBox.alert("提示","请选中节点!");
@@ -149,12 +149,12 @@ Ext.define("core.rbac.role.controller.RolePermController",{
 					}
 				}				
 			},
-			"panel[xtype=role.usergrid] button[ref=addUser]":{
+			"container[xtype=role.usergrid] button[ref=addUser]":{
 				click:function(btn){
-					var mainLayout=btn.up("panel[xtype=role.mainlayout]");
-					var roleTree=mainLayout.down("panel[xtype=role.roletree]");
+					var mainLayout=btn.up("container[xtype=role.mainlayout]");
+					var roleTree=mainLayout.down("container[xtype=role.roletree]");
 					var selRoles=roleTree.getSelectionModel().getSelection();
-					var userGrid=btn.up("panel[xtype=role.usergrid]");
+					var userGrid=btn.up("container[xtype=role.usergrid]");
 					if(selRoles.length<=0){
 						 Ext.MessageBox.alert("提示","请选择角色");
 						return;
@@ -195,12 +195,12 @@ Ext.define("core.rbac.role.controller.RolePermController",{
 					});	
 				}
 			},
-			"panel[xtype=role.usergrid] button[ref=removeUser]":{
+			"container[xtype=role.usergrid] button[ref=removeUser]":{
 				click:function(btn){
-					var mainLayout=btn.up("panel[xtype=role.mainlayout]");
-					var userGrid=btn.up("panel[xtype=role.usergrid]");
-					var roleTree=mainLayout.down("panel[xtype=role.roletree]");
-					var userGrid=btn.up("panel[xtype=role.usergrid]");
+					var mainLayout=btn.up("container[xtype=role.mainlayout]");
+					var userGrid=btn.up("container[xtype=role.usergrid]");
+					var roleTree=mainLayout.down("container[xtype=role.roletree]");
+					var userGrid=btn.up("container[xtype=role.usergrid]");
 					var records=userGrid.getSelectionModel().getSelection();
 					var selRoles=roleTree.getSelectionModel().getSelection();
 					
@@ -232,10 +232,10 @@ Ext.define("core.rbac.role.controller.RolePermController",{
 			/**
 			 * 模块授权
 			 */
-			"panel[xtype=role.moduletree]":{
+			"container[xtype=role.moduletree]":{
 				itemdblclick:function(tree,record){
-					var mainLayout=tree.up("panel[xtype=role.mainlayout]");
-					var roleTree=mainLayout.down("panel[xtype=role.roletree]");
+					var mainLayout=tree.up("container[xtype=role.mainlayout]");
+					var roleTree=mainLayout.down("container[xtype=role.roletree]");
 					var selRoles=roleTree.getSelectionModel().getSelection();
 					if(selRoles.length<=0){
 						 Ext.MessageBox.alert("提示","请选择角色");
@@ -273,11 +273,11 @@ Ext.define("core.rbac.role.controller.RolePermController",{
 			/**
 			 * 授权
 			 */
-			"panel[xtype=role.moduletree] button[ref=setPerm]":{
+			"container[xtype=role.moduletree] button[ref=setPerm]":{
 				click:function(btn){
 					alert(0);
-					var mainLayout=btn.up("panel[xtype=role.mainlayout]");
-					var roleTree=mainLayout.down("panel[xtype=role.roletree]");
+					var mainLayout=btn.up("container[xtype=role.mainlayout]");
+					var roleTree=mainLayout.down("container[xtype=role.roletree]");
 					var selRoles=roleTree.getSelectionModel().getSelection();
 					if(selRoles.length<=0){
 						 Ext.MessageBox.alert("提示","请选择角色");
@@ -313,10 +313,10 @@ Ext.define("core.rbac.role.controller.RolePermController",{
 			/**
 			 * 查看权限
 			 */
-			"panel[xtype=role.moduletree] button[ref=seePerm]":{
+			"container[xtype=role.moduletree] button[ref=seePerm]":{
 				click:function(btn){
-					var mainLayout=btn.up("panel[xtype=role.mainlayout]");
-					var roleTree=mainLayout.down("panel[xtype=role.roletree]");
+					var mainLayout=btn.up("container[xtype=role.mainlayout]");
+					var roleTree=mainLayout.down("container[xtype=role.roletree]");
 					var selRoles=roleTree.getSelectionModel().getSelection();
 					if(selRoles.length<=0){
 						 Ext.MessageBox.alert("提示","请选择角色");

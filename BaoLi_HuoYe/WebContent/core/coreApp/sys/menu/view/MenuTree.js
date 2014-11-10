@@ -3,6 +3,7 @@ Ext.define("core.sys.menu.view.MenuTree",{
 	alias : "widget.menu.menutree",
 	displayField : "text",
 	rootVisible : false,
+	border:false,
 	store : "core.sys.menu.store.MenuStore",
 	title:"菜单管理",
 	tools : [{

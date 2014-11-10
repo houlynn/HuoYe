@@ -102,7 +102,7 @@ LoginWindow = Ext.extend(
 				labelAlign : 'right',
 				labelWidth : 35,
 				labelPad : 2,
-				height:150,
+				height:170,
 				border:false,
 				frame : true,
 				// frame : true,

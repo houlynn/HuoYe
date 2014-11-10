@@ -11,11 +11,11 @@ Ext.define("core.sys.menu.controller.MenuController",{
 		var self=this
 		//事件注册
 		this.control({
-			"panel[xtype=menu.menutree]":{
+			"container[xtype=menu.menutree]":{
 				itemclick:function(tree,record,item,index,e,eOpts){
-					var mainLayout=tree.up("panel[xtype=menu.mainlayout]");
-					var deptForm=mainLayout.down("panel[xtype=menu.menuform]");
-					var deptTree=mainLayout.down("panel[xtype=menu.menutree]");
+					var mainLayout=tree.up("container[xtype=menu.mainlayout]");
+					var deptForm=mainLayout.down("container[xtype=menu.menuform]");
+					var deptTree=mainLayout.down("container[xtype=menu.menutree]");
 					var formObj=deptForm.getForm();
 					formObj.findField("menuName").setValue(record.get("text"));
 					formObj.findField("moduleCode").setValue(record.get("code"));
@@ -32,9 +32,9 @@ Ext.define("core.sys.menu.controller.MenuController",{
 					treeDel.setDisabled(false);
 				}
 			},
-			"panel[xtype=menu.menutree] button[ref=treeIns]":{
+			"container[xtype=menu.menutree] button[ref=treeIns]":{
 				click:function(btn){
-					var tree=btn.up("panel[xtype=menu.menutree]");
+					var tree=btn.up("container[xtype=menu.menutree]");
 					var root=tree.getRootNode();
 					var params={
 						layer:root.getDepth()+1,
@@ -54,9 +54,9 @@ Ext.define("core.sys.menu.controller.MenuController",{
 					}
 				}
 			},
-			"panel[xtype=menu.menutree] button[ref=treechildIns]":{
+			"container[xtype=menu.menutree] button[ref=treechildIns]":{
 				click:function(btn){
-					var tree=btn.up("panel[xtype=menu.menutree]");
+					var tree=btn.up("container[xtype=menu.menutree]");
 					var records=tree.getSelectionModel().getSelection();
 					if(records.length<=0){
 						alert("请选中节点!");
@@ -85,9 +85,9 @@ Ext.define("core.sys.menu.controller.MenuController",{
 					}
 				}
 			},
-			"panel[xtype=menu.menutree] button[ref=treeDel]":{
+			"container[xtype=menu.menutree] button[ref=treeDel]":{
 				click:function(btn){
-					var tree=btn.up("panel[xtype=menu.menutree]");
+					var tree=btn.up("container[xtype=menu.menutree]");
 					var records=tree.getSelectionModel().getSelection();
 					if(records.length<=0){
 						alert("请选中节点!");
@@ -103,9 +103,9 @@ Ext.define("core.sys.menu.controller.MenuController",{
 					}
 				}
 			},
-			"panel[xtype=menu.menuform] button[ref=submit]":{
+			"container[xtype=menu.menuform] button[ref=submit]":{
 				click:function(btn){
-					var menuForm=btn.up("panel[xtype=menu.menuform]");
+					var menuForm=btn.up("container[xtype=menu.menuform]");
 					var formObj=menuForm.getForm();
 					var idValue=formObj.findField("menuId").getValue();
 					if(idValue!=null && idValue!=""){
@@ -119,8 +119,8 @@ Ext.define("core.sys.menu.controller.MenuController",{
 								if(action.result.success){
 									//刷新当前表单
 									self.setFormValue(formObj,obj);
-									var mainLayout=menuForm.up("panel[xtype=menu.mainlayout]");
-									var menuTree=mainLayout.down("panel[xtype=menu.menutree]");
+									var mainLayout=menuForm.up("container[xtype=menu.mainlayout]");
+									var menuTree=mainLayout.down("container[xtype=menu.menutree]");
 									var node=menuTree.getSelectionModel().getSelection()[0];
 									node.set("text",obj.menuName);
 									node.set("code",obj.moduleCode);

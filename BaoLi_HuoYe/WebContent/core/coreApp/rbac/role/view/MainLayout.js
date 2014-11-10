@@ -2,6 +2,7 @@ Ext.define("core.rbac.role.view.MainLayout",{
 	extend:"Ext.container.Container",
 	alias : 'widget.role.mainlayout',
 	layout : 'border',
+	border:false,
 	items : [{		
 		width:comm.get("clientWidth")*0.18,
 		region:"west",
