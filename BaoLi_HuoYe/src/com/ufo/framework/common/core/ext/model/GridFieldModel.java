@@ -1,6 +1,6 @@
 package com.ufo.framework.common.core.ext.model;
 
-import com.ufo.framework.common.model.Model;
+import com.ufo.framework.common.model.BaseEntity;
 
 
 /**
@@ -8,7 +8,7 @@ import com.ufo.framework.common.model.Model;
  * @author 作者 yingqu:
  * @version 创建时间：2014年7月12日 下午12:14:30 version 1.0
  */
-public class GridFieldModel implements Model {
+public class GridFieldModel extends BaseEntity {
 
 	private String text;
 	private String dataIndex;

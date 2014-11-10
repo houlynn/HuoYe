@@ -12,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
@@ -23,12 +22,13 @@ import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.NodeType;
 import com.ufo.framework.common.core.ext.ExtFieldType;
 import com.ufo.framework.common.core.ext.TreeNodeType;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 
 
 @Entity
 @GenericGenerator(name="systemUUID",strategy="uuid")
-public class DictionaryItem implements Model{
+public class DictionaryItem extends BaseEntity{
 	@NodeType(type=TreeNodeType.ID)
 	@FieldInfo(name="主键",type=ExtFieldType.ID)
 	private String itemId;

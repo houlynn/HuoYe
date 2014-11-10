@@ -65,7 +65,6 @@ public class DeptController extends SimpleBaseController<Department> {
 			toWrite(response,jsonBuilder.returnFailureJson("'保存方法出错，错误信息"+e.getMessage()+"'"));
 		}
 	}
-
 	@Override
 	public Department getModel(HttpServletRequest request, Department model) {
 		String parentId=request.getParameter("parentId");

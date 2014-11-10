@@ -17,6 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 /**
  *
@@ -30,7 +31,7 @@ import com.ufo.framework.common.model.Model;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9921, title = "系统菜单")
-public class _MenuModule implements Model {
+public class _MenuModule extends BaseEntity {
 	@Id
 	@FieldInfo(title = "ID号", hidden = true, number = 10)
 	@GeneratedValue(generator = "increment")

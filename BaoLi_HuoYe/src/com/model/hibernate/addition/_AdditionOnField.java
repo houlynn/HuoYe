@@ -2,15 +2,18 @@ package com.model.hibernate.addition;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+
 import org.hibernate.annotations.DynamicUpdate;
+
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 @SuppressWarnings("serial")
 @Entity
 @DynamicUpdate(true)
 @TableInfo(group = "附件管理", id = 9506, title = "附件对应字段")
-public class _AdditionOnField implements Model {
+public class _AdditionOnField extends BaseEntity {
 	@Id
 	@FieldInfo(title = "ID号", number = 10)
 	@Column(nullable = false)

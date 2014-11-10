@@ -10,12 +10,13 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 @SuppressWarnings("serial")
 @Entity
 @DynamicUpdate(true)
 @TableInfo(group = "附件管理", id = 9503, title = "附件文件类型")
-public class _AdditionFileType implements Model{
+public class _AdditionFileType extends BaseEntity{
 
 	@Id
 	@GeneratedValue(generator = "increment")

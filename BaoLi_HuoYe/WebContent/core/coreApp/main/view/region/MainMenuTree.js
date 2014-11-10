@@ -33,7 +33,7 @@ Ext.define('core.main.view.region.MainMenuTree', {
 		}
 			},
 			rootVisible : false,
-			lines : false,
+			lines : true,
 			initComponent : function() {
 				this.store=comm.get("menuTreeStore");
 				console.log(this.store);

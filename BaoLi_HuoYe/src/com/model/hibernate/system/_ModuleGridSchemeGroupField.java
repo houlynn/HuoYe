@@ -17,6 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 
 /**
@@ -31,7 +32,7 @@ import com.ufo.framework.common.model.Model;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9906, title = "模块列表字段", shortname = "列表字段")
-public class _ModuleGridSchemeGroupField implements Model {
+public class _ModuleGridSchemeGroupField extends BaseEntity {
 
 	@Id
 	@GeneratedValue(generator = "increment")

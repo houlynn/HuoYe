@@ -17,13 +17,13 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
-import com.ufo.framework.common.model.Model;
+import com.ufo.framework.common.model.BaseEntity;
 @Entity
 @Table(name="_Module")
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9902, title = "系统模块")
-public class _Module implements Model {
+public class _Module extends BaseEntity {
 
 	public static final String MODULEID = "tf_moduleId";
 	public static final String MODULENAME = "tf_moduleName";

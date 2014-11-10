@@ -17,6 +17,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 /**
  * 每个模块的各个字段
@@ -30,7 +31,7 @@ import com.ufo.framework.common.model.Model;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9903, title = "模块字段")
-public class _ModuleField implements Model {
+public class _ModuleField extends BaseEntity {
 
 	public static final String FIELDID = "tf_fieldId";
 	public static final String FIELDNAME = "tf_fieldName";

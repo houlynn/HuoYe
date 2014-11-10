@@ -17,6 +17,7 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 /**
 * @author HouLynn
@@ -29,7 +30,7 @@ import com.ufo.framework.common.model.Model;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9920, title = "菜单分组")
-public class _MenuGroup implements Model {
+public class _MenuGroup extends BaseEntity {
 	@Id
 	@FieldInfo(title = "顺序号", remark = "菜单分组按顺序号显示在菜单条上", number = 10)
 	@Column(length = 10, nullable = false)

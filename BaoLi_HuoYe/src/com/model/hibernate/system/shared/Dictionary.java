@@ -10,18 +10,15 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
-
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.codehaus.jackson.annotate.JsonProperty;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.Proxy;
-
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.common.core.ext.ExtFieldType;
-import com.ufo.framework.common.model.Model;
+import com.ufo.framework.common.model.BaseEntity;
 
 /**
  * 数字字典目录
@@ -32,7 +29,7 @@ import com.ufo.framework.common.model.Model;
 @Entity
 @GenericGenerator(name="systemUUID",strategy="uuid")
 @Proxy(lazy = true)
-public class Dictionary  implements Model {
+public class Dictionary  extends BaseEntity {
 	@FieldInfo(name="主键",type=ExtFieldType.ID)
 	private String ddId;
 	@FieldInfo(name="字典名称")

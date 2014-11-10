@@ -23,9 +23,7 @@ Ext.define("core.rbac.user.controller.DeptUserController",{
 					formObj.findField("orderIndex").setValue(record.get("orderIndex"));
 					formObj.findField("parentId").setValue(record.get("parent"));
 					var treechildIns=deptTree.down("button[ref=treechildIns]");
-					if(treechildIns){
-						treechildIns.setDisabled(false);
-					}
+					treechildIns.setDisabled(false);
 					var treeDel=deptTree.down("button[ref=treeDel]");
 					treeDel.setDisabled(false);
 					//加载人员信息

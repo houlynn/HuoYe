@@ -4,7 +4,7 @@ Ext.define("core.rbac.user.view.DeptForm",{
 	layout:"auto",
 	align:"left",
 	frame:true,
-	title:"小区信息",
+	title:"部门信息",
 	defaults:{
 			selectOnFocus:true,
 			msgTarget:"side", //提示信息现在的位置
@@ -17,11 +17,11 @@ Ext.define("core.rbac.user.view.DeptForm",{
 				hidden:true
 			},{
 				xtype:"textfield",
-				fieldLabel:"小区名称",
+				fieldLabel:"部门名称",
 				name:"deptName"
 			},{
 				xtype:"textfield",
-				fieldLabel:"小区编码",
+				fieldLabel:"部门编码",
 				name:"deptCode"
 			},{
 				xtype:"numberfield",

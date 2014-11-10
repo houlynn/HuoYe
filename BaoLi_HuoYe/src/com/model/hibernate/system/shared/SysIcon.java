@@ -10,10 +10,11 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.common.core.ext.ExtFieldType;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 @Entity
 @GenericGenerator(name="systemUUID",strategy="uuid")
-public class SysIcon  implements Model {
+public class SysIcon  extends BaseEntity {
 	@FieldInfo(name="主键",type=ExtFieldType.ID)
 	private String id;
 	@FieldInfo(name="图标类名")

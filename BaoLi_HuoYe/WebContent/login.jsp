@@ -121,13 +121,13 @@ LoginWindow = Ext.extend(
 					cls : 'user',
 					name : 'userCode',
 					fieldLabel : '登录帐号',
-					blankText : '帐号不能为空'
+					blankText : '帐号不能为空',
 				}, {
 					cls : 'key',
 					name : 'password',
 					fieldLabel : '登录密码',
 					blankText : '密码不能为空',
-					inputType : 'password'
+					inputType : 'password',
 				}, {
 					cls : 'key',
 					name : 'verifyCode',

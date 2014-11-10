@@ -27,6 +27,7 @@
 		<mapping class="com.model.hibernate.system.shared.Menu" />
 		<mapping class="com.model.hibernate.system.shared.SysIcon" />
 		<mapping class="com.model.hibernate.system.shared.OperateLog" />
+	<!-- 	<mapping class="com.model.hibernate.system.shared.Position"/> -->
 		
 			<mapping class="com.model.hibernate.system._Module"/>
 		<mapping class="com.model.hibernate.system._ModuleGroup"/>

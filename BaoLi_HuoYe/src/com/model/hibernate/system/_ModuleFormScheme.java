@@ -1,5 +1,6 @@
 package com.model.hibernate.system;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,19 +11,22 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
+
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 @javax.persistence.Table(name="_ModuleFormScheme")
 @Entity
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9907, title = "模块Form方案", shortname = "Form方案")
-public class _ModuleFormScheme implements Model {
+public class _ModuleFormScheme extends BaseEntity {
 
 	@Id
 	@GeneratedValue(generator = "increment")

@@ -12,13 +12,13 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
-import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
 
+import com.ibm.icu.text.Transliterator.Position;
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.NodeType;
 import com.ufo.framework.common.core.ext.ExtFieldType;
@@ -45,7 +45,7 @@ public class Department extends TreeBaseEntity {
 	private Department parent;
 	private Set<Department> children=new HashSet<Department>();
 	private Set<EndUser> users=new HashSet<EndUser>();
-	
+	private Set<Position> postes=new HashSet<Position>(); 
 	@Id
 	@GeneratedValue(generator="systemUUID")
 	@Column(length=50)
@@ -94,4 +94,15 @@ public class Department extends TreeBaseEntity {
 	public void setUsers(Set<EndUser> users) {
 		this.users = users;
 	}
+/*	
+	@JsonIgnore
+	@OneToMany(fetch=FetchType.LAZY,mappedBy="dept",cascade={CascadeType.MERGE})
+	@LazyCollection(LazyCollectionOption.TRUE)
+	public Set<Position> getPostes() {
+		return postes;
+	}
+	public void setPostes(Set<Position> postes) {
+		this.postes = postes;
+	}*/
+	
 }

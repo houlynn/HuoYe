@@ -20,6 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 /**
  * 模块的列表方案，一个模块可以有多个列表方案，可以显示不同的字段，有不同的属性
@@ -33,7 +34,7 @@ import com.ufo.framework.common.model.Model;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9904, title = "模块列表方案", shortname = "列表方案")
-public class _ModuleGridScheme implements Model {
+public class _ModuleGridScheme extends BaseEntity {
 
 	@Id
 	@GeneratedValue(generator = "increment")

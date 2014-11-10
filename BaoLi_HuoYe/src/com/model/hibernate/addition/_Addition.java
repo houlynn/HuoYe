@@ -2,6 +2,7 @@ package com.model.hibernate.addition;
 
 import java.sql.Blob;
 import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,13 +19,14 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 
 @SuppressWarnings("serial")
 @Entity
 @DynamicUpdate(true)
 @TableInfo(group = "附件管理", id = 9505, title = "附件")
-public class _Addition implements Model {
+public class _Addition extends BaseEntity {
 
 	public static final String ADDITIONCOUNT = "tf_additionCount";
 	public static final String _ADDITION = "_Addition";

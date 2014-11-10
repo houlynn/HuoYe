@@ -20,6 +20,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 
 /**
@@ -33,7 +34,7 @@ import com.ufo.framework.common.model.Model;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9905, title = "模块列表字段分组", shortname = "列表字段分组")
-public class _ModuleGridSchemeGroup implements Model {
+public class _ModuleGridSchemeGroup extends BaseEntity {
 
 	public static final String GRIDGROUPID = "tf_gridGroupId";
 

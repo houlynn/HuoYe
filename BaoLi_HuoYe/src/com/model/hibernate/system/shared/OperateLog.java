@@ -11,6 +11,7 @@ import javax.persistence.Transient;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 
 /**
@@ -21,7 +22,7 @@ import com.ufo.framework.common.model.Model;
  */
 @Entity
 @GenericGenerator(name="systemUUID",strategy="uuid")
-public class OperateLog implements Model  {
+public class OperateLog extends BaseEntity  {
 	
 	private String logId;
 	@FieldInfo(name="登录IP地址")

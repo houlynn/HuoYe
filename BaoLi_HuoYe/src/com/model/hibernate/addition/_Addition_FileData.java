@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import org.hibernate.annotations.DynamicUpdate;
 
 import com.ufo.framework.annotation.FieldInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 
 /**
@@ -22,7 +23,7 @@ import com.ufo.framework.common.model.Model;
 @Entity
 @DynamicUpdate(true)
 @Table(name = "addit_Addition")
-public class _Addition_FileData implements Model {
+public class _Addition_FileData extends BaseEntity {
 
 	@Id
 	@Column(updatable = false)

@@ -1,6 +1,6 @@
 package com.ufo.framework.common.core.ext.model;
 
-import com.ufo.framework.common.model.Model;
+import com.ufo.framework.common.model.BaseEntity;
 
 
 /**
@@ -10,7 +10,7 @@ import com.ufo.framework.common.model.Model;
 * @date 2014年8月26日
   @version 1.0
  */
-public class SysComponent implements Model {
+public class SysComponent extends BaseEntity {
 	
 	private String id;
 	private String name;

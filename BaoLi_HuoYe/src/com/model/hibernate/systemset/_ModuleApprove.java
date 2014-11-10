@@ -7,12 +7,15 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
+
 import com.model.hibernate.system._Module;
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 /**
  * 模块的一级审批信息的定义
@@ -24,7 +27,7 @@ import com.ufo.framework.common.model.Model;
 @Entity
 @DynamicUpdate(true)
 @TableInfo(group = "系统设置", id = 9045, title = "模块审批设置")
-public class _ModuleApprove implements Model {
+public class _ModuleApprove extends BaseEntity {
 
 	@Id
 	@GeneratedValue(generator = "increment")

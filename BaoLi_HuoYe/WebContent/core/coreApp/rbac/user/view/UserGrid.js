@@ -30,7 +30,9 @@ Ext.define("core.rbac.user.view.UserGrid",{
 	},{
 		text:"密码",
 		dataIndex:"password",
-		hidden:true
+		field:{
+			xtype:"textfield"
+		}
 	},{
 		text:"性别",
 		dataIndex:"sex",

@@ -4,6 +4,7 @@ import javax.persistence.Transient;
 
 import com.ufo.framework.annotation.NodeType;
 import com.ufo.framework.common.core.ext.TreeNodeType;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 /**
  * 
@@ -12,7 +13,7 @@ import com.ufo.framework.common.model.Model;
 * version 1.0
  */
 @MappedSuperclass
-public abstract class TreeBaseEntity implements Model {
+public abstract class TreeBaseEntity extends BaseEntity {
 	@NodeType(type=TreeNodeType.LAYER)
 	private Integer layer;
 	@NodeType(type=TreeNodeType.NODEINFO)

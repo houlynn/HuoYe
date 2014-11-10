@@ -3,9 +3,8 @@ Ext.define("core.rbac.user.view.DeptTree",{
 	alias : "widget.rbac.depttree",
 	displayField : "text",
 	rootVisible : false,
-	frame:true,
 	store : "core.rbac.user.store.DeptStore",
-	title:"小区管理员",
+	title:"部门管理",
 	tools : [{
 		type:'refresh',
 	   	qtip: '刷新',
@@ -28,12 +27,18 @@ Ext.define("core.rbac.user.view.DeptTree",{
 	}],
 	rbar:[{
 			xtype : 'button',
-			tooltip : '添加小区',
+			tooltip : '添加部门',
 			iconCls : 'tree_model_add',
 			ref : 'treeIns'
+		},{
+			xtype : 'button',
+			tooltip : '添加子部门',
+			iconCls : 'tree_func_add',
+			disabled : true,
+			ref : 'treechildIns'
 		}, {
 			xtype : 'button',
-			tooltip : '删除小区',
+			tooltip : '删除部门',
 			iconCls : 'tree_delete',
 			disabled : true,
 			ref : 'treeDel'

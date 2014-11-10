@@ -27,6 +27,7 @@ import com.ufo.framework.annotation.DDItemName;
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.common.core.ext.ExtFieldType;
 import com.ufo.framework.common.core.properties.PropUtil;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 
 /**
@@ -37,7 +38,7 @@ import com.ufo.framework.common.model.Model;
  */
 @Entity
 @GenericGenerator(name="systemUUID",strategy="uuid")
-public class EndUser implements Model {
+public class EndUser extends BaseEntity {
 	@FieldInfo(name="主键",type=ExtFieldType.ID)
 	@DDItemCode
 	private String userId;

@@ -20,13 +20,14 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 @Table(name="_ModuleFormSchemeGroup")
 @Entity
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9908, title = "模块Form字段分组", shortname = "Form字段分组")
-public class _ModuleFormSchemeGroup implements Model {
+public class _ModuleFormSchemeGroup extends BaseEntity {
 
 	public static final String FORMGROUPID = "tf_formGroupId";
 
