@@ -67,6 +67,8 @@ public class EndUser extends BaseEntity {
 	
 	private String remark;
 	
+	private String admin;
+	
 	@FieldInfo(name="是否启用")
 	private String enabled;
 	
@@ -177,6 +179,12 @@ public class EndUser extends BaseEntity {
 	}
 	public void setRemark(String remark) {
 		this.remark = remark;
+	}
+	public String getAdmin() {
+		return admin;
+	}
+	public void setAdmin(String admin) {
+		this.admin = admin;
 	}
 	
 	

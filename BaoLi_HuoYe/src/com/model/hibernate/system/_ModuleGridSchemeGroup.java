@@ -34,7 +34,7 @@ import com.ufo.framework.common.model.Model;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9905, title = "模块列表字段分组", shortname = "列表字段分组")
-public class _ModuleGridSchemeGroup extends BaseEntity {
+public class _ModuleGridSchemeGroup  implements Model{
 
 	public static final String GRIDGROUPID = "tf_gridGroupId";
 

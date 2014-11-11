@@ -9,8 +9,8 @@ import com.ufo.framework.annotation.FieldInfo;
 
 
 public interface Model  extends Serializable{
-	public String getXcode();
-	public void setXcode(String xcode);
+/*	public String getXcode();
+	public void setXcode(String xcode);*/
 	
 	default List<Field> fielsColection(final Class<?> clazz,  final List<Field> list) {
 		for (Field field : clazz.getDeclaredFields()) {

@@ -23,7 +23,6 @@ import com.ufo.framework.annotation.NodeType;
 import com.ufo.framework.common.core.ext.ExtFieldType;
 import com.ufo.framework.common.core.ext.TreeNodeType;
 import com.ufo.framework.common.model.BaseEntity;
-import com.ufo.framework.common.model.Model;
 
 
 @Entity

@@ -116,7 +116,7 @@ public class ModuleRepertory extends HibernateRepertory implements IModelReperto
 	@SuppressWarnings("unchecked")
 	public void updateValueToBean(String moduleName, Object record, JSONObject keyValue)
 			throws OgnlException {
-		_Module module = ApplicationService.getModuleWithName(moduleName);
+		//_Module module = ApplicationService.getModuleWithName(moduleName);
 		Iterator<String> keyIterator = keyValue.keys();
 		while (keyIterator.hasNext()) {
 			String key = keyIterator.next();

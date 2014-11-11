@@ -35,7 +35,7 @@ Ext.define("factory.ModelFactory",{
 				}
 				var newModel=Ext.define(modelName,{
 					extend:"Ext.data.Model",
-					fields:fields
+					fields:fields,
 				});
 				this.models.add(modelName,newModel);
 			}

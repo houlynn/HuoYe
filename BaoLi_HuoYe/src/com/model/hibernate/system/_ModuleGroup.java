@@ -23,7 +23,7 @@ import com.ufo.framework.common.model.Model;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9901, title = "模块分组")
-public class _ModuleGroup extends BaseEntity {
+public class _ModuleGroup  implements Model {
 
 	public static final String TITLE = "tf_title";
 

@@ -23,7 +23,7 @@ import com.ufo.framework.common.model.Model;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9909, title = "模块Form字段", shortname = "Form字段")
-public class _ModuleFormSchemeGroupField extends BaseEntity {
+public class _ModuleFormSchemeGroupField  implements Model {
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")

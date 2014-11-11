@@ -375,4 +375,14 @@ public class HibernateRepertory implements ICommonRepertory {
 	   return list;
 	}
 
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

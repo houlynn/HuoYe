@@ -147,6 +147,7 @@ public  abstract class  SimpleEbo<M extends Model> implements SimpleEbi<M>,Loger
 				break;
 			}
 		}
+		// list 26   root root 
 		createTreeChildren(list, root);
 		return root;
 	}
@@ -170,7 +171,7 @@ public  abstract class  SimpleEbo<M extends Model> implements SimpleEbi<M>,Loger
 	@Override
 	public List<JSONTreeNode> getTreeList(String rootId, String tableName,
 			String whereSql, JSONTreeNode template,Boolean expanded) throws Exception {
-		// TODO Auto-generated method stub
+/*	// TODO Auto-generated method stub
 		List<JSONTreeNode> chilrens=new ArrayList<JSONTreeNode>();
 		StringBuffer sql=new StringBuffer("select ");
 		sql.append("t."+template.getId()+",");
@@ -217,10 +218,99 @@ public  abstract class  SimpleEbo<M extends Model> implements SimpleEbi<M>,Loger
 		System.out.println(sql);
 		if(StringUtil.isNotEmpty(whereSql)){
 			sql.append(whereSql);
-		}
+		}*/
 		
 	// 	sql.append(" start with t."+template.getId()+"='"+rootId+"' CONNECT BY t."+template.getParent()+"= PRIOR t."+template.getId()+" ");
 
+		
+	
+		List<JSONTreeNode> chilrens=new ArrayList<JSONTreeNode>();
+		StringBuffer sql=new StringBuffer("with  cte(");
+		sql.append(" "+template.getId()+",");
+		sql.append(" "+template.getText()+",");
+		sql.append(" "+template.getCode()+",");
+		sql.append(" "+template.getNodeType()+",");
+		sql.append(" "+template.getNodeInfo()+",");
+		sql.append(" "+template.getNodeInfoType()+",");
+		sql.append(" "+template.getParent()+",");
+		sql.append(" orderIndex ");
+		if(StringUtil.isNotEmpty(template.getIcon())){
+			sql.append(", "+template.getIcon());
+		}
+		if(StringUtil.isNotEmpty(template.getHref())){
+			sql.append(", "+template.getHref());
+		}
+		if(StringUtil.isNotEmpty(template.getBigIcon())){
+			sql.append(", "+template.getBigIcon());
+		}
+	
+		sql.append(") as ( select ");
+		sql.append(" "+template.getId()+",");
+		sql.append(" "+template.getText()+",");
+		sql.append(" "+template.getCode()+",");
+		sql.append(" "+template.getNodeType()+",");
+		sql.append(" "+template.getNodeInfo()+",");
+		sql.append(" "+template.getNodeInfoType()+",");
+		sql.append(" "+template.getParent()+",");
+		sql.append(" orderIndex ");
+		if(StringUtil.isNotEmpty(template.getIcon())){
+			sql.append(", "+template.getIcon());
+		}
+		if(StringUtil.isNotEmpty(template.getHref())){
+			sql.append(", "+template.getHref());
+		}
+		if(StringUtil.isNotEmpty(template.getBigIcon())){
+			sql.append(", "+template.getBigIcon());
+		}
+	
+		sql.append( " from "+tableName +" where "+template.getId()+" ='"+rootId+"' ");
+		sql.append(" union all  select ");
+		sql.append("t."+template.getId()+",");
+		sql.append(" t."+template.getText()+",");
+		sql.append(" t."+template.getCode()+",");
+		sql.append(" t."+template.getNodeType()+",");
+		sql.append(" t."+template.getNodeInfo()+",");
+		sql.append(" t."+template.getNodeInfoType()+",");
+		sql.append(" t."+template.getParent()+",");
+		sql.append(" t.orderIndex ");
+		if(StringUtil.isNotEmpty(template.getIcon())){
+			sql.append(", t."+template.getIcon());
+		}
+		if(StringUtil.isNotEmpty(template.getHref())){
+			sql.append(", t."+template.getHref());
+		}
+		if(StringUtil.isNotEmpty(template.getBigIcon())){
+			sql.append(", t."+template.getBigIcon());
+		}
+		sql.append( " from "+tableName +" t inner join  cte as c on t. "+template.getParent()+" =c."+template.getId()+") ");
+		sql.append("select ");
+		sql.append(" "+template.getId()+",");
+		sql.append(" "+template.getText()+",");
+		sql.append(" "+template.getCode()+",");
+		sql.append(" "+template.getNodeType()+",");
+		sql.append(" "+template.getNodeInfo()+",");
+		sql.append(" "+template.getNodeInfoType()+",");
+		sql.append(" "+template.getParent()+",");
+		sql.append(" orderIndex ");
+		if(StringUtil.isNotEmpty(template.getIcon())){
+			sql.append(", "+template.getIcon());
+		}
+		if(StringUtil.isNotEmpty(template.getHref())){
+			sql.append(", "+template.getHref());
+		}
+		if(StringUtil.isNotEmpty(template.getBigIcon())){
+			sql.append(", "+template.getBigIcon());
+		}
+		sql.append( " from cte ");
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	     System.out.println(sql);
 		List<?> alist=repertory.queryBySql(sql.toString());
 		for(int i=0;i<alist.size();i++){

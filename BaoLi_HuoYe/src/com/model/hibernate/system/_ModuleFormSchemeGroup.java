@@ -27,7 +27,7 @@ import com.ufo.framework.common.model.Model;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9908, title = "模块Form字段分组", shortname = "Form字段分组")
-public class _ModuleFormSchemeGroup extends BaseEntity {
+public class _ModuleFormSchemeGroup  implements Model {
 
 	public static final String FORMGROUPID = "tf_formGroupId";
 

@@ -31,7 +31,7 @@ import com.ufo.framework.common.model.Model;
 @DynamicInsert(true)
 @DynamicUpdate(true)
 @TableInfo(group = "系统模块", id = 9921, title = "系统菜单")
-public class _MenuModule extends BaseEntity {
+public class _MenuModule  implements Model {
 	@Id
 	@FieldInfo(title = "ID号", hidden = true, number = 10)
 	@GeneratedValue(generator = "increment")

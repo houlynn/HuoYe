@@ -22,6 +22,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.lowagie.text.pdf.AcroFields.Item;
+import com.model.hibernate.property.PropertyCompany;
 import com.model.hibernate.system.shared.Position;
 import com.sun.xml.internal.stream.Entity;
 import com.ufo.framework.annotation.Dictionary;
@@ -595,7 +596,7 @@ public class ViewModelGenerator implements LogerManager {
 		createCode(SellOferImg.class,"bl","sellimg","org.yingqu.baoli",false);*/
 		//createCode(EndUser.class, "bl", "sysuser", "org.yingqu.baoli", false);
 		//createCode(OrderView.class, "bl", "order", "org.yingqu.baoli", true);
-		createCode(Position.class, "rabac", "pos", "com.ufo.framework.system", true);
+		createCode(PropertyCompany.class, "base", "101", "com.property.base", true);
 	}
 	
 
