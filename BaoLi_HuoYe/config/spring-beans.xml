@@ -24,6 +24,9 @@ Springmvc将在该路径下寻找Controller(有Controller注释的类)
 -->
  <context:component-scan base-package="com.ufo.framework" use-default-filters="true">
 </context:component-scan>
+
+ <context:component-scan base-package="com.property.base" use-default-filters="true">
+</context:component-scan>
  
 <!--开启注解 -->
 <mvc:annotation-driven/>
