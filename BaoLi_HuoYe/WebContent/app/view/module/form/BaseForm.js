@@ -7,7 +7,6 @@
 Ext.define('app.view.module.form.BaseForm', {
 			extend : 'Ext.form.Panel',
 			alias : 'widget.baseform',
-
 			autoScroll : true,
 
 			buttonAlign : 'center',
@@ -20,7 +19,6 @@ Ext.define('app.view.module.form.BaseForm', {
 							glyph : 0xf0c7,
 							handler : function(button){
 								var form = button.up('form');
-								
 								button.up('form').updateRecord();
 								button.up('form').getForm().getRecord().save();
 							}

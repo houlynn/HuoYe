@@ -20,7 +20,7 @@ import com.ufo.framework.common.model.BaseEntity;
 @Entity
 @DynamicInsert(true)
 @DynamicUpdate(true)
-@TableInfo(group = "基础信息模块", id = 1001, title = "物业公司信息管理", shortname = "物业公司信息")
+@TableInfo(group = "基础信息模块", id =101, title = "物业公司信息管理", shortname = "物业公司信息")
 public class PropertyCompany extends BaseEntity {
 	@Id
 	@GeneratedValue(generator = "increment")

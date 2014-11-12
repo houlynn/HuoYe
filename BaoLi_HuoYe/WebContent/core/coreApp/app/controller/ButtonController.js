@@ -322,6 +322,8 @@ Ext.define("core.app.controller.ButtonController",{
 				click:function(btn){
 					//拿到组件和配置信息
 					var baseForm=btn.up("baseform");
+					var recode=baseForm.updateRecord();
+					alert(recode);
 					var funCode=baseForm.funCode;
 					var basePanel=baseForm.up("basepanel[funCode="+funCode+"]");
 					var baseGrid=basePanel.down("basegrid[funCode="+funCode+"]");

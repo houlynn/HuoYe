@@ -167,6 +167,7 @@ public class ModuleController implements LogerManager {
 	DataUpdateResponseInfo update(String moduleName, @PathVariable("id") String id, String oldid,
 			String operType, @RequestBody String updated, HttpServletRequest request) {
 
+		System.out.println(updated);
 		DataUpdateResponseInfo result = null;
 		_Module module = ApplicationService.getModuleWithName(moduleName);
 		// 如果主键值修改了，那么先进行主键的修改

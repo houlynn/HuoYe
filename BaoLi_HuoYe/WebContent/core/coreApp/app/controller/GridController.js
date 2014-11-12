@@ -20,7 +20,6 @@ Ext.define("core.app.controller.GridController",{
 				 * 表格的双击事件
 				 */
 				itemdblclick:function(grid,record,item,index,e,eOpts){
-					
 					var itemdblclickOver= grid.ownerCt.itemdblclickOver;
 					if(!itemdblclickOver){
 					var basePanel=grid.up("basepanel");
@@ -52,6 +51,8 @@ Ext.define("core.app.controller.GridController",{
 						var resObj=self.ajax({url:funData.action+"/getInfoById.action",params:{pkValue:insertObj[funData.pkName]}});
 						//表单赋值
 						insertObj=Ext.apply(insertObj,resObj.obj);
+						///
+						baseForm.loadRecord(record);
 						self.setFormValue(baseForm.getForm(),insertObj);
 						var baseForm=basePanel.down("baseform[funCode="+funCode+"]");
 						/**--------------------主子功能处理开始----------------------*/

@@ -1,11 +1,41 @@
 Ext.define("core.base.101.view.PropertyCompanyGrid", {
-	extend : "core.app.base.BaseGrid",
+	extend : "Ext.grid.Panel",
 	alias : "widget.base.propertyCompanyGrid",
-	tbar:[
-			{xtype:'button',text:'添加',ref:'gridInsert',iconCls:'table_add'},
-			{xtype:'button',text:'删除',ref:'gridDelete',iconCls:'table_remove'},
-			{xtype:'button',text:'保存',ref:'gridSave',iconCls:'table_save'}
-		],
+	tbar : [{
+		xtype:"gridtoolbar",
+		height:26,
+		border:0,
+		margin:"1 1 0 0 0",
+	}],
+		initComponent : function() {
+		// 可以在grid中进行行编辑的设置
+		this.rowEditing = new Ext.grid.plugin.RowEditing({
+	              saveBtnText: '保存', 
+	              cancelBtnText: "取消", 
+					clicksToEdit : 2
+				});
+		this.plugins = [this.rowEditing];
+	    this.selType = 'rowmodel';
+		this.on('edit', function(editor, e) {
+					// 每一行编辑完保存之后，都提交数据
+					e.grid.getStore().sync({
+								callback : function(data,store) {
+									 e.record.commit();
+								}
+							});
+					var proxy= e.grid.getStore().getProxy();
+					var errorInfo=proxy.proxy;
+					if(errorInfo){
+						
+					}else{
+						showMsg("添加信息","添加成功!",1);
+					}
+				});
+		this.callParent();
+		},
+
+		
+		
 	columns : [{
 		xtype:"rownumberer",
 		width : 35,
@@ -26,7 +56,6 @@ Ext.define("core.base.101.view.PropertyCompanyGrid", {
 		beforeLabelTextTpl : comm.get('required'),
 		emptyText :'物业公司名称必填',
 		allowBlank : false,
-		  hideTrigger : false
 		}
 	}
 , {
@@ -37,7 +66,6 @@ Ext.define("core.base.101.view.PropertyCompanyGrid", {
 		field:{
 			 xtype:"textfield",
 		allowBlank : true,
-		  hideTrigger : false
 		}
 	}
 , {
@@ -48,7 +76,6 @@ Ext.define("core.base.101.view.PropertyCompanyGrid", {
 		field:{
 			 xtype:"textfield",
 		allowBlank : true,
-		  hideTrigger : false
 		}
 	}
 , {
@@ -59,7 +86,6 @@ Ext.define("core.base.101.view.PropertyCompanyGrid", {
 		field:{
 			 xtype:"textfield",
 		allowBlank : true,
-		  hideTrigger : false
 		}
 	}
 , {
@@ -70,7 +96,6 @@ Ext.define("core.base.101.view.PropertyCompanyGrid", {
 		field:{
 			 xtype:"textfield",
 		allowBlank : true,
-		  hideTrigger : false
 		}
 	}
 	
