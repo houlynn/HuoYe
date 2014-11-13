@@ -1,8 +1,8 @@
 /**
- * 用于生成Grid的Columns的类+++
+ * 用于生成Grid的Columns的类
  */
 
-Ext.define('app.view.module.factory.ColumnsFactory', {
+Ext.define('core.app.module.factory.ColumnsFactory', {
 
 			statics : {
 				getColumns : function(moduleModel, schemeOrderId) {
@@ -49,6 +49,7 @@ Ext.define('app.view.module.factory.ColumnsFactory', {
 							columns.push(group);
 						}
 					}
+					console.log("===================grid clunmm===================")
 					console.log(columns)
 					return columns;
 				},

@@ -1,4 +1,5 @@
 Ext.define("core.util.MenuUtil",{
+	uses:["core.app.module.Module"],
 	mixins:{
 		suppleUtil:"core.util.SuppleUtil"
 	},
@@ -104,6 +105,10 @@ Ext.define("core.util.MenuUtil",{
 							var nodeInfo=node.get("nodeInfo");
 				        	var config=nodeInfo.split(",");
 				            var controller=coreApp.getController(config[1]);
+				           
+				            if(" base.propertyCompanyPanel"==config[0]){
+				            	config[0]="modulepanel";
+				            }
 							var panel=  Ext.create('Ext.panel.Panel', {
 							            layout: 'fit',
 							            title : node.data.text,

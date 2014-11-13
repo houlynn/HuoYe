@@ -1,14 +1,27 @@
 Ext.define("core.util.GridActionUtil", {
 	statics : {
-		editRecord : function(button) {
+		editRecord : function(btn) {
+			var viewModel=comm.get("viewModel").getModuleDefine(101);
+			var module=Ext.create("core.app.module.ModuleModel");
+			Ext.apply(module.data, viewModel);
 			var window = Ext.widget('basewindow', {
+				viewModel:module
+			});
+			var gridtoolbar = btn.up("gridtoolbar");
+		    var grid=gridtoolbar.ownerCt.ownerCt;
+	        console.log(grid.getSelectionModel().getSelection()[0]);
+	       console.log(grid.getStore().getAt(0));
+	       window.down('baseform').setData(grid.getSelectionModel().getSelection()[0]);
+	        window.show();
+			
+	/*		var window = Ext.widget('basewindow', {
 					});
-			var grid = this.getView().down('modulegrid');
+			var gridtoolbar = btn.up("gridtoolbar");
+		    var grid=gridtoolbar.ownerCt.ownerCt;
 			console.log(grid.getSelectionModel().getSelection()[0]);
 			console.log(grid.getStore().getAt(0));
-
 			window.down('baseform').setData(grid.getSelectionModel().getSelection()[0]);
-			window.show();
+			window.show();*/
 		},
 		// 新增一条记录
 		addRecord : function(btn) {

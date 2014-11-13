@@ -7,6 +7,8 @@ Ext.onReady(function(){
         	   coreApp.initMenu();
         	 //  alert("appp init");
         	   Ext.create("core.main.view.Main");
+        	   Ext.create("core.app.main.MainModel");
+        	   console.log(comm.get("viewModel"));
         },
         controllers:[
          "core.app.controller.MainController"          //装在主控制器
