@@ -11,6 +11,12 @@ Ext.define('core.main.view.region.MainMenuTree', {
 	            coreApp.getController(config[1]);
 	        	var  mainPanel= view.up('app-main');
             	var maincenter=mainPanel.down("maincenter");
+                if("base.propertyCompanyPanel"==config[0]){
+	            	config[0]="modulepanel";
+	            }
+                var viewModel=comm.get("viewModel").getModuleDefine(101);
+                var module=Ext.create("core.app.module.ModuleModel");
+    			Ext.apply(module.data, viewModel);
 				var panel=  Ext.create('Ext.panel.Panel', {
 				            layout: 'fit',
 				            title : node.data.text,
@@ -21,6 +27,7 @@ Ext.define('core.main.view.region.MainMenuTree', {
 				              items: [
 				                 {
 				                     xtype: config[0],
+				                     viewModel:module
 				                 }
 				             ] 
 				         });

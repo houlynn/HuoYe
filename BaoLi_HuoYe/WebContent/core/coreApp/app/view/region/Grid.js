@@ -34,10 +34,9 @@ Ext.define('core.app.view.region.Grid', {
 	},
 
 	initComponent : function() {
-
-		var viewModel = this.up('modulepanel').viewModel;
+		
 		this.store.modulegrid = this;
-
+		var viewModel=this.store.modulePanel.viewModel;
 		// 可以在grid中进行行编辑的设置
 		this.rowEditing = new Ext.grid.plugin.RowEditing({
 					clicksToEdit : 2
@@ -77,6 +76,7 @@ Ext.define('core.app.view.region.Grid', {
 		// 创建grid列
 		// 默认第一个grid方案
 		this.gridSchemeId = viewModel.get('tf_gridSchemes')[0].tf_schemeOrder;
+		alert(0);
 		// 将第一个方案的columns生成，第一个方案是要先设置好，并不是gridschemecombo触发来生成的
 		this.columns = core.app.module.factory.ColumnsFactory.getColumns(viewModel);
 
@@ -91,10 +91,9 @@ Ext.define('core.app.view.region.Grid', {
 					prependButtons : true,
 					dock : 'bottom',
 					items : [{ // 在最前面加入grid方案的选择Combo
-						xtype : 'gridschemecombo'
+						//xtype : 'gridschemecombo'
 					}]
 				}];
-
 		this.callParent();
 	},
 

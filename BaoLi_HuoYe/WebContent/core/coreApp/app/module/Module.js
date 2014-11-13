@@ -12,14 +12,12 @@ Ext.define('core.app.module.Module', {
 			initComponent : function() {
 				console.log(this.moduleName + ' 正在创建');
 				// 从MainModel中取得当前模块的定义数据，包括字段和各种设置的信息
-				var mainmodel =cmm.get("viewModel");
 				var viewModel=this.viewModel;
 				this.setTitle(viewModel.get("tf_title"));//设置标题
-				this.module = mainmodel.getModuleDefine(this.moduleName);
-				this.glyph = this.viewModel().get('tf_glyph'); // 由于上面的glyph的bind无效，因此需要在这里加入glyph的设置
-				this.model = core.app.module.factory.ModelFactory.getModelByModule(this.module);
-				this.store = Ext.create('app.store.GridStore', {
-							module : this.module,
+				this.glyph = this.viewModel.get('tf_glyph'); // 由于上面的glyph的bind无效，因此需要在这里加入glyph的设置
+				this.model = core.app.module.factory.ModelFactory.getModelByModule(this.viewModel.data);
+				this.store = Ext.create('core.app.store.GridStore', {
+							module : this.viewModel.data,
 							model : this.model,
 							modulePanel : this
 						});

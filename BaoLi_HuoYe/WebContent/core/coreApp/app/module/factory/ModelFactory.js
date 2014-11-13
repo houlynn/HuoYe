@@ -5,6 +5,8 @@ Ext.define('core.app.module.factory.ModelFactory', {
 
 	statics : {
 		getModelByModule : function(module) {
+			console.log("===========model==========");
+			console.log(module);
 			var model = Ext.define('app.model.' + module.tf_moduleName, {
 				extend : 'Ext.data.Model',
 				module : module,

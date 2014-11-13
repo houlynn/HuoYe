@@ -6,7 +6,8 @@ Ext.define('core.app.view.region.GridToolbar', {
 			alias : 'widget.gridtoolbar',
 			uses : ['baseUx.GridSearchField'],
 			initComponent : function() {
-				var viewModel = this.up('modulepanel').viewModel;
+				var viewModel = this.grid.store.modulePanel.viewModel;
+				
 				this.items = [{
 							text : '显示',
 							glyph : 0xf022
@@ -60,14 +61,14 @@ Ext.define('core.app.view.region.GridToolbar', {
 							text : '修改',
 							glyph : 0xf044,
 							itemId : 'edit',
-							handler : 'editRecord'
+						//	handler : 'editRecord'
 						}, {
 							text : '删除',
 							disabled : true,
 							glyph : 0xf014,
 							itemId : 'delete',
 							listeners : {
-								click : 'deleteRecords', // 这里不要用handler，而要用click,因为下面要发送click事件
+								//click : 'deleteRecords', // 这里不要用handler，而要用click,因为下面要发送click事件
 								// 删除按钮在渲染后加入可以Drop的功能
 								render : function(button) {
 									// 可以使Grid中选中的记录拖到到此按钮上来进行删除

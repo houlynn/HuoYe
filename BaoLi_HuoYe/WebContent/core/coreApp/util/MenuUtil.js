@@ -104,11 +104,7 @@ Ext.define("core.util.MenuUtil",{
 						itemclick : function(view,node){
 							var nodeInfo=node.get("nodeInfo");
 				        	var config=nodeInfo.split(",");
-				            var controller=coreApp.getController(config[1]);
-				           
-				            if(" base.propertyCompanyPanel"==config[0]){
-				            	config[0]="modulepanel";
-				            }
+				            coreApp.getController(config[1]);
 							var panel=  Ext.create('Ext.panel.Panel', {
 							            layout: 'fit',
 							            title : node.data.text,
