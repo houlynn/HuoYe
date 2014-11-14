@@ -7,38 +7,31 @@ Ext.define('core.app.view.region.Grid', {
 	alias : 'widget.modulegrid',
 	uses : ['core.app.view.region.GridToolbar',
 			'core.app.module.factory.ColumnsFactory',
+			'core.util.GridActionUtil'
 			//'app.view.module.widget.GridSchemeCombo'
 			],
-
 	requires : ['Ext.selection.CellModel', 'Ext.grid.*', 'Ext.data.*',
 			'Ext.util.*'],
-
-	bind : {
-		//title : '{tf_title} {selectedNames}', // 数据绑定到ModuleModel中的tf_title和选中记录的名称  
-		//gridSchemeId : '{gridSchemeId}' // 属性gridSchemeId
-		// 设置绑定，和GridSchemeCombo是value绑定是一样的
-		// ＊＊＊＊＊＊＊＊＊＊＊＊这里有个问题，就是所有的模块都绑定了相同的gridSchemeId,以后解决
-	},
-
 	tools : [{
-				type : 'gear'
+				type : 'gear',
 			}],
-
 	columnLines : true, // 加上表格线
 	multiSelect : true,
-
 	enableLocking : true, // 使grid可以锁定列
-
 	listeners : {
-		//selectionChange : 'selectionChange'
+		 selectionChange : function(model, selected, eOpts){
+			core.util.GridActionUtil.selectionChange(this, model, selected, eOpts);
+		}
 	},
-
 	initComponent : function() {
-		
 		this.store.modulegrid = this;
 		var viewModel=this.store.modulePanel.viewModel;
+		var title = viewModel.get('tf_title');
+		this.setTitle(title);
 		// 可以在grid中进行行编辑的设置
 		this.rowEditing = new Ext.grid.plugin.RowEditing({
+			     saveBtnText: '保存', 
+                   cancelBtnText: "取消", 
 					clicksToEdit : 2
 				});
 		this.plugins = [this.rowEditing];
@@ -46,7 +39,7 @@ Ext.define('core.app.view.region.Grid', {
 		this.on('edit', function(editor, e) {
 					// 每一行编辑完保存之后，都提交数据
 					e.grid.getStore().sync({
-								callback : function(data,store) {
+								    callback : function(data,store) {
 									 e.record.commit();
 								}
 							});
@@ -63,23 +56,14 @@ Ext.define('core.app.view.region.Grid', {
 
 			stripeRows : true, // 奇偶行不同底色
 			enableTextSelection : false, // 不允许选择行中的text数据
-			// 加入允许拖动功能
-			plugins : [{
-				ptype : 'gridviewdragdrop',
-				ddGroup : 'DD_grid_' + viewModel.get('tf_moduleName'), // 拖动分组必须设置，这个分组名称为:DD_grid_Globbal
-				enableDrop : false
-					// 设为false，不允许在本grid中拖动
-				}]
 
 		};
 
 		// 创建grid列
 		// 默认第一个grid方案
 		this.gridSchemeId = viewModel.get('tf_gridSchemes')[0].tf_schemeOrder;
-		alert(0);
 		// 将第一个方案的columns生成，第一个方案是要先设置好，并不是gridschemecombo触发来生成的
 		this.columns = core.app.module.factory.ColumnsFactory.getColumns(viewModel);
-
 		this.dockedItems = [{
 					xtype : 'gridtoolbar', // 按钮toolbar
 					dock : 'top',

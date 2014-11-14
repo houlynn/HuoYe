@@ -2,7 +2,7 @@
  * 一个模块的主控界面的容器，用来安放各个模块控件以及协调他们之间的关系
  */
 Ext.define('core.app.module.Module', {
-			extend : 'Ext.panel.Panel',
+			extend : 'Ext.container.Container',
 			alias : 'widget.modulepanel',
 			requires : ['core.app.module.factory.ModelFactory'],
 			uses : ['core.app.view.region.Navigate', 'core.app.view.region.Grid',
@@ -13,7 +13,7 @@ Ext.define('core.app.module.Module', {
 				console.log(this.moduleName + ' 正在创建');
 				// 从MainModel中取得当前模块的定义数据，包括字段和各种设置的信息
 				var viewModel=this.viewModel;
-				this.setTitle(viewModel.get("tf_title"));//设置标题
+				//this.setTitle(viewModel.get("tf_title"));//设置标题
 				this.glyph = this.viewModel.get('tf_glyph'); // 由于上面的glyph的bind无效，因此需要在这里加入glyph的设置
 				this.model = core.app.module.factory.ModelFactory.getModelByModule(this.viewModel.data);
 				this.store = Ext.create('core.app.store.GridStore', {

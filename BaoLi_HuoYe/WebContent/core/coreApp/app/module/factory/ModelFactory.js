@@ -38,7 +38,7 @@ Ext.define('core.app.module.factory.ModelFactory', {
 					},
 					reader : {
 						type : 'json',
-						rootProperty : 'records',
+						root : 'records',
 						totalProperty : 'totalCount'
 					},
 					writer : {

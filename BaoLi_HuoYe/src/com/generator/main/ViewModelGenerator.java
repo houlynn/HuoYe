@@ -168,6 +168,7 @@ public class ViewModelGenerator implements LogerManager {
 		data.put("basePk",basePk+".repertory");
 		getTemplate("IRepertoryImpl.ftl").process(data, foIRepertoryImpl);
 		foIRepertoryImpl.close();
+		
 	}
 
 	public static void createExjrequestPathvc(String moduble, String requestPath,

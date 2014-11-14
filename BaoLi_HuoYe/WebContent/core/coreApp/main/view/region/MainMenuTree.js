@@ -35,6 +35,13 @@ Ext.define('core.main.view.region.MainMenuTree', {
 				     if(addPanel){
 				    	return;
 				     }
+				     if(config[0]=="modulepanel"){
+				    	 addPanel= Ext.createWidget("modulepanel",{
+				    		  viewModel:module,
+				    		  id:101,
+				    		 
+				    	 })
+				     }
 				     maincenter.add(panel);
 				     maincenter.setActiveTab(panel);
 		}

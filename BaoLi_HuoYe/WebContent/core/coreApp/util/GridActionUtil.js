@@ -1,17 +1,17 @@
 Ext.define("core.util.GridActionUtil", {
 	statics : {
+		
+		
 		editRecord : function(btn) {
-			var viewModel=comm.get("viewModel").getModuleDefine(101);
-			var module=Ext.create("core.app.module.ModuleModel");
-			Ext.apply(module.data, viewModel);
+			var modulegrid=btn.up("modulegrid");
+			var modulePanle =modulegrid.ownerCt;
+			var module=modulePanle.viewModel;
 			var window = Ext.widget('basewindow', {
 				viewModel:module
 			});
-			var gridtoolbar = btn.up("gridtoolbar");
-		    var grid=gridtoolbar.ownerCt.ownerCt;
-	        console.log(grid.getSelectionModel().getSelection()[0]);
-	       console.log(grid.getStore().getAt(0));
-	       window.down('baseform').setData(grid.getSelectionModel().getSelection()[0]);
+	        console.log(modulegrid.getSelectionModel().getSelection()[0]);
+	       console.log(modulegrid.getStore().getAt(0));
+	       window.down('baseform').setData(modulegrid.getSelectionModel().getSelection()[0]);
 	        window.show();
 			
 	/*		var window = Ext.widget('basewindow', {
@@ -23,18 +23,18 @@ Ext.define("core.util.GridActionUtil", {
 			window.down('baseform').setData(grid.getSelectionModel().getSelection()[0]);
 			window.show();*/
 		},
+		
 		// 新增一条记录
 		addRecord : function(btn) {
-			var gridtoolbar = btn.up("gridtoolbar");
-		    var grid=gridtoolbar.ownerCt.ownerCt;
-			var model = Ext.create(grid.getStore().model);
+			var modulegrid = btn.up("modulegrid");
+			var model = Ext.create(modulegrid.getStore().model);
 			model.set(model.idProperty, null); // 设置主键为null,可自动增加
 			// 插入空记录到第一条
-			grid.getStore().insert(0, model);
+			modulegrid.getStore().insert(0, model);
 			// 编辑第一条
-			grid.rowEditing.startEdit(0,0); 
-			//grid.rowEditing.startEdit(model);
+			modulegrid.rowEditing.startEdit(0,0); 
 		},
+		
 		// 根据选中的记录复制新增一条记录
 		addRecordWithCopy : function() {
 			var grid = this.getView().down('modulegrid'), sm = grid.getSelectionModel();
@@ -70,29 +70,37 @@ Ext.define("core.util.GridActionUtil", {
 			grid.getStore().insert(0, model);
 			sm.select(model); // 选中当前新增的记录
 		},
+		
 		// 删除一条或多条记录
-		deleteRecords : function(button) {
-			var grid = this.getView().down('modulegrid'), selection = grid
-					.getSelectionModel().getSelection(), message = '', infoMessage = '', modultitle;
+		deleteRecords : function(btn) {
+			
+			var modulegrid=btn.up("modulegrid");
+			console.log(modulegrid);
+			var modulePanle =modulegrid.ownerCt;
+			var module=modulePanle.viewModel;
+			var selection=modulegrid.getSelectionModel().getSelection();
+			var message='';
+			var infoMessage='';
+			var modultitle='';
 			if (selection.length == 1) { // 如果只选择了一条
 				message = ' 『' + selection[0].getNameValue() + '』 吗?';
 				infoMessage = '『' + selection[0].getNameValue() + '』';
 			} else { // 选择了多条记录
 				message = '<ol>';
-				Ext.Array.each(grid.getSelectionModel().getSelection(), function(record) {
+				Ext.Array.each(selection, function(record) {
 							message += '<li>' + record.getNameValue() + '</li>';
 						});
 				message += '</ol>';
 				infoMessage = message;
 				message = '以下 ' + selection.length + ' 条记录吗?' + message;
 			}
-			moduletitle = '<strong>' + this.getView().getViewModel().get('tf_title')
+			moduletitle = '<strong>' + module.get('tf_title')
 					+ '</strong>';
 			Ext.MessageBox.confirm('确定删除', '确定要删除 ' + moduletitle + ' 中的' + message,
 					function(btn) {
 						if (btn == 'yes') {
-							grid.getStore().remove(grid.getSelectionModel().getSelection());
-							grid.getStore().sync();
+							modulegrid.getStore().remove(modulegrid.getSelectionModel().getSelection());
+							modulegrid.getStore().sync();
 							Ext.toast({
 										title : '删除成功',
 										html : moduletitle + infoMessage + '已成功删除！',
@@ -116,8 +124,48 @@ Ext.define("core.util.GridActionUtil", {
 									});
 						}
 					})
-		}
+		},
+		
+		// 用户修改了grid列表方案后执行
+		gridSchemeChange : function(combo, schemeId) {
+			console.log(schemeId);
+			this.getView().down('modulegrid').changeGridScheme(schemeId)
+
+		},
+		
+		// 选中的记录发生变化过后的事件
+		selectionChange : function(view, model, selected, eOpts) {
+			// 设置删除按钮的状态
+			view.up('modulepanel').down('toolbar button#delete')[selected.length > 0
+					? 'enable'
+					: 'disable']();
+			var viewModel =view.up('modulepanel').viewModel;
+			// 下面将组织选中的记录的name显示在title上，有二种方案可供选择，一种是用下面的MVVM特性，第二种是调用refreshTitle()
+			var selectedNames =viewModel.get("tf_title");
+			if (selected.length > 0) {
+				if (!!selected[0].getNameValue()){
+					selectedNames = selectedNames + '　『<em>' + selected[0].getNameValue()
+							+ '</em>'
+							+ (selected.length > 1 ? ' 等' + selected.length + '条' : '') + '』';
+				view.setTitle(selectedNames);
+				}
+			}
+			
+		},
+		
+		
+		
+		
+		
 	},
+	
+
+	
+	
+	
+	
+	
+	
 			/**
 			 * 得到默认值对象
 			 * 

@@ -246,6 +246,8 @@ Ext.define('core.app.module.ModuleModel', {
 	},
 	get:function(key){
 		return this.data[key];
-		
+	},
+	set:function(key,value){
+		 this.data[key]=value;
 	}
 });
