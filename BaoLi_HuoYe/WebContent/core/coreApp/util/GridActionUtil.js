@@ -1,4 +1,5 @@
 Ext.define("core.util.GridActionUtil", {
+	requires : ['Ext.MessageBox', 'Ext.ux.Toast'],
 	statics : {
 		
 		
@@ -101,7 +102,7 @@ Ext.define("core.util.GridActionUtil", {
 						if (btn == 'yes') {
 							modulegrid.getStore().remove(modulegrid.getSelectionModel().getSelection());
 							modulegrid.getStore().sync();
-							Ext.toast({
+							 Ext.toast({
 										title : '删除成功',
 										html : moduletitle + infoMessage + '已成功删除！',
 										bodyStyle : 'background-color:#7bbfea;',

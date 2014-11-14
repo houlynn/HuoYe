@@ -26,4 +26,5 @@ Ext.syncRequire([
         "factory.ModelFactory",
         "factory.DDCache",
         "Ext.container.Viewport",
+        "Ext.MessageBox",
 ]);

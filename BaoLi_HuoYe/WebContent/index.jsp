@@ -52,6 +52,26 @@ String basePath = request.getScheme()+"://"+request.getServerName()+":"+request.
 </head>
 <body>
        <script type="text/javascript">
+       Ext.Ajax.on('requestcomplete', function(conn, response, options) {
+			if (response.getResponseHeader) {
+				var sessionStatus = response.getResponseHeader("sessionstatus");
+				if (typeof(sessionStatus) != "undefined") {
+					Ext.MessageBox.show({
+								title : '服务器超时',
+								msg : '服务器登录超时，您需要重新登录系统。',
+								buttons : Ext.MessageBox.OK,
+								width : 250,
+								icon : Ext.MessageBox.WARNING,
+								fn : function() {
+									var redirect = 'login.jsp';
+									window.location = redirect
+								}
+							})
+				}
+			}
+		});
+       
+       
 			<!--加载分辨率大小-->
 			var clientWidth = document.body.clientWidth;
 			var clientHeight = document.body.clientHeight;
