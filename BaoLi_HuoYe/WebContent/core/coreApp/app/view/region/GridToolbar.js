@@ -6,6 +6,7 @@ Ext.define('core.app.view.region.GridToolbar', {
 			alias : 'widget.gridtoolbar',
 			uses : ['baseUx.GridSearchField'],
 			initComponent : function() {
+				var self=this;
 				var viewModel = this.grid.store.modulePanel.viewModel;
 				this.items = [{
 							text : '显示',
@@ -21,7 +22,10 @@ Ext.define('core.app.view.region.GridToolbar', {
 										itemId : 'newwithcopy',
 										glyph : 0xf0c5,
 										listeners : {
-											//click : 'addRecordWithCopy'
+											    click:function(){
+											    	core.util.GridActionUtil.addRecordWithCopy(self.grid);
+											    }
+												
 										}
 									}, '-', {
 										text : '上传Excel表单条新增',

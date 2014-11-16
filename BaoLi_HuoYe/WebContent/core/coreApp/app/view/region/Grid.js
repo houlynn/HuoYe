@@ -38,26 +38,33 @@ Ext.define('core.app.view.region.Grid', {
 		this.selType = 'rowmodel';
 		this.on('edit', function(editor, e) {
 					// 每一行编辑完保存之后，都提交数据
-					e.grid.getStore().sync({
-								    callback : function(data,store) {
-									 e.record.commit();
-								}
-							});
-					var proxy= e.grid.getStore().getProxy();
-					var errorInfo=proxy.proxy;
-					if(errorInfo){
-						
-					}else{
-						showMsg("添加信息","添加成功!",1);
-					}
-				});
+			// 每一行编辑完保存之后，都提交数据
+			e.grid.getStore().sync({
+						callback : function(data,store) {
+							 e.record.commit();
+						}
+					});
+			var proxy= e.grid.getStore().getProxy();
+			var errorInfo=proxy.proxy;
+			if(errorInfo){
+				
+			}else{
+				showMsg("添加信息","添加成功!",1);
+			}
+		});
 
 		this.viewConfig = {
+				stripeRows : true, // 奇偶行不同底色
+				enableTextSelection : false,
+				// 加入允许拖动功能
+				plugins : [{
+					ptype : 'gridviewdragdrop',
+					ddGroup : 'DD_grid_' + viewModel.get('tf_moduleName'), // 拖动分组必须设置，这个分组名称为:DD_grid_Global
+					enableDrop : false  // 设为false，不允许在本grid中拖动
+					}]
 
-			stripeRows : true, // 奇偶行不同底色
-			enableTextSelection : false, // 不允许选择行中的text数据
+			};
 
-		};
 
 		// 创建grid列
 		// 默认第一个grid方案

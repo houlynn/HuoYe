@@ -18,7 +18,7 @@ Ext.define("core.util.GridActionUtil", {
 		addRecord : function(btn) {
 			var modulegrid = btn.up("modulegrid");
 			var model = Ext.create(modulegrid.getStore().model);
-			model.set(model.idProperty, null); // 设置主键为null,可自动增加
+			model.set(model.idProperty, null); // 设置主键为null,可自动
 			// 插入空记录到第一条
 			modulegrid.getStore().insert(0, model);
 			// 编辑第一条
@@ -26,9 +26,8 @@ Ext.define("core.util.GridActionUtil", {
 		},
 		
 		// 根据选中的记录复制新增一条记录
-		addRecordWithCopy : function() {
-			
-			var grid = this.getView().down('modulegrid'), sm = grid.getSelectionModel();
+		addRecordWithCopy : function(grid) {
+		     var sm = grid.getSelectionModel();
 			if (sm.getSelection().length != 1) {
 				Ext.toast({
 							title : '警告',
@@ -51,15 +50,17 @@ Ext.define("core.util.GridActionUtil", {
 							useXAxis : true,
 							slideInDuration : 500
 						});
-				return;
+				return;get
 			}
 			var model = Ext.create(grid.getStore().model);
-			Ext.Array.each(model.fields, function(field) { // 将选中记录的model都赋给值新的记录
+			Ext.Array.each(model.fields.keys, function(field) { // 将选中记录的model都赋给值新的记录
 						model.set(field.name, sm.getSelection()[0].get(field.name));
+						model.set(field, sm.getSelection()[0].get(field));
 					});
 			model.set(model.idProperty, null); // 设置为null,可自动增加
 			grid.getStore().insert(0, model);
 			sm.select(model); // 选中当前新增的记录
+	
 		},
 		
 		// 删除一条或多条记录

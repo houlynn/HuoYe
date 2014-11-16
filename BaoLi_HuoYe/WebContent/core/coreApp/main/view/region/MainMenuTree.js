@@ -11,39 +11,27 @@ Ext.define('core.main.view.region.MainMenuTree', {
 	            coreApp.getController(config[1]);
 	        	var  mainPanel= view.up('app-main');
             	var maincenter=mainPanel.down("maincenter");
-                if("base.propertyCompanyPanel"==config[0]){
-	            	config[0]="modulepanel";
-	            }
-                var viewModel=comm.get("viewModel").getModuleDefine(101);
-                var module=Ext.create("core.app.module.ModuleModel");
+            	var nodeInfoType=node.get("nodeInfoType");
+            	var addPanel={};
+            	 var module={};
+                if("FUNC"==nodeInfoType){
+                var viewModel=comm.get("viewModel").getModuleDefine(node.get("code"));
+                module =Ext.create("core.app.module.ModuleModel");
     			Ext.apply(module.data, viewModel);
-				var panel=  Ext.create('Ext.panel.Panel', {
-				            layout: 'fit',
-				            title : node.data.text,
-				            frame:true,
-							closable : true,
-							id:node.data.id,
-							iconCls : 'icon-activity',
-				              items: [
-				                 {
-				                     xtype: config[0],
-				                     viewModel:module
-				                 }
-				             ] 
-				         });
-				     var  addPanel=maincenter.getComponent(node.data.id);
-				     if(addPanel){
+                }
+                	addPanel= Ext.createWidget(config[0],{
+                		  viewModel:module,
+                		  title:node.get("text"),
+                		  id:node.data.id,
+                		  closable : true
+                	});
+             var   oldPanel=maincenter.getComponent(node.data.id);
+				     if(oldPanel){
 				    	return;
 				     }
-				     if(config[0]=="modulepanel"){
-				    	 addPanel= Ext.createWidget("modulepanel",{
-				    		  viewModel:module,
-				    		  id:101,
-				    		 
-				    	 })
-				     }
-				     maincenter.add(panel);
-				     maincenter.setActiveTab(panel);
+				     console.log(addPanel);
+				     maincenter.add(addPanel);
+				     maincenter.setActiveTab(addPanel);
 		}
 			},
 			rootVisible : false,

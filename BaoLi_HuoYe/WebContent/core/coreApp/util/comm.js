@@ -1,4 +1,35 @@
- /**静态变量声明*/
+		Ext.Ajax.on('requestcomplete',
+				function(conn, response, options) {
+					if (response.getResponseHeader) {
+						var sessionStatus = response
+								.getResponseHeader("sessionstatus");
+						if (typeof (sessionStatus) != "undefined") {
+							Ext.MessageBox.show({
+								title : '服务器超时',
+								msg : '服务器登录超时，您需要重新登录系统。',
+								buttons : Ext.MessageBox.OK,
+								width : 250,
+								icon : Ext.MessageBox.WARNING,
+								fn : function() {
+									var redirect = 'login.jsp';
+									window.location = redirect
+								}
+							})
+						}
+					}
+				});
+Ext.setGlyphFontFamily('FontAwesome'); // 设置图标字体文件，只有设置了以后才能用glyph属性		
+//开启动态加载
+Ext.Loader.setConfig({
+	enabled : true
+});
+
+Ext.Loader.setPath({
+	'Ext.ux' : 'extjs/ux',
+	'Ext.app' : 'extjs/app'
+});
+
+/**静态变量声明*/
  var comm = Ext.create("Ext.util.MixedCollection");
  /**声明主控制器*/
  var coreApp=null;
@@ -30,11 +61,75 @@ var ajax = function(config) {
 		return false;
 	};
 	
+	/**
+	 * 这里存放了Grid的列renderer的各种自定义的方法
+	 */
+
+	Ext.onReady(function() {
+		Ext.monetaryText = '千'; // 加在数字后面的金额单位
+		Ext.monetaryUnit = 1000;
+		if (Ext.util && Ext.util.Format) {
+			Ext.apply(Ext.util.Format, {
+				// 金额字段
+				monetaryRenderer : function(val) {
+					if (val) {
+						if (Ext.monetaryUnit && Ext.monetaryUnit != 1)
+							val = val / Ext.monetaryUnit;
+						// 正数用蓝色显示，负数用红色显示
+						return '<span style="color:' + (val > 0 ? 'blue' : 'red')
+								+ ';float:right;">' + Ext.util.Format.number(val, '0,000.00')
+								+ Ext.monetaryText + '</span>';
+					} else
+						return ''; // 如果为0,则不显示
+				},
+
+				// 日期
+				dateRenderer : function(val) {
+					return '<span style="color:#a40;">'
+							+ Ext.util.Format.date(val, 'Y-m-d') + '</span>';
+				},
+
+				// 整型变量
+				floatRenderer : function(val, rd, model, row, col, store, gridview) {
+					return '<span style="color:' + (val > 0 ? 'blue' : 'red')
+							+ ';float:right;">' + (val == 0 ? '' : val) + '</span>';
+				},
+
+				// 整型变量
+				intRenderer : function(val, rd, model, row, col, store, gridview) {
+					return '<span style="color:' + (val > 0 ? 'blue' : 'red')
+							+ ';float:right;">' + (val == 0 ? '' : val) + '</span>';
+				},
+
+				// 百分比
+				percentRenderer : function(v, rd, model) {
+					v = v * 100;
+					var v1 = v > 100 ? 100 : v;
+					v1 = v1 < 0 ? 0 : v1;
+					var v2 = parseInt(v1 * 2.55).toString(16);
+					if (v2.length == 1)
+						v2 = '0' + v2;
+					return Ext.String
+							.format(
+									'<div>'
+											+ '<div style="float:left;border:1px solid #008000;height:15px;width:100%;">'
+											+ '<div style="float:left;text-align:center;width:100%;color:blue;">{0}%</div>'
+											+ '<div style="background: #FAB2{2};width:{1}%;height:13px;"></div>'
+											+ '</div></div>', v, v1, v2);
+				},
+
+				// 对模块的namefields字段加粗显示
+				nameFieldRenderer : function(val, rd, model, row, col, store, gridview) {
+					return ('<strong>' + val + '</strong>');
+				}
+
+			})
+		};
+	});
+
+	
+	
 	Ext.define("app.system.System", {
-        viewport: null,
-        monetary: "\u4e07\u5143",//万元
-        monetaryUnit: 1e4,
-        monetaryUnitText: "\u4e07",//万
         constructor: function(e) {
                this.pageSize = parseInt(Cookies.get("pagesize", "20"));
                 Ext.apply(this, e);
@@ -133,21 +228,6 @@ var ajax = function(config) {
     			buttons : Ext.MessageBox.OK,
     			icon : Ext.MessageBox.ERROR
     		});
-        },
-        defaultRenderer: function(e, t, i, o, n, a) {
-                return filterTextSetBk(a, e)
-        },
-        dateRenderer: function(e, t, i, o, n, a) {
-                return '<span class="datecolor">' + filterTextSetBk(a, Ext.util.Format.date(e, "Y-m-d")) + "</span>"
-        },
-        datetimeRenderer: function(e, t, i, o, n, a) {
-                return '<span class="datecolor">' + filterTextSetBk(a, Ext.util.Format.date(e, "Y-m-d H:i:s")) + "</span>"
-        },
-        intRenderer: function(e, t, i, o, n, a) {
-                return '<span style="color:#00C;float:right;">' + (0 == e ? "": filterTextSetBk(a, "" + e)) + "</span>"
-        },
-        booleanTextRenderer: function(e) {
-                return e ? "\u662f": " "
         },
         moneyRenderer: function(e) {
                 if (0 == e) return "";
@@ -304,8 +384,6 @@ var ajax = function(config) {
 					}]
 		},
 		getModuleDefine : function(moduleId) {
-			console.log(this);
-			alert(this);
 			var result = null;
 			Ext.Array.each(this.get("tf_Modules"), function(module) {
 						if (module.tf_moduleId == moduleId + ''
@@ -322,15 +400,8 @@ var ajax = function(config) {
 		}
 	});
 	
-	
-	
-	
-	
-	
-	
  system=Ext.create("app.system.System",Ext.createWidget("mainViewModel"));
  
- console.log(system);
 
 	
 	

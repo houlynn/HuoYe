@@ -21,13 +21,61 @@ Ext.define('core.app.module.Module', {
 							model : this.model,
 							modulePanel : this
 						});
+				
+				var nav={ moduleGridNavigates:[{
+					tf_NumberGroup: null,
+					tf_cascading: true,
+					tf_enabled: false,
+					tf_fields: "Province--City--Customer",
+					tf_navigatesetId: null,
+					tf_order: null,
+					tf_reverseOrder: false,
+					tf_text: "省份-市-客户单位",
+					tf_type: null
+				},
+				{
+					tf_NumberGroup: null,
+					tf_cascading: true,
+					tf_enabled: false,
+					tf_fields: "Trade--Customer",
+					tf_navigatesetId: null,
+					tf_order: null,
+					tf_reverseOrder: false,
+					tf_text: "行业-客户单位",
+					tf_type: null
+				},
+				{
+					tf_NumberGroup: null,
+					tf_cascading: true,
+					tf_enabled: false,
+					tf_fields: "Rate--Customer",
+					tf_navigatesetId: null,
+					tf_order: null,
+					tf_reverseOrder: false,
+					tf_text: "客户等级-客户单位",
+					tf_type: null
+				},
+				{
+					tf_NumberGroup: null,
+					tf_cascading: true,
+					tf_enabled: false,
+					tf_fields: "_DepartmentScope--_Department--Salesman",
+					tf_navigatesetId: null,
+					tf_order: null,
+					tf_reverseOrder: false,
+					tf_text: "部门权限-部门-业务员",
+					tf_type: null,
+				}
+				]};
+				Ext.apply(this.viewModel.data,nav);
 				this.items = [{
-							xtype : 'navigate', // 导航区域
+							xtype : 'modulenavigate', // 导航区域
 							region : 'west',
 							width : 250,
 							collapsible : true,
 							collapsed : true,
-							split : true
+							split : true,
+							module : this.viewModel.data,
 						}, {
 							xtype : 'modulegrid', // 模块的grid显示区域
 							region : 'center',

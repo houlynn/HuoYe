@@ -167,11 +167,6 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 								align : 'center',
 								minWidth : 80,
 								renderer : Ext.util.Format.percentRenderer,
-								// xtype : 'widgetcolumn', // 这里注释掉的是extjs5自带的百分比类型的显示方法
-								// widget : {
-								// xtype : 'progressbarwidget',
-								// textTpl : ['{percent:number("0.00")}%']
-								// },
 								editor : {
 									xtype : 'numberfield',
 									step : 0.01
@@ -183,9 +178,11 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 
 						case 'String' :
 							// 如果这个字段是此模块的nameFields则加粗显示
+							var width=200;
 							if (module.get('tf_nameFields') == fd.tf_fieldName)
 								Ext.apply(field, {
 											text : '<strong>' + fd.tf_title + '</strong>',
+											width:width,
 											renderer : Ext.util.Format.nameFieldRenderer
 										});
 							else
