@@ -29,3 +29,316 @@ var ajax = function(config) {
 				});
 		return false;
 	};
+	
+	Ext.define("app.system.System", {
+        viewport: null,
+        monetary: "\u4e07\u5143",//万元
+        monetaryUnit: 1e4,
+        monetaryUnitText: "\u4e07",//万
+        constructor: function(e) {
+               this.pageSize = parseInt(Cookies.get("pagesize", "20"));
+                Ext.apply(this, e);
+               // this.tf_previewExts = this.tf_previewExts.split(",")
+        },
+        getViewport: function() {
+                return this.viewport;
+        },
+        setViewport: function(e) {
+                this.viewport = e;
+        },
+        getMaxTab: function() {
+                var e = Cookies.get("maxtab", 8);
+                return parseInt(e);
+        },
+        setMaxTab: function(e) {
+                Cookies.set("maxtab", "" + e);
+        },
+        getAutoOpenModules: function() {
+                var e = Cookies.get("autoopen", "");
+                return e.length > 1 ? e.split(";") : [];
+        },
+        isModuleAutoOpen: function(e) {
+                var t = Cookies.get("autoopen", "");
+                i = t ? t.split(";") : [];
+                o = !1;
+                return Ext.each(i,  function(t) {
+                        t == e && (o = !0)
+                })
+        },
+        addModuleToAutoOpen: function(e) {
+                var t = Cookies.get("autoopen", "");
+                i = t ? t.split(";") : [];
+                o = !1;
+                Ext.each(i,
+                function(t) {    t == e && (o = !0) }),
+                o || (i.push(e), Cookies.set("autoopen", i.join(";")));
+        },
+        deleteModuleToAutoOpen: function(e) {
+                var t = Cookies.get("autoopen", ""),
+                i = t ? t.split(";") : [],
+                o = -1;
+                Ext.each(i,
+                function(t, i) {
+                        return t == e ? (o = i, !1) : void 0
+                }),
+                -1 != o && (i.splice(o, 1), Cookies.set("autoopen", i.join(";")))
+        },
+        smileInfo: function(e, t) {
+                Ext.createWidget("uxNotification", {
+                        title: t ? t: "\u63d0\u9192\u4fe1\u606f",
+                        position: "tr",
+                        width: 300,
+                        slideInDuration: 800,
+                        slideBackDuration: 1500,
+                        iconCls: "ux-notification-icon-smile",
+                        autoCloseDelay: 3e3,
+                        slideInAnimation: "elasticIn",
+                        slideBackAnimation: "elasticIn",
+                        html: e
+                }).show()
+        },
+        warnInfo: function(e, t) {
+                Ext.createWidget("uxNotification", {
+                        title: t ? t: "\u63d0\u793a\u4fe1\u606f",
+                        position: "tr",
+                        width: 300,
+                        slideInDuration: 800,
+                        slideBackDuration: 1500,
+                        iconCls: "ux-notification-icon-warn",
+                        autoCloseDelay: 3e3,
+                        slideInAnimation: "elasticIn",
+                        slideBackAnimation: "elasticIn",
+                        html: e
+                }).show()
+        },
+        errorInfo: function(e, t) {
+                Ext.createWidget("uxNotification", {
+                        title: t ? t: "\u9519\u8bef\u63d0\u793a",
+                        position: "tr",
+                        useXAxis: !0,
+                        width: 300,
+                        slideInDuration: 800,
+                        slideBackDuration: 1500,
+                        iconCls: "ux-notification-icon-error",
+                        autoCloseDelay: 3e3,
+                        slideInAnimation: "elasticIn",
+                        slideBackAnimation: "elasticIn",
+                        html: e
+                }).show()
+        },
+        errorAlertInfo:function(e,t){
+    		Ext.MessageBox.show({
+    		    title: t ? t: "\u9519\u8bef\u63d0\u793a",
+    			msg : e,
+    			buttons : Ext.MessageBox.OK,
+    			icon : Ext.MessageBox.ERROR
+    		});
+        },
+        defaultRenderer: function(e, t, i, o, n, a) {
+                return filterTextSetBk(a, e)
+        },
+        dateRenderer: function(e, t, i, o, n, a) {
+                return '<span class="datecolor">' + filterTextSetBk(a, Ext.util.Format.date(e, "Y-m-d")) + "</span>"
+        },
+        datetimeRenderer: function(e, t, i, o, n, a) {
+                return '<span class="datecolor">' + filterTextSetBk(a, Ext.util.Format.date(e, "Y-m-d H:i:s")) + "</span>"
+        },
+        intRenderer: function(e, t, i, o, n, a) {
+                return '<span style="color:#00C;float:right;">' + (0 == e ? "": filterTextSetBk(a, "" + e)) + "</span>"
+        },
+        booleanTextRenderer: function(e) {
+                return e ? "\u662f": " "
+        },
+        moneyRenderer: function(e) {
+                if (0 == e) return "";
+                e /= Jfok.system.monetaryUnit,
+                e = Math.round(100 * (e - 0)) / 100,
+                e = e == Math.floor(e) ? e + ".00": 10 * e == Math.floor(10 * e) ? e + "0": e,
+                e = String(e);
+                for (var t = e.split("."), i = t[0], o = t[1] ? "." + t[1] : ".00", n = /(\d+)(\d{3})/; n.test(i);) i = i.replace(n, "$1,$2");
+                e = i + o;
+                var n = "";
+                return n = "-" == e.charAt(0) ? "-" + e.substr(1) + Jfok.system.monetaryUnitText: "" + e + Jfok.system.monetaryUnitText,
+                '<span style="color: #00C;float:right;">' + n + "</span>"
+        },
+        percentRenderer1: function(e) {
+                return '<span style="color: #00C;float:right;">' + (e + " %") + "</span>"
+        },
+        percentRenderer: function(e) {
+                var t = e > 100 ? 100 : e;
+                t = 0 > t ? 0 : t;
+                var i = parseInt(2.55 * t).toString(16);
+                return 1 == i.length && (i = "0" + i),
+                String.format('<div><div style="float:left;border:1px solid #008000;height:15px;width:100%;"><div style="float:left;text-align:center;width:100%;color:blue;">{0}%</div><div style="background: #FAB2{2};width:{1}%;height:13px;"></div></div></div>', e, t, i)
+        },
+        manytoOneFieldRenderer: function(e, t, i, o, n, a, l) {
+                var r = e;
+                try {
+                        var d = l.headerCt.columnManager.columns[n],
+                        s = i.data[d.manytooneIdName];
+                        if (void 0 == s && (s = i.raw[d.manytooneIdName]), !s) return filterTextSetBk(a, e);
+                        r = '<span class="gridNameField"><a onclick="javascript:__smr(\'' + d.moduleName + "','" + s + '\');return false;" href="#">' + filterTextSetBk(a, e) + "</a></span>"
+                } catch(u) {}
+                return r
+        }
+});
+	
+	Ext.define('core.app.main.MainModel', {
+	    extend: 'Ext.container.Container',
+	    alias:"widget.mainViewModel",
+		initComponent : function() {
+			Ext.log('module constructor');
+			Ext.log('MainModel constructor');
+			var me = this;
+			// 这一句是关键，如果没有的话，this还没有初始化完成,下面的Ext.apply(me.data,....)这句就会出错
+			this.callParent(arguments);
+			// 同步调用取得系统参数
+			Ext.Ajax.request({
+						url : 'applicationinfo.do',
+						async : false, // 同步
+						success : function(response) {
+							var text = response.responseText;
+							// 将字段串转换成本地变量
+							var applicationInfo = Ext.decode(text, true);
+							// 把从后台传过来的参数加入到data中去
+							Ext.apply(me.data, applicationInfo);
+						}
+					});
+			comm.add("viewModel",this);
+		},
+		data : {
+			name : 'app',
+			// 系统信息
+			system : {
+				name : '工程项目合同及资金管理系统',
+				version : '5.2014.06.60',
+				iconUrl : ''
+			},
+			// 用户单位信息和用户信息
+			user : {
+				company : '武当太极公司',
+				department : '工程部',
+				name : '张三丰'
+			},
+			// 服务单位和服务人员信息
+			service : {
+				company : '无锡熙旺公司',
+				name : '蒋锋',
+				phonenumber : '1320528----',
+				qq : '78580822',
+				email : 'jfok1972@qq.com',
+				copyright : '熙旺公司'
+			},
+			menuType : {
+				value : 'toolbar'
+			}, // 菜单的位置，'button' , 'toolbar' , 'tree'
+			// 系统菜单的定义，这个菜单可以是从后台通过ajax传过来的
+			systemMenu : [{
+						text : '工程管理', // 菜单项的名称
+						icon : '', // 菜单顶的图标地址
+						glyph : 0,// 菜单项的图标字体的数值
+						expanded : true, // 在树形菜单中是否展开
+						description : '', // 菜单项的描述
+						items : [{
+							text : '工程项目', // 菜单条的名称
+							module : 'Global', // 对应模块的名称
+							icon : '', // 菜单条的图标地址
+							glyph : 0xf0f7
+								// 菜单条的图标字体
+							}, {
+							text : '工程标段',
+							module : 'Project',
+							icon : '',
+							glyph : 0xf02e
+						}]
+
+					}, {
+						text : '合同管理',
+						expanded : true,
+						items : [{
+									text : '项目合同',
+									module : 'Agreement',
+									glyph : 0xf02d
+								}, {
+									text : '合同付款计划',
+									module : 'AgreementPlan',
+									glyph : 0xf03a
+								}, {
+									text : '合同请款单',
+									module : 'Payment',
+									glyph : 0xf022
+								}, {
+									text : '合同付款单',
+									module : 'Payout',
+									glyph : 0xf0d6
+								}, {
+									text : '合同发票',
+									module : 'Invoice',
+									glyph : 0xf0a0
+								}]
+					}, {
+						text : '综合查询',
+						glyph : 0xf0ce,
+						expanded : true,
+						items : [{
+									text : '项目合同台帐',
+									module : 'Agreement',
+									glyph : 0xf02d
+								}, {
+									text : '合同付款计划台帐',
+									module : 'AgreementPlan',
+									glyph : 0xf03a
+								}, {
+									text : '合同请款单台帐',
+									module : 'Payment',
+									glyph : 0xf022
+								}, {
+									text : '合同付款单台帐',
+									module : 'Payout',
+									glyph : 0xf0d6
+								}, {
+									text : '合同发票台帐',
+									module : 'Invoice',
+									glyph : 0xf0a0
+								}]
+					}]
+		},
+		getModuleDefine : function(moduleId) {
+			console.log(this);
+			alert(this);
+			var result = null;
+			Ext.Array.each(this.get("tf_Modules"), function(module) {
+						if (module.tf_moduleId == moduleId + ''
+								|| module.tf_moduleName == moduleId) {
+							result = module;
+							return false;
+						}
+					})
+			return result;
+		},
+		get:function(key){
+			return this.data[key];
+			
+		}
+	});
+	
+	
+	
+	
+	
+	
+	
+ system=Ext.create("app.system.System",Ext.createWidget("mainViewModel"));
+ 
+ console.log(system);
+
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	

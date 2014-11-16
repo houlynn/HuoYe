@@ -1,8 +1,6 @@
 Ext.define("core.util.GridActionUtil", {
 	requires : ['Ext.MessageBox', 'Ext.ux.Toast'],
 	statics : {
-		
-		
 		editRecord : function(btn) {
 			var modulegrid=btn.up("modulegrid");
 			var modulePanle =modulegrid.ownerCt;
@@ -13,16 +11,7 @@ Ext.define("core.util.GridActionUtil", {
 	        console.log(modulegrid.getSelectionModel().getSelection()[0]);
 	       console.log(modulegrid.getStore().getAt(0));
 	       window.down('baseform').setData(modulegrid.getSelectionModel().getSelection()[0]);
-	        window.show();
-			
-	/*		var window = Ext.widget('basewindow', {
-					});
-			var gridtoolbar = btn.up("gridtoolbar");
-		    var grid=gridtoolbar.ownerCt.ownerCt;
-			console.log(grid.getSelectionModel().getSelection()[0]);
-			console.log(grid.getStore().getAt(0));
-			window.down('baseform').setData(grid.getSelectionModel().getSelection()[0]);
-			window.show();*/
+	       window.show();
 		},
 		
 		// 新增一条记录
@@ -38,6 +27,7 @@ Ext.define("core.util.GridActionUtil", {
 		
 		// 根据选中的记录复制新增一条记录
 		addRecordWithCopy : function() {
+			
 			var grid = this.getView().down('modulegrid'), sm = grid.getSelectionModel();
 			if (sm.getSelection().length != 1) {
 				Ext.toast({
@@ -74,15 +64,12 @@ Ext.define("core.util.GridActionUtil", {
 		
 		// 删除一条或多条记录
 		deleteRecords : function(btn) {
-			
 			var modulegrid=btn.up("modulegrid");
-			console.log(modulegrid);
 			var modulePanle =modulegrid.ownerCt;
 			var module=modulePanle.viewModel;
 			var selection=modulegrid.getSelectionModel().getSelection();
 			var message='';
 			var infoMessage='';
-			var modultitle='';
 			if (selection.length == 1) { // 如果只选择了一条
 				message = ' 『' + selection[0].getNameValue() + '』 吗?';
 				infoMessage = '『' + selection[0].getNameValue() + '』';
@@ -95,7 +82,7 @@ Ext.define("core.util.GridActionUtil", {
 				infoMessage = message;
 				message = '以下 ' + selection.length + ' 条记录吗?' + message;
 			}
-			moduletitle = '<strong>' + module.get('tf_title')
+			var moduletitle = '<strong>' + module.get('tf_title')
 					+ '</strong>';
 			Ext.MessageBox.confirm('确定删除', '确定要删除 ' + moduletitle + ' 中的' + message,
 					function(btn) {
@@ -120,6 +107,7 @@ Ext.define("core.util.GridActionUtil", {
 										align : 'tr',
 										closable : true,
 										minWidth : 200,
+										maxheight:150,
 										useXAxis : true,
 										slideInDuration : 500
 									});

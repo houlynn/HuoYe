@@ -23,6 +23,7 @@ Ext.syncRequire([
         "baseUx.form.datetime.DateTime",
         'baseUx.ButtonTransparent',
         'baseUx.GridSearchField',
+        'baseUx.Notification',
         "factory.ModelFactory",
         "factory.DDCache",
         "Ext.container.Viewport",
