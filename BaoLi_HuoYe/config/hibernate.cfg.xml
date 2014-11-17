@@ -42,5 +42,6 @@
 		<mapping class="com.model.hibernate.system._ModuleGridScheme"/>
 		<mapping class="com.model.hibernate.system._ModuleGridSchemeGroup"/>
 		<mapping class="com.model.hibernate.system._ModuleGridSchemeGroupField"/>
+		<mapping class="com.model.hibernate.system._ModuleGridNavigate"/>
 	</session-factory>
 </hibernate-configuration>

@@ -35,7 +35,7 @@ public class _MenuGroup implements Model  {
 	@Column(length = 10, nullable = false)
 	private String tf_menuGroupId;
 	@FieldInfo(title = "分组名称", uniqueField = true, number = 20)
-	@Column(length = 50, nullable = false)
+	@Column(length = 250, nullable = false)
 	private String tf_title;
 	@FieldInfo(title = "展开", remark = "在树状菜单下默认是否展开", number = 30)
 	private Boolean tf_expand;

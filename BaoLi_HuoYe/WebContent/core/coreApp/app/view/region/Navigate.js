@@ -84,11 +84,11 @@ Ext.define('core.app.view.region.Navigate', {
                        layout: {
                                type: "accordion",
                                animate: !0,
-                               multi: this.module.moduleGridNavigates.length < 4
+                               multi: this.module.tf_moduleGridNavigates.length < 4
                        }
                });
-               for (var i in this.module.moduleGridNavigates) {
-                       var o = this.module.moduleGridNavigates[i];
+               for (var i in this.module.tf_moduleGridNavigates) {
+                       var o = this.module.tf_moduleGridNavigates[i];
                        t.add({
                                title: o.tf_text,
                                layout: "fit",
@@ -105,8 +105,8 @@ Ext.define('core.app.view.region.Navigate', {
                        tabPosition: this.tabPosition,
                        plugins: [Ext.create("Ext.ux.TabReorderer")]
                });
-               for (var t in this.module.moduleGridNavigates) {
-                       var i = this.module.moduleGridNavigates[t];
+               for (var t in this.module.tf_moduleGridNavigates) {
+                       var i = this.module.tf_moduleGridNavigates[t];
                        e.add({
                                title: i.tf_text,
                                datapanel: !0,

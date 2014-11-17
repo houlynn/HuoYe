@@ -24,6 +24,7 @@ Ext.define('core.app.module.ModuleModel', {
 
 		// 模块的form方案，可以定义多个方案
 		tf_formSchemes : [],
+		tf_moduleGridNavigates:[],
 
 		selectedNames : '' // 选中的记录的names显示在title上
 },

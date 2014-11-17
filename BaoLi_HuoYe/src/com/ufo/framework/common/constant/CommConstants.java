@@ -201,4 +201,10 @@ public interface CommConstants {
 	 * 0:节点属性值方式
 	 */
 	public static final String BASE64_KEY = "mowen520";
+	
+	
+	public static final String NODE_TYPE_FIELDTITLE="0";
+	
+	public static final String NODE_TYPE_FIELDQUERY="0";
+	
 }

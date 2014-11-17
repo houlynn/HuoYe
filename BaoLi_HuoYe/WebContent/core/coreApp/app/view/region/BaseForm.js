@@ -53,6 +53,7 @@ Ext.define('core.app.view.region.BaseForm', {
 			initComponent : function() {
 				var me = this;
 				this.buttons = [];
+				var self=this;
 				this.buttons.push({
 							text : '保存',
 							itemId : 'save',
@@ -60,7 +61,11 @@ Ext.define('core.app.view.region.BaseForm', {
 							handler : function(button){
 								var form = button.up('form');
 								button.up('form').updateRecord();
-								button.up('form').getForm().getRecord().save();
+								//button.up('form').getForm().getRecord().save();
+								system.smileInfo("保存成功!")
+					            self.up("basewindow").grid.getStore().sync();
+								this.setDisabled(true);
+								
 							}
 						},{
 							text : '关闭',

@@ -15,6 +15,7 @@ import org.hibernate.annotations.GenericGenerator;
 import com.model.hibernate.system.shared.EndUser;
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.annotation.TreeItemKey;
 import com.ufo.framework.common.core.ext.ExtFieldType;
 import com.ufo.framework.common.model.BaseEntity;
 @Entity
@@ -26,9 +27,11 @@ public class PropertyCompany extends BaseEntity {
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
 	@FieldInfo(name = "ID号", number = 10, hidden = true,type=ExtFieldType.ID)
+	@TreeItemKey
 	private int tf_proid;
 	@Column(length = 200, nullable = false)
 	@FieldInfo(name="物业公司名称",nullAble=false,visible=true)
+	@TreeItemKey
 	private String tf_name;
 	@Column(length = 50)
 	@FieldInfo(name="法人代表",visible=true)

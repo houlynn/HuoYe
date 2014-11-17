@@ -212,6 +212,12 @@ public class _Module implements Model  {
 	@OrderBy("tf_schemeOrder")
 	private List<_ModuleGridScheme> tf_gridSchemes;
 
+	
+	@OneToMany(targetEntity = _ModuleGridNavigate.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "tf_moduleId")
+	@OrderBy("tf_order")
+	private List<_ModuleGridNavigate> tf_moduleGridNavigates;
+	
 	public _Module() {
 
 	}
@@ -610,5 +616,15 @@ public class _Module implements Model  {
 	public void setTf_searchCondOrder(Integer tf_searchCondOrder) {
 		this.tf_searchCondOrder = tf_searchCondOrder;
 	}
+
+	public List<_ModuleGridNavigate> getTf_moduleGridNavigates() {
+		return tf_moduleGridNavigates;
+	}
+
+	public void setTf_moduleGridNavigates(
+			List<_ModuleGridNavigate> tf_moduleGridNavigates) {
+		this.tf_moduleGridNavigates = tf_moduleGridNavigates;
+	}
+
 
 }

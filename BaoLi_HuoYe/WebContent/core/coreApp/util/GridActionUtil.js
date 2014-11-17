@@ -6,7 +6,8 @@ Ext.define("core.util.GridActionUtil", {
 			var modulePanle =modulegrid.ownerCt;
 			var module=modulePanle.viewModel;
 			var window = Ext.widget('basewindow', {
-				viewModel:module
+				viewModel:module,
+				grid:modulegrid
 			});
 	        console.log(modulegrid.getSelectionModel().getSelection()[0]);
 	       console.log(modulegrid.getStore().getAt(0));
@@ -108,7 +109,7 @@ Ext.define("core.util.GridActionUtil", {
 										align : 'tr',
 										closable : true,
 										minWidth : 200,
-										maxheight:150,
+										maxheight:250,
 										useXAxis : true,
 										slideInDuration : 500
 									});

@@ -22,7 +22,7 @@ Ext.define('core.app.module.Module', {
 							modulePanel : this
 						});
 				
-				var nav={ moduleGridNavigates:[{
+				var nav={ tf_moduleGridNavigates:[{
 					tf_NumberGroup: null,
 					tf_cascading: true,
 					tf_enabled: false,

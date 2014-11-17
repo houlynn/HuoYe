@@ -28,6 +28,7 @@ public class JSONTreeNode {
 	private String nodeInfoType;
 	private Integer orderIndex;
 	private Boolean disabled;
+	private int count;
 	private List<JSONTreeNode> children=new ArrayList<JSONTreeNode>();
 	public String getId() {
 		return id;
@@ -148,6 +149,12 @@ public class JSONTreeNode {
 	}
 	public void setBigIcon(String bigIcon) {
 		this.bigIcon = bigIcon;
+	}
+	public int getCount() {
+		return count;
+	}
+	public void setCount(int count) {
+		this.count = count;
 	}
 	
 }

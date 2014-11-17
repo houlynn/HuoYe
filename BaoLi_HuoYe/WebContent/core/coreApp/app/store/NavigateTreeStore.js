@@ -5,7 +5,7 @@ Ext.define("core.app.store.NavigateTreeStore", {
         constructor: function() {
           this.proxy = {
                         type: "ajax",
-                        url: "navigatetree/fetchdata.do",
+                        url: "module/navigatetree/fetchdata.do",
                         extraParams: arguments[0]
                 },
                 this.callParent(arguments)

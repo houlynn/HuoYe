@@ -42,6 +42,7 @@ Ext.define('core.app.view.region.Grid', {
 			e.grid.getStore().sync({
 						callback : function(data,store) {
 							 e.record.commit();
+							  system.smileInfo("保存成功!")
 						}
 					});
 			var proxy= e.grid.getStore().getProxy();
