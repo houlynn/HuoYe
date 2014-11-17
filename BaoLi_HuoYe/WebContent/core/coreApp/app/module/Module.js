@@ -8,6 +8,7 @@ Ext.define('core.app.module.Module', {
 			uses : ['core.app.view.region.Navigate', 'core.app.view.region.Grid',
 					'core.app.view.region.Detail', 'core.app.view.region.BaseWindow'],
 			referenceHolder : true,
+			
 			layout : 'border', // 模块采用border布局
 			initComponent : function() {
 				console.log(this.moduleName + ' 正在创建');
@@ -21,76 +22,36 @@ Ext.define('core.app.module.Module', {
 							model : this.model,
 							modulePanel : this
 						});
-				
-				var nav={ tf_moduleGridNavigates:[{
-					tf_NumberGroup: null,
-					tf_cascading: true,
-					tf_enabled: false,
-					tf_fields: "Province--City--Customer",
-					tf_navigatesetId: null,
-					tf_order: null,
-					tf_reverseOrder: false,
-					tf_text: "省份-市-客户单位",
-					tf_type: null
-				},
-				{
-					tf_NumberGroup: null,
-					tf_cascading: true,
-					tf_enabled: false,
-					tf_fields: "Trade--Customer",
-					tf_navigatesetId: null,
-					tf_order: null,
-					tf_reverseOrder: false,
-					tf_text: "行业-客户单位",
-					tf_type: null
-				},
-				{
-					tf_NumberGroup: null,
-					tf_cascading: true,
-					tf_enabled: false,
-					tf_fields: "Rate--Customer",
-					tf_navigatesetId: null,
-					tf_order: null,
-					tf_reverseOrder: false,
-					tf_text: "客户等级-客户单位",
-					tf_type: null
-				},
-				{
-					tf_NumberGroup: null,
-					tf_cascading: true,
-					tf_enabled: false,
-					tf_fields: "_DepartmentScope--_Department--Salesman",
-					tf_navigatesetId: null,
-					tf_order: null,
-					tf_reverseOrder: false,
-					tf_text: "部门权限-部门-业务员",
-					tf_type: null,
-				}
-				]};
-				Ext.apply(this.viewModel.data,nav);
-				this.items = [{
-							xtype : 'modulenavigate', // 导航区域
-							region : 'west',
-							width : 250,
-							collapsible : true,
-							collapsed : true,
-							split : true,
-							module : this.viewModel.data,
-						}, {
-							xtype : 'modulegrid', // 模块的grid显示区域
-							region : 'center',
-							store : this.store
-						}, {
-							xtype : 'recorddetail', // 记录明细
-							region : 'east',
-							width : 250,
-							collapsible : true, // 可以折叠隐藏
-							collapsed : true,
-							collapseMode : 'mini', // 折叠陷藏模式
-							split : true
-							// 可以拖动大小
-					}]
+				this.items = [ {
+					xtype : 'modulegrid', // 模块的grid显示区域
+					region : 'center',
+					store : this.store
+				}, {
+					xtype : 'recorddetail', // 记录明细
+					region : 'east',
+					width : 250,
+					collapsible : true, // 可以折叠隐藏
+					collapsed : true,
+					collapseMode : 'mini', // 折叠陷藏模式
+					split : true
+					// 可以拖动大小
+			}]
 
+				if(this.model.get("tf_moduleGridNavigates")&&this.model.get("tf_moduleGridNavigates").lenght>1){
+				var navigate=	{
+						xtype : 'modulenavigate', // 导航区域
+						region : 'west',
+						width : 250,
+						collapsible : true,
+						hidden:false,
+						collapsed : true,
+						split : true,
+						module : this.viewModel.data,
+					};
+				alert(0);
+				items.push(navigate);
+				}
+			
 				this.callParent();
 			}
 

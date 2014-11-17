@@ -7,11 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.exception.ConstraintViolationException;
@@ -25,8 +23,8 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import com.model.hibernate.system._Module;
 import com.ufo.framework.annotation.TableInfo;
-import com.ufo.framework.annotation.TreeItemKey;
 import com.ufo.framework.annotation.TreeItemName;
+import com.ufo.framework.annotation.TreeItemValue;
 import com.ufo.framework.common.constant.CommConstants;
 import com.ufo.framework.common.core.utils.EntityUtil;
 import com.ufo.framework.common.core.utils.StringUtil;
@@ -282,6 +280,9 @@ public class ModuleController implements LogerManager {
 		return result;
 	}
 	
+	
+	
+	
 	@RequestMapping(value="/navigatetree/fetchdata",produces = "application/json;text/plain;charset=UTF-8")
 	public @ResponseBody List<JSONTreeNode> navigatetree(HttpServletResponse response,
 			 	String moduleName,
@@ -297,16 +298,18 @@ public class ModuleController implements LogerManager {
 			){
 		
 		List<JSONTreeNode> views=new ArrayList<>();
-		List<String> modueName=new ArrayList<>();
+		List<String> modues=new ArrayList<>();
 		try{
 		if(StringUtil.isNotEmpty(navigatePath)&&navigatePath.contains("--")){
 			String[] modueStrs=navigatePath.split("--");
-			modueName=Arrays.asList(modueStrs);
+			modues=Arrays.asList(modueStrs);
+		}else{
+			modues.add(navigatePath);
 		}
-		for(String modue :modueName){
+		for(String modue :modues){
 			JSONTreeNode titleNode=new JSONTreeNode();
 			titleNode.setNodeType(CommConstants.NODE_TYPE_FIELDTITLE);//isCodeLevel
-			Class<? extends Model> clazz=(Class<? extends Model>) ModuleServiceFunction.getModuleBeanClass(moduleName);
+			Class<? extends Model> clazz=(Class<? extends Model>) ModuleServiceFunction.getModuleBeanClass(modue);
 			String tilte="";
 			String fieldname="";
 			String fieldvalue="";
@@ -316,23 +319,21 @@ public class ModuleController implements LogerManager {
 				tilte=tableInfo.title();
 			}
 			 List<Field> listFields=clazz.newInstance().fielsColection(new ArrayList<Field>());
-			 List<Field> listFieldKey=listFields.parallelStream().filter(o->o.isAnnotationPresent(TreeItemKey.class)).collect(Collectors.toList());
-			 List<Field> listFieldValue=listFields.parallelStream().filter(o->o.isAnnotationPresent(TreeItemName.class)).collect(Collectors.toList());
+			 List<Field> listFieldValue=listFields.parallelStream().filter(o->o.isAnnotationPresent(TreeItemValue.class)).collect(Collectors.toList());
+			 List<Field> listFieldVaKey=listFields.parallelStream().filter(o->o.isAnnotationPresent(TreeItemName.class)).collect(Collectors.toList());
 			tilte=StringUtil.isEmpty(tilte)?"未定义":	tilte;
 			titleNode.setText(tilte);
 			titleNode.setNodeInfo(modue);
 			titleNode.setExpanded(true);
-			List<JSONTreeNode> childrens=new ArrayList<>();
 			String hql=" from "+clazz.getSimpleName()+whereSql+parentSql+querySql+orderSql;
 			List<?> listItems=ebi.queryByHql(hql);
-			String fieldKey=listFieldKey.get(0).getName();
 			String fieldValue=listFieldValue.get(0).getName();
+			String fieldName=listFieldVaKey.get(0).getName();
 			 List<JSONTreeNode> children=listItems.parallelStream().map(item->{
 				JSONTreeNode treeNode=new JSONTreeNode();
-				Object  fieldnameV=EntityUtil.getPropertyValue(item,fieldKey);
+				Object  fieldnameV=EntityUtil.getPropertyValue(item,fieldName);
 				Object fieldvalueV= EntityUtil.getPropertyValue(item,fieldValue);
 				treeNode.setText(fieldnameV+"");//text
-				treeNode.setCode(fieldKey);//id
 				treeNode.setCode(fieldvalueV+"");//field
 				treeNode.setExpanded(true);
 				treeNode.setNodeInfo(modue); //modue 
