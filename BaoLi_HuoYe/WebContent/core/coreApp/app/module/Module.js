@@ -37,7 +37,7 @@ Ext.define('core.app.module.Module', {
 					// 可以拖动大小
 			}]
 
-				if(this.model.get("tf_moduleGridNavigates")&&this.model.get("tf_moduleGridNavigates").lenght>1){
+				if(this.viewModel.get("tf_moduleGridNavigates")&&this.model.get("tf_moduleGridNavigates").lenght>1){
 				var navigate=	{
 						xtype : 'modulenavigate', // 导航区域
 						region : 'west',
