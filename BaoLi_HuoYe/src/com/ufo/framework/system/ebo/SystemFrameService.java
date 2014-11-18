@@ -182,7 +182,7 @@ public class SystemFrameService extends Ebo implements SystemFrameEbi   {
 					moduleField.setTf_fieldRelation("OneToMany");
 				
 				
-				if (FieldInfo.money())
+		if (FieldInfo.money())
 					moduleField.setTf_fieldType("Money");
 				if (FieldInfo.percent())
 					moduleField.setTf_fieldType("Percent");

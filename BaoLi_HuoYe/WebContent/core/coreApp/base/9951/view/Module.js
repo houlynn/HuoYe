@@ -1,9 +1,9 @@
 /**
  * 一个模块的主控界面的容器，用来安放各个模块控件以及协调他们之间的关系
  */
-Ext.define('core.app.module.Module', {
+Ext.define('core.base.9951.view.Module', {
 			extend : 'Ext.container.Container',
-			alias : 'widget.modulepanel',
+			alias : 'widget.9951modulepanel',
 			requires : ['core.app.module.factory.ModelFactory'],
 			uses : ['core.app.view.region.Navigate', 'core.app.view.region.Grid',
 					'core.app.view.region.Detail', 'core.app.view.region.BaseWindow'],

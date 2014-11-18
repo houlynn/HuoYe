@@ -1,5 +1,6 @@
 package com.model.hibernate.system.shared;
 
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -16,19 +17,18 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
+import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.LazyCollection;
 import org.hibernate.annotations.LazyCollectionOption;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.userdetails.UserDetails;
 
 import com.ufo.framework.annotation.DDItemCode;
 import com.ufo.framework.annotation.DDItemName;
 import com.ufo.framework.annotation.FieldInfo;
+import com.ufo.framework.annotation.TableInfo;
 import com.ufo.framework.common.core.ext.ExtFieldType;
 import com.ufo.framework.common.core.properties.PropUtil;
 import com.ufo.framework.common.model.BaseEntity;
-import com.ufo.framework.common.model.Model;
 
 /**
  * 人员表
@@ -36,39 +36,44 @@ import com.ufo.framework.common.model.Model;
 * @version 创建时间：2014年6月21日 下午10:33:58 
 * version 1.0
  */
+@SuppressWarnings("serial")
 @Entity
+@DynamicUpdate(true)
+@TableInfo(group = "系统模块", id = 9951, title = "用户管理")
 @GenericGenerator(name="systemUUID",strategy="uuid")
 public class EndUser extends BaseEntity {
-	@FieldInfo(name="主键",type=ExtFieldType.ID)
+	
+	@FieldInfo(name="主键",type=ExtFieldType.ID,title = "ID号", number = 10, hidden = true)
 	@DDItemCode
 	private String userId;
 	@DDItemName
-	@FieldInfo(name="用户姓名",nullAble=false,visible=true)
+	@FieldInfo(name="用户姓名",nullAble=false,visible=true,number=20)
 	private String username;
-	@FieldInfo(name="用户编码",nullAble=false,visible=true)
+	@FieldInfo(name="登录帐号",nullAble=false,visible=true,number=30)
 	private String userCode;
-	@FieldInfo(name="密码",nullAble=false,visible=true)
+	@FieldInfo(name="密码",nullAble=false,visible=true,hidden=true)
 	private String password;
   	//@Dictionary("SEX")
 	//@SearchProperty(value="SEX",index=1)
-	@FieldInfo(name="性别",nullAble=false,visible=true)
+	@Column(length=10)
+	@FieldInfo(name="性别",nullAble=false,visible=true,number=40)
 	private String sex="0";//0代表男，1代表女
-	@FieldInfo(name="出生日期",visible=true,type=ExtFieldType.DATE)
+	@FieldInfo(name="出生日期",visible=true,type=ExtFieldType.DATE,hidden=true)
 	private String birthday;
 	/**后面属性不进行持久化操作*/
-	@FieldInfo(name="图标")
+	@FieldInfo(name="图标",hidden=true)
 	private String icon=PropUtil.get("sys.rbac.userIcon");
-	@FieldInfo(name="部门主键")
+	@FieldInfo(name="部门主键",hidden=true)
 	private String deptId;
-	@FieldInfo(name="部门名称")
+	@FieldInfo(name="部门名称",hidden=true)
 	private String deptName;
-	@FieldInfo(name="部门编码")
+	@FieldInfo(name="部门编码",hidden=true)
 	private String deptCode;
 	
+	@FieldInfo(title = "备注", number =50)
+	@Column(length = 250)
 	private String remark;
-	
-	private String admin;
-	
+	private String admins;
 	@FieldInfo(name="是否启用")
 	private String enabled;
 	
@@ -82,6 +87,12 @@ public class EndUser extends BaseEntity {
 	private Set<Role> roles=new HashSet<Role>();
 	/**部门*/
 	private Department department=new Department();
+	
+	@FieldInfo(title = "创建时间", number = 190)
+	private Date createTime;
+	
+	
+	
 	@Id
 	@GeneratedValue(generator="systemUUID")
 	@Column(length=50)
@@ -180,11 +191,17 @@ public class EndUser extends BaseEntity {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-	public String getAdmin() {
-		return admin;
+	public String getAdmins() {
+		return admins;
 	}
-	public void setAdmin(String admin) {
-		this.admin = admin;
+	public void setAdmins(String admins) {
+		this.admins = admins;
+	}
+	public Date getCreateTime() {
+		return createTime;
+	}
+	public void setCreateTime(Date createTime) {
+		this.createTime = createTime;
 	}
 	
 	

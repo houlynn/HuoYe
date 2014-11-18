@@ -11,8 +11,7 @@ Ext.define("core.base.101.controller.PropertyCompanyController",{
 	"core.base.101.view.PropertyCompanyPanel",
 	"core.base.101.view.PropertyCompanyForm",
 	"core.app.view.region.GridToolbar",
-	"core.app.view.region.BaseWindow",
-	"core.base.9951.view.Module"
+	"core.app.view.region.BaseWindow"
 	],
 	stores:[
 	        "core.base.101.store.PropertyCompanyStore"

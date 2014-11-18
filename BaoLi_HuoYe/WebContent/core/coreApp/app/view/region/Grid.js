@@ -72,6 +72,8 @@ Ext.define('core.app.view.region.Grid', {
 		this.gridSchemeId = viewModel.get('tf_gridSchemes')[0].tf_schemeOrder;
 		// 将第一个方案的columns生成，第一个方案是要先设置好，并不是gridschemecombo触发来生成的
 		this.columns = core.app.module.factory.ColumnsFactory.getColumns(viewModel);
+		console.log("======colun,m,,=======")
+		console.log(this.columns);
 		this.dockedItems = [{
 					xtype : 'gridtoolbar', // 按钮toolbar
 					dock : 'top',

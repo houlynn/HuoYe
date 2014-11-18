@@ -30,7 +30,6 @@ import com.ufo.framework.common.model.Model;
 @DynamicUpdate(true)
 @TableInfo(group = "合同管理", id = 2010, title = "销售合同")
 public class Agreement implements Model {
-
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
