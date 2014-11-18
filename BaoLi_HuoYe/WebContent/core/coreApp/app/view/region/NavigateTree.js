@@ -53,6 +53,12 @@ Ext.define("core.app.view.region.NavigateTree", {
                                 treePanel: e
                         })
                 },
+                itemclick: function (view, node, item, index, e, eOpts){
+                	var grid=view.ownerCt.ownerCt.ownerCt.ownerCt.ownerCt.down("modulegrid");
+                	var title=grid.store.modulePanel.viewModel.get('tf_title')+"  导航值        "+node.get("text");
+                	grid.setTitle(title);
+                	console.log(node);
+                }
                 
         },
         initComponent: function() {
