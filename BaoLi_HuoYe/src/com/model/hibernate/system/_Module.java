@@ -17,6 +17,8 @@ import org.hibernate.annotations.DynamicUpdate;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.annotation.TreeItemName;
+import com.ufo.framework.annotation.TreeItemValue;
 import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 @Entity
@@ -29,6 +31,7 @@ public class _Module implements Model  {
 	public static final String MODULEID = "tf_moduleId";
 	public static final String MODULENAME = "tf_moduleName";
 
+	@TreeItemValue
 	@Id
 	@FieldInfo(title = "模块ID号", number = 10)
 	@Column(nullable = false, length = 10)
@@ -43,6 +46,7 @@ public class _Module implements Model  {
 	@Column(nullable = false, length = 50, updatable = false)
 	private String tf_moduleName; // 模块英文名称
 
+	@TreeItemName
 	@FieldInfo(title = "模块名称", uniqueField = true, number = 40)
 	@Column(nullable = false, length = 50)
 	private String tf_title; // 模块中文名称

@@ -52,7 +52,8 @@ Ext.define("core.app.view.region.NavigateTree", {
                                 width: "72%",
                                 treePanel: e
                         })
-                }
+                },
+                
         },
         initComponent: function() {
                 var e = this;

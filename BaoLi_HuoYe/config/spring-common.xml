@@ -62,7 +62,7 @@
 				<prop key="hibernate.jdbc.fetch_size">50</prop>
 				<prop key="hibernate.jdbc.batch_size">50</prop>
 				<prop key="hibernate.use_outer_join">false</prop>
-				<prop key="hibernate.hbm2ddl.auto">none</prop>
+				<prop key="hibernate.hbm2ddl.auto">update</prop>
 				<prop key="hibernate.format_sql">false</prop>
 		</props>
 		</property>

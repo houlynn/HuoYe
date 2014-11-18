@@ -9,6 +9,7 @@ import org.hibernate.SQLQuery;
 
 import com.model.hibernate.system._Module;
 import com.model.hibernate.system._ModuleField;
+import com.ufo.framework.common.core.utils.StringUtil;
 import com.ufo.framework.common.core.web.SortParameter;
 import com.ufo.framework.system.ebo.ApplicationService;
 import com.ufo.framework.system.shared.FieldType;
@@ -63,6 +64,9 @@ public class SqlGenerator {
          
 		// 加入所有基本类型于sql中
 		for (_ModuleField field : module.getTf_fields()) {
+			if(StringUtil.isNotEmpty(field.getTf_fieldRelation())){
+				continue;
+			}
 				getFieldList().add(
 						new SqlField(module.getTf_moduleName(), module.getTableAsName(), field
 								.getTf_fieldName(), field.getTf_DBfieldName(), field.getTf_DBformula(), field

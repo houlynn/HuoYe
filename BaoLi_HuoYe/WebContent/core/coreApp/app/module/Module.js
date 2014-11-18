@@ -36,8 +36,7 @@ Ext.define('core.app.module.Module', {
 					split : true
 					// 可以拖动大小
 			}]
-
-				if(this.viewModel.get("tf_moduleGridNavigates")&&this.viewModel.get("tf_moduleGridNavigates").lenght>1){
+				if(viewModel.get("tf_moduleGridNavigates")&&viewModel.get("tf_moduleGridNavigates").length>0){
 				var navigate=	{
 						xtype : 'modulenavigate', // 导航区域
 						region : 'west',
@@ -48,9 +47,9 @@ Ext.define('core.app.module.Module', {
 						split : true,
 						module : this.viewModel.data,
 					};
-				alert(0);
-				items.push(navigate);
-				}
+				//alert(0);
+				this.items.push(navigate);
+			}
 			
 				this.callParent();
 			}
