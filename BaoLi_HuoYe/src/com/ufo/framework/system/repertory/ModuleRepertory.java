@@ -134,7 +134,7 @@ public class ModuleRepertory extends HibernateRepertory implements IModelReperto
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public DataFetchResponseInfo getModuleData(String moduleName, DataFetchRequestInfo dsRequest,
-			GridFilterData gridFilterData, HttpServletRequest request) {
+			GridFilterData gridFilterData) {
 		_Module module = ApplicationService.getModuleWithName(moduleName);
 
 		// 所有的导航tree产生的过滤条件
@@ -143,7 +143,7 @@ public class ModuleRepertory extends HibernateRepertory implements IModelReperto
 		addParentModuleFiltToSQLFilters(module, gridFilterData.getParentModuleFilter(),
 				treeAndParentFilters);
 
-		SqlGenerator generator = new SqlGenerator(module, request);
+		SqlGenerator generator = new SqlGenerator(module);
 
 		generator.setModuleFilters(treeAndParentFilters);
 		generator.setGridColumnNames(gridFilterData.getGridColumnNames());
@@ -213,7 +213,7 @@ public class ModuleRepertory extends HibernateRepertory implements IModelReperto
 	@Transactional(propagation = Propagation.REQUIRED, readOnly = true)
 	public JSONObject getModuleRecord(String moduleName, String keyValue, HttpServletRequest request) {
 		_Module module = ApplicationService.getModuleWithName(moduleName);
-		SqlGenerator generator = new SqlGenerator(module, request);
+		SqlGenerator generator = new SqlGenerator(module);
 		generator.setKeyValue(keyValue);
 		JSONArray jsonArray = getData(generator, -1, 0);
 		if (jsonArray.size() > 0)

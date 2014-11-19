@@ -30,6 +30,9 @@
 	     <mapping class="com.model.hibernate.property.PropertyCompany"/>
 	     <mapping class="com.model.hibernate.property.Agreement2"/>
 		  <mapping class="com.model.hibernate.property.Agreement"/>
+		     <mapping class="com.model.hibernate.property.Village"/>
+		  
+		  
 	     <mapping class="com.model.hibernate.system.shared.Position"/>
 		<mapping class="com.model.hibernate.system._Module"/>
 		<mapping class="com.model.hibernate.system._ModuleGroup"/>
@@ -43,5 +46,10 @@
 		<mapping class="com.model.hibernate.system._ModuleGridSchemeGroup"/>
 		<mapping class="com.model.hibernate.system._ModuleGridSchemeGroupField"/>
 		<mapping class="com.model.hibernate.system._ModuleGridNavigate"/>
+		
+		
+		
+		
+		
 	</session-factory>
 </hibernate-configuration>

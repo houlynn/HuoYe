@@ -13,30 +13,22 @@ import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
 import ognl.Ognl;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.hibernate.Query;
-import org.hibernate.Session;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.model.hibernate.system._Module;
 import com.ufo.framework.common.core.web.ModuleServiceFunction;
 import com.ufo.framework.common.core.web.SortParameter;
 import com.ufo.framework.system.ebi.ModelEbi;
 import com.ufo.framework.system.irepertory.IModelRepertory;
 import com.ufo.framework.system.repertory.SqlModuleFilter;
-import com.ufo.framework.system.repertory.SystemBaseDAO;
 import com.ufo.framework.system.shared.module.DataDeleteResponseInfo;
 import com.ufo.framework.system.shared.module.DataFetchRequestInfo;
 import com.ufo.framework.system.shared.module.DataFetchResponseInfo;
 import com.ufo.framework.system.shared.module.DataInsertResponseInfo;
 import com.ufo.framework.system.shared.module.DataUpdateResponseInfo;
-import com.ufo.framework.system.shared.module.ModuleFormOperateType;
 import com.ufo.framework.system.shared.module.grid.GridFilterData;
 
 @Service
@@ -141,8 +133,7 @@ public class ModuleService extends Ebo implements ModelEbi {
 		gridFilterData.setSearchText(query);
 		if (columns != null)
 			gridFilterData.setGridColumnNames(columns.split(","));
-		DataFetchResponseInfo response = moduleDAO.getModuleData(moduleName, dsRequest, gridFilterData,
-				request);
+		DataFetchResponseInfo response = moduleDAO.getModuleData(moduleName, dsRequest, gridFilterData);
 		return response;
 	}
 
@@ -257,8 +248,8 @@ public class ModuleService extends Ebo implements ModelEbi {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public DataUpdateResponseInfo update(String moduleName, String id, String operType,
-			String updated, HttpServletRequest request) {
-		return moduleDAO.update(moduleName, id, operType, updated, request);
+			String updated) {
+		return moduleDAO.update(moduleName, id, operType, updated);
 
 	}
 

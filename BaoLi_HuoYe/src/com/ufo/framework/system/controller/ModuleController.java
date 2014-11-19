@@ -202,7 +202,7 @@ public class ModuleController implements LogerManager {
 		}
 		// 修改记录
 		try {
-			result = moduleService.update(moduleName, id, operType, updated, request);
+			result = moduleService.update(moduleName, id, operType, updated);
 			result.getRecords().add(moduleDAO.getModuleRecord(moduleName, id, request).toString());
 		} catch (DataAccessException e) {
 			result = new DataUpdateResponseInfo();
@@ -334,9 +334,10 @@ public class ModuleController implements LogerManager {
 				Object  fieldnameV=EntityUtil.getPropertyValue(item,fieldName);
 				Object fieldvalueV= EntityUtil.getPropertyValue(item,fieldValue);
 				treeNode.setText(fieldnameV+"");//text
-				treeNode.setCode(fieldvalueV+"");//field
+				treeNode.setCode(fieldvalueV+"");//val
 				treeNode.setExpanded(true);
 				treeNode.setNodeInfo(modue); //modue 
+				treeNode.setDescription(fieldName);
 				treeNode.setNodeInfoType(CommConstants.NODE_TYPE_FIELDQUERY);//isCodeLevel
 				return treeNode;
 			}).collect(Collectors.toList());

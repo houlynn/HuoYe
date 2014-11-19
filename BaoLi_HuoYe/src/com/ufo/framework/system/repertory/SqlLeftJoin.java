@@ -1,9 +1,12 @@
 package com.ufo.framework.system.repertory;
 
+import com.model.hibernate.system._Module;
+import com.ufo.framework.system.ebo.ApplicationService;
+
 /**
- * 加入到 sql语句里面的left outer join 的结构
- * @author jfok
- *
+* @author HouLynn
+* @date 2014年11月19日
+  @version 1.0
  */
 public class SqlLeftJoin {
 	private String moduleName;
@@ -16,66 +19,61 @@ public class SqlLeftJoin {
 	private String joinString = " left outer join ";
 
 	public SqlLeftJoin() {
-		// String result = " left outer join " + tf_moduleName + " " +
-		// getTableAsName() + " on "
-		// + getTableAsName() + "." + tf_primaryKey + " = " + childTableAsName + "."
-		// + tf_primaryKey
-		// + " ";
 
 	}
 
+	public SqlLeftJoin(_Module module,_Module childModule) {
+		this.moduleName = module.getTf_moduleName();
+		this.tableAsName = module.getTableAsName();
+		this.primaryKey = module.getTf_primaryKey();
+		
+		this.childModuleName = childModule.getTf_moduleName();
+		this.childModuleName = childModule.getTableAsName();
+	}
+	
+	public SqlLeftJoin(String moduleName,String childModuleName) {
+		
+		this(ApplicationService.getModuleWithName(moduleName),ApplicationService.getModuleWithName(childModuleName));
+	}
 	public String getJoinSql() {
 		String result = joinString + moduleName + " " + tableAsName + " on " + tableAsName + "."
 				+ primaryKey + " = " + childTableAsName + "." + primaryKey + " ";
 		return result;
 	}
-
 	public String getModuleName() {
 		return moduleName;
 	}
-
 	public void setModuleName(String moduleName) {
 		this.moduleName = moduleName;
 	}
-
 	public String getTableAsName() {
 		return tableAsName;
 	}
-
 	public void setTableAsName(String tableAsName) {
 		this.tableAsName = tableAsName;
 	}
-
 	public String getPrimaryKey() {
 		return primaryKey;
 	}
-
 	public void setPrimaryKey(String primaryKey) {
 		this.primaryKey = primaryKey;
 	}
-
 	public String getChildModuleName() {
 		return childModuleName;
 	}
-
 	public void setChildModuleName(String childModuleName) {
 		this.childModuleName = childModuleName;
 	}
-
 	public String getChildTableAsName() {
 		return childTableAsName;
 	}
-
 	public void setChildTableAsName(String childTableAsName) {
 		this.childTableAsName = childTableAsName;
 	}
-
 	public String getJoinString() {
 		return joinString;
 	}
-
 	public void setJoinString(String joinString) {
 		this.joinString = joinString;
 	}
-
 }

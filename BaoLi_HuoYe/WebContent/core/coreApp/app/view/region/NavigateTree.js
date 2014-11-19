@@ -55,9 +55,34 @@ Ext.define("core.app.view.region.NavigateTree", {
                 },
                 itemclick: function (view, node, item, index, e, eOpts){
                 	var grid=view.ownerCt.ownerCt.ownerCt.ownerCt.ownerCt.down("modulegrid");
-                	var title=grid.store.modulePanel.viewModel.get('tf_title')+"  导航值        "+node.get("text");
+                	var viewModel=grid.store.modulePanel.viewModel;
+                	var title=viewModel.get('tf_title')+"  导航值        "+node.get("text");
                 	grid.setTitle(title);
-                	console.log(node);
+                	var modue=system.getModuleDefine(node.raw.nodeInfo);
+                	console.log(modue);
+                	navigates:[{"moduleName":"City","tableAsName":"_t7012","primarykey":"tf_cityId","fieldtitle":"\u5e02","equalsValue":"0301","equalsMethod":null,"text":"\u77f3\u5bb6\u5e84\u5e02","isCodeLevel":false}]
+                	var navigate={
+                			moduleName:node.raw.nodeInfo,
+                			tableAsName:"_t"+modue.tf_moduleId,
+                			text:node.raw.text,
+                			primarykey:modue.tf_primaryKey,
+                		    fieldtitle:node.raw.description,
+                		    equalsValue:node.raw.code,
+                		    isCodeLevel:false
+                	};
+                	var store=grid.store;
+                	if(store.navigates){
+                		store.navigates.push(navigate);
+                	}
+                  	var proxy=store.getProxy();
+					proxy.extraParams.navigates=Ext.encode(store.navigates);
+					store.load();	          						
+                	
+                	
+                	
+                	
+                	
+                	
                 }
                 
         },

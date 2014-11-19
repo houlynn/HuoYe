@@ -42,17 +42,16 @@ public class SqlGenerator {
 
 	private boolean distinct;
 
-	public SqlGenerator(String moduleName, HttpServletRequest request) {
-		this(ApplicationService.getModuleWithName(moduleName), request);
+	public SqlGenerator(String moduleName) {
+		this(ApplicationService.getModuleWithName(moduleName));
 	}
 
-	public SqlGenerator(_Module module, HttpServletRequest request) {
+	public SqlGenerator(_Module module) {
 
 		// 是否有不隐藏的字段不允许查看的
 		//userSession = SessionManage.getInstance().getUserSession(request.getSession());
 
 		this.module = module;
-		this.request = request;
 		fieldList = new ArrayList<SqlField>();
 		joinField = new ArrayList<SqlField>();
 		joinOn = new ArrayList<SqlLeftJoin>();
@@ -73,9 +72,6 @@ public class SqlGenerator {
 								.getTf_fieldType()));
 			
 		}
-		System.out.println("=======================================================");
-		getFieldList().forEach(item->System.out.println(item.getFieldSql()+item.getFieldName()));
-		System.out.println("=======================================================");
 
 	}
 
@@ -224,6 +220,7 @@ public class SqlGenerator {
 	}
 
 	protected String getFrom() {
+		System.out.println(" from " + module.getTf_tableName() + " " + module.getTableAsName());
 		return " " + module.getTf_tableName() + " " + module.getTableAsName();
 	}
 
@@ -368,5 +365,29 @@ public class SqlGenerator {
 			this.groupFieldname = null;
 		else
 			this.groupFieldname = groupFieldname;
+	}
+	public static void main(String[] args) {
+		
+/*		SqlGenerator generator=new SqlGenerator("_Modue");
+		generator.getLeftJoin()*/
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 	}
 }
