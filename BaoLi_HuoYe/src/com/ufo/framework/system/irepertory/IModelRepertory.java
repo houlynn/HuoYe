@@ -51,8 +51,8 @@ public interface IModelRepertory extends ICommonRepertory {
 	 * @throws OgnlException
 	 */
 
-	public DataUpdateResponseInfo update(String moduleName, String id,
-			String operType, String updated, HttpServletRequest request);
+	public abstract void updateValueToBean(String moduleName, Object record,
+			JSONObject keyValue) throws OgnlException;
 
 	/**
 	 * 根据前台传进来的参数取得list 数据，然后返回
@@ -63,8 +63,7 @@ public interface IModelRepertory extends ICommonRepertory {
 	 * @return
 	 */
 	public abstract DataFetchResponseInfo getModuleData(String moduleName,
-			DataFetchRequestInfo dsRequest, GridFilterData gridFilterData
-			);
+			DataFetchRequestInfo dsRequest, GridFilterData gridFilterData);
 
 	/**
 	 * 根据前台传进来的参数取一个模块的 record 数据，然后返回 用在用户增加，修改了数据之后，将修改新增的数据，通过这里取得数据后返回
@@ -95,6 +94,6 @@ public interface IModelRepertory extends ICommonRepertory {
 	
 	
 	public DataUpdateResponseInfo update(String moduleName, String id, String operType,
-			String updated);
+			String updated, HttpServletRequest request);
 
 }

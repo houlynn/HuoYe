@@ -202,7 +202,7 @@ public class ModuleController implements LogerManager {
 		}
 		// 修改记录
 		try {
-			result = moduleService.update(moduleName, id, operType, updated);
+			result = moduleService.update(moduleName, id, operType, updated,request);
 			result.getRecords().add(moduleDAO.getModuleRecord(moduleName, id, request).toString());
 		} catch (DataAccessException e) {
 			result = new DataUpdateResponseInfo();

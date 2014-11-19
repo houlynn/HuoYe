@@ -248,8 +248,8 @@ public class ModuleService extends Ebo implements ModelEbi {
 	@Override
 	@Transactional(propagation = Propagation.REQUIRED)
 	public DataUpdateResponseInfo update(String moduleName, String id, String operType,
-			String updated) {
-		return moduleDAO.update(moduleName, id, operType, updated);
+			String updated,HttpServletRequest request) {
+		return moduleDAO.update(moduleName, id, operType, updated,request);
 
 	}
 

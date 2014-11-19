@@ -67,7 +67,7 @@ public class SqlField {
 	public SqlField(_Module module, _Module childModule, HttpServletRequest request) {
 		super();
 		this.moduleName = childModule.getTf_moduleName();
-		SqlGenerator sqlGenerator = new SqlGenerator(childModule, request);
+		SqlGenerator sqlGenerator = new SqlGenerator(childModule);
 		List<SqlModuleFilter> filters = new ArrayList<SqlModuleFilter>();
 		SqlModuleFilter moduleFilter = new SqlModuleFilter();
 		moduleFilter.setModuleName(module.getTf_moduleName());
@@ -102,7 +102,7 @@ public class SqlField {
 			HttpServletRequest request) {
 		super();
 		this.moduleName = childModule.getTf_moduleName();
-		SqlGenerator sqlGenerator = new SqlGenerator(childModule, request);
+		SqlGenerator sqlGenerator = new SqlGenerator(childModule);
 		List<SqlModuleFilter> filters = new ArrayList<SqlModuleFilter>();
 		SqlModuleFilter moduleFilter = new SqlModuleFilter();
 		moduleFilter.setModuleName(module.getTf_moduleName());

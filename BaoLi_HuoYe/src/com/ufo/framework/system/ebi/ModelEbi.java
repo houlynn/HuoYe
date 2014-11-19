@@ -69,7 +69,7 @@ public interface ModelEbi extends Ebi{
 
 	// @Override
 	public abstract DataUpdateResponseInfo update(String moduleName, String id,
-			String operType, String updated);
+			String operType, String updated,HttpServletRequest request);
 
 	// @Override
 	public abstract DataDeleteResponseInfo remove(String moduleName, String id,

@@ -53,7 +53,7 @@ public class SqlGenerator {
 
 		this.module = module;
 		fieldList = new ArrayList<SqlField>();
-		joinField = new ArrayList<SqlField>();
+		joinField = new ArrayList<SqlField>();//
 		joinOn = new ArrayList<SqlLeftJoin>();
 		moduleFilters = new ArrayList<SqlModuleFilter>();
 		sqlConditions = new ArrayList<SqlCondition>();
@@ -63,8 +63,11 @@ public class SqlGenerator {
          
 		// 加入所有基本类型于sql中
 		for (_ModuleField field : module.getTf_fields()) {
-			if(StringUtil.isNotEmpty(field.getTf_fieldRelation())){
-				continue;
+			if(StringUtil.isNotEmpty(field.getTf_fieldRelation())&&field.getTf_fieldRelation().equals("ManyToOne")){
+				if(field.getTf_showNavigatorTree()==true){
+					String modue=field.getTf_fieldName();
+				
+				
 			}
 				getFieldList().add(
 						new SqlField(module.getTf_moduleName(), module.getTableAsName(), field
@@ -74,8 +77,17 @@ public class SqlGenerator {
 		}
 
 	}
+	}
 
 
+	
+	public static SqlLeftJoin getSQLManyToOneLeftJoin(String moduleName,String childModuleName){
+		 return new SqlLeftJoin(moduleName,childModuleName);
+		 
+		
+	}
+	
+	
 	public String getCountSqlStatement() {
 		String sql = "select count(*) ";
 		sql = sql + " from " + getFrom();
@@ -366,10 +378,7 @@ public class SqlGenerator {
 		else
 			this.groupFieldname = groupFieldname;
 	}
-	public static void main(String[] args) {
-		
-/*		SqlGenerator generator=new SqlGenerator("_Modue");
-		generator.getLeftJoin()*/
+
 		
 		
 		

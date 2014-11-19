@@ -5961,9 +5961,12 @@ Ext.define("Jfok.m.factory.ModelFactory", {
                                         return this.nameFields ? this.get(this.nameFields) : null
                                 }
                         });
+						console.log(t);
                         return t
                 },
                 getFields: function(e) {
+				console.log('moduefiel ');
+				console.log(e);
                         var t = [];
                         e.tf_hasAddition && t.push({
                                 name: "tf_additionCount",
