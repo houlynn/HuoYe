@@ -129,7 +129,6 @@ public class SqlField {
 	}
 
 	public String getFieldSql() {
-
 		switch (aggregationType) {
 		case NORMAL:
 			return " " + fieldFullName + " as " + fieldAsName + " ";

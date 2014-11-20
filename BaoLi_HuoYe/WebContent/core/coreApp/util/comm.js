@@ -386,7 +386,7 @@ var ajax = function(config) {
 		getModuleDefine : function(moduleId) {
 			var result = null;
 			Ext.Array.each(this.get("tf_Modules"), function(module) {
-/.						if (module.tf_moduleId == moduleId + ''
+						if (module.tf_moduleId == moduleId + ''
 								|| module.tf_moduleName == moduleId) {
 							result = module;
 							return false;

@@ -62,22 +62,18 @@ public class SqlGenerator {
 
 		// 加入所有基本类型于sql中
 		for (_ModuleField field : module.getTf_fields()) {
-			System.out.println(field.getTf_fieldRelation());
 			if (("ManyToOne").equals(field.getTf_fieldRelation())) {
 				if (field.getTf_showNavigatorTree() == true) {
-				   String modue=field.getTf_fieldName();
 				   String tf_fieldType=field.getTf_fieldType();
 				   _Module chile_Moduel= ApplicationService.getModuleWithName(tf_fieldType);
 				   SqlField sqlField= new  SqlField(chile_Moduel.getTf_moduleName(), chile_Moduel
-							.getTableAsName(), field.getTf_fieldName(),
+							.getTableAsName(),chile_Moduel.getTf_nameFields(),
 							field.getTf_DBfieldName(), field
 									.getTf_DBformula(), field
 									.getTf_fieldType());
-				   getFieldList().add(sqlField);
-				   
-				   
-					continue;
-
+				   sqlField.setFieldasScalar(field.getFactfieldName());
+				   getJoinField().add(sqlField);
+				   joinOn.add(getSQLManyToOneLeftJoin(field.getTf_Module().getTf_moduleName(),chile_Moduel.getTf_moduleName()));
 				}
 			} else {
 				getFieldList().add(
@@ -88,7 +84,6 @@ public class SqlGenerator {
 										.getTf_fieldType()));
 
 			}
-			getFieldList().parallelStream().forEach(item->System.out.println(item));
 		}
 	}
 
@@ -131,10 +126,14 @@ public class SqlGenerator {
 	}
 
 	public String getSqlStatment() {
+		System.out.println(" join on 1212111111111111111111111======");
 		String sql = "select " + (distinct ? "distinct " : " ")
 				+ getSelectFields() + (distinct ? " , 1 as ____c " : " ");
 		sql = sql + " from " + getFrom();
+		System.out.println(" join on 1212111111111111111111111======");
+		System.out.println(getLeftJoin());
 		sql = sql + getLeftJoin();
+		
 		// sql = sql + getWhere();
 		// sql = sql + getSortByString();
 		System.out.println(" 凭借sql:" + sql);
@@ -242,6 +241,7 @@ public class SqlGenerator {
 			fields = fields + field.getFieldSql() + ",";
 		for (SqlField field : joinField)
 			fields = fields + field.getFieldSql() + ",";
+		    System.out.println(fields);
 		fields = fields.substring(0, fields.length() - 1);
 		return fields + " ";
 	}
@@ -256,6 +256,10 @@ public class SqlGenerator {
 		String leftJoin = "";
 		for (SqlLeftJoin field : joinOn)
 			leftJoin = leftJoin + field.getJoinSql();
+		 System.out.println(" join lef on");
+		 System.out.println(leftJoin);
+		
+		
 		return leftJoin;
 	}
 
