@@ -250,7 +250,8 @@ public class ModuleRepertory extends HibernateRepertory implements IModelReperto
 
 		String sql = generator.getSqlStatment();
 		Session session = getSf().getCurrentSession();
-		SQLQuery query = session.createSQLQuery(sql);
+		System.out.println("sql:"+sql);
+		SQLQuery query = session.createSQLQuery(sql).addScalar("tf_title");
 		if (startRow != -1) {
 			query.setFirstResult(startRow);
 			query.setMaxResults(endRow - startRow + 1);

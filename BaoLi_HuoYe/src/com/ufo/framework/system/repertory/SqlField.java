@@ -131,6 +131,8 @@ public class SqlField {
 	public String getFieldSql() {
 		switch (aggregationType) {
 		case NORMAL:
+			System.out.println("fieldAsName");
+			System.out.println(fieldAsName);
 			return " " + fieldFullName + " as " + fieldAsName + " ";
 		case COUNT:
 			return " " + fieldFullName + " as " + fieldAsName + " ";

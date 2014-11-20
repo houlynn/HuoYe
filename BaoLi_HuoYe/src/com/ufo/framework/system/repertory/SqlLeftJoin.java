@@ -25,10 +25,10 @@ public class SqlLeftJoin {
 	public SqlLeftJoin(_Module module,_Module childModule) {
 		this.moduleName = module.getTf_moduleName();
 		this.tableAsName = module.getTableAsName();
-		this.primaryKey = module.getTf_primaryKey();
+		this.primaryKey = childModule.getTf_primaryKey();
 		
 		this.childModuleName = childModule.getTf_moduleName();
-		this.childModuleName = childModule.getTableAsName();
+		this.childTableAsName = childModule.getTableAsName();
 	}
 	
 	public SqlLeftJoin(String moduleName,String childModuleName) {
@@ -36,7 +36,7 @@ public class SqlLeftJoin {
 		this(ApplicationService.getModuleWithName(moduleName),ApplicationService.getModuleWithName(childModuleName));
 	}
 	public String getJoinSql() {
-		String result = joinString + moduleName + " " + tableAsName + " on " + tableAsName + "."
+		String result = joinString + childModuleName + " " + childTableAsName + " on " + tableAsName + "."
 				+ primaryKey + " = " + childTableAsName + "." + primaryKey + " ";
 		return result;
 	}
