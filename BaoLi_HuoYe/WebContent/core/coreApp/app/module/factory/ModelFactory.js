@@ -123,30 +123,45 @@ Ext.define('core.app.module.factory.ModelFactory', {
 
 		getFields : function(module) {
 			var fields = [];
-
+			
+			console.log("=========modue field==========");
+			console.log(module.tf_fields);
 			for (var i in module.tf_fields) {
+		
 				var fd = module.tf_fields[i];
-
 				var field = {
 					name : fd.tf_fieldName,
 					title : fd.tf_title,
 					type : this.getTypeByStr(fd.tf_fieldType)
 				};
+				
 				if (field.type == 'string') {
 					field.useNull = true;
 					field.serialize = this.convertToNull;
 				}
-
+				
 				if (fd.tf_fieldType == 'Date') {
 					field.dateWriteFormat = 'Y-m-d';
 					field.dateReadFormat = 'Y-m-d';
 				}
-				if (fd.tf_fieldType == 'Datetime')
+				
+				if (fd.tf_fieldType == 'Datetime'){
 					field.dateReadFormat = 'Y-m-d H:i:s';
+			     }
+			 
+			  if(fd.manyToOne==true){
+				  field.type="string";
+				  var modue=system.getModuleDefine(fd.tf_fieldType);
+				  field.manytoone_IdName="_"+modue.tf_moduleId+"___"+modue.tf_primaryKey;
+				  field.manytoone_TitleName="_"+modue.tf_moduleId+"___"+modue.tf_nameFields;
+				  field.name=field.manytoone_IdName;
+			     }
 				field.tf_haveAttachment = fd.tf_haveAttachment;
 				fields.push(field);
+				console.log("print very  field");
+				console.log(field);
 			}
-			return fields;
+			    return fields;
 
 		},
 

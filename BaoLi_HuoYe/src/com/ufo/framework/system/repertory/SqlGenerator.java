@@ -9,11 +9,9 @@ import org.hibernate.SQLQuery;
 
 import com.model.hibernate.system._Module;
 import com.model.hibernate.system._ModuleField;
-import com.ufo.framework.common.core.utils.StringUtil;
 import com.ufo.framework.common.core.web.SortParameter;
 import com.ufo.framework.system.ebo.ApplicationService;
 import com.ufo.framework.system.shared.FieldType;
-
 
 public class SqlGenerator {
 
@@ -49,7 +47,8 @@ public class SqlGenerator {
 	public SqlGenerator(_Module module) {
 
 		// 是否有不隐藏的字段不允许查看的
-		//userSession = SessionManage.getInstance().getUserSession(request.getSession());
+		// userSession =
+		// SessionManage.getInstance().getUserSession(request.getSession());
 
 		this.module = module;
 		fieldList = new ArrayList<SqlField>();
@@ -60,34 +59,45 @@ public class SqlGenerator {
 
 		if (module.getTf_hasAddition())
 			getFieldList().add(new SqlField_AdditionCount(module));
-         
+
 		// 加入所有基本类型于sql中
 		for (_ModuleField field : module.getTf_fields()) {
-			if(StringUtil.isNotEmpty(field.getTf_fieldRelation())&&field.getTf_fieldRelation().equals("ManyToOne")){
-				if(field.getTf_showNavigatorTree()==true){
-					String modue=field.getTf_fieldName();
-				
-				
-			}
+			System.out.println(field.getTf_fieldRelation());
+			if (("ManyToOne").equals(field.getTf_fieldRelation())) {
+				if (field.getTf_showNavigatorTree() == true) {
+				   String modue=field.getTf_fieldName();
+				   String tf_fieldType=field.getTf_fieldType();
+				   _Module chile_Moduel= ApplicationService.getModuleWithName(tf_fieldType);
+				   SqlField sqlField= new  SqlField(chile_Moduel.getTf_moduleName(), chile_Moduel
+							.getTableAsName(), field.getTf_fieldName(),
+							field.getTf_DBfieldName(), field
+									.getTf_DBformula(), field
+									.getTf_fieldType());
+				   getFieldList().add(sqlField);
+				   
+				   
+					continue;
+
+				}
+			} else {
 				getFieldList().add(
-						new SqlField(module.getTf_moduleName(), module.getTableAsName(), field
-								.getTf_fieldName(), field.getTf_DBfieldName(), field.getTf_DBformula(), field
-								.getTf_fieldType()));
-			
+						new SqlField(module.getTf_moduleName(), module
+								.getTableAsName(), field.getTf_fieldName(),
+								field.getTf_DBfieldName(), field
+										.getTf_DBformula(), field
+										.getTf_fieldType()));
+
+			}
+			getFieldList().parallelStream().forEach(item->System.out.println(item));
 		}
-
-	}
 	}
 
+	public static SqlLeftJoin getSQLManyToOneLeftJoin(String moduleName,
+			String childModuleName) {
+		return new SqlLeftJoin(moduleName, childModuleName);
 
-	
-	public static SqlLeftJoin getSQLManyToOneLeftJoin(String moduleName,String childModuleName){
-		 return new SqlLeftJoin(moduleName,childModuleName);
-		 
-		
 	}
-	
-	
+
 	public String getCountSqlStatement() {
 		String sql = "select count(*) ";
 		sql = sql + " from " + getFrom();
@@ -121,13 +131,13 @@ public class SqlGenerator {
 	}
 
 	public String getSqlStatment() {
-		String sql = "select " + (distinct ? "distinct " : " ") + getSelectFields() + 
-				(distinct ? " , 1 as ____c " : " ") ;
+		String sql = "select " + (distinct ? "distinct " : " ")
+				+ getSelectFields() + (distinct ? " , 1 as ____c " : " ");
 		sql = sql + " from " + getFrom();
 		sql = sql + getLeftJoin();
-		//sql = sql + getWhere();
-		//sql = sql + getSortByString();
-		System.out.println(" 凭借sql:"+sql);
+		// sql = sql + getWhere();
+		// sql = sql + getSortByString();
+		System.out.println(" 凭借sql:" + sql);
 		return sql;
 	}
 
@@ -138,7 +148,8 @@ public class SqlGenerator {
 			groupFN = groupFieldname + " asc ";
 		if (sorts != null && (sorts.length > 0)) {
 			for (SortParameter sort : sorts) {
-				result = result + sort.getProperty() + " " + sort.getDirection() + " , ";
+				result = result + sort.getProperty() + " "
+						+ sort.getDirection() + " , ";
 			}
 			result = result.substring(0, result.length() - 3);
 		} else if (module.getTf_defaultOrderField() != null
@@ -162,13 +173,15 @@ public class SqlGenerator {
 		if (columnFilterString != null)
 			wheres.add(columnFilterString);
 		if (keyValue != null && keyValue.length() > 0)
-			wheres.add(module.getTableAsName() + "." + module.getTf_primaryKey() + "='" + keyValue + "'");
+			wheres.add(module.getTableAsName() + "."
+					+ module.getTf_primaryKey() + "='" + keyValue + "'");
 
 		if (wheres.size() == 0)
 			return "";
 		String where = " where ";
 		for (int i = 0; i < wheres.size(); i++)
-			where = where + wheres.get(i) + (i != wheres.size() - 1 ? " and " : "");
+			where = where + wheres.get(i)
+					+ (i != wheres.size() - 1 ? " and " : "");
 		return where;
 	}
 
@@ -186,7 +199,8 @@ public class SqlGenerator {
 
 	// 生成加个grid 字段上的筛选条件
 	protected String getGridColumnFilterString() {
-		if (searchText == null || searchText.length() < 1 || gridColumnNames.length == 0)
+		if (searchText == null || searchText.length() < 1
+				|| gridColumnNames.length == 0)
 			return null;
 		StringBuilder result = new StringBuilder();
 		for (String string : gridColumnNames) {
@@ -206,7 +220,8 @@ public class SqlGenerator {
 
 		}
 		if (result.length() > 4)
-			return "(" + result.toString().substring(0, result.length() - 4) + ")";
+			return "(" + result.toString().substring(0, result.length() - 4)
+					+ ")";
 		else
 			return "( 1=1 )";
 	}
@@ -232,7 +247,8 @@ public class SqlGenerator {
 	}
 
 	protected String getFrom() {
-		System.out.println(" from " + module.getTf_tableName() + " " + module.getTableAsName());
+		System.out.println(" from " + module.getTf_tableName() + " "
+				+ module.getTableAsName());
 		return " " + module.getTf_tableName() + " " + module.getTableAsName();
 	}
 
@@ -246,10 +262,12 @@ public class SqlGenerator {
 	public void setFieldsOnlyIdAndName() {
 		fieldList.clear();
 		joinField.clear();
-		fieldList.add(new SqlField(module.getTf_moduleName(), module.getTableAsName(), module
-				.getTf_primaryKey(), null, null, FieldType.String.getValue()));
-		fieldList.add(new SqlField(module.getTf_moduleName(), module.getTableAsName(), module
-				.getTf_nameFields(), null, null, FieldType.String.getValue()));
+		fieldList.add(new SqlField(module.getTf_moduleName(), module
+				.getTableAsName(), module.getTf_primaryKey(), null, null,
+				FieldType.String.getValue()));
+		fieldList.add(new SqlField(module.getTf_moduleName(), module
+				.getTableAsName(), module.getTf_nameFields(), null, null,
+				FieldType.String.getValue()));
 		sorts = new SortParameter[1];
 		sorts[0] = new SortParameter(module.getTf_primaryKey(), "asc");
 
@@ -265,7 +283,6 @@ public class SqlGenerator {
 		sorts = new SortParameter[1];
 		sorts[0] = new SortParameter(fieldName, "asc");
 	}
-
 
 	// 对sql 加入 scalar
 	public void addScalar(SQLQuery query) {
@@ -293,7 +310,9 @@ public class SqlGenerator {
 				for (SqlLeftJoin join : joinOn)
 					if (join.getTableAsName().equals(filter.getTableAsName())) {
 
-						// if (join.getModuleName().equals(filter.getModuleName())) {
+						// if
+						// (join.getModuleName().equals(filter.getModuleName()))
+						// {
 						this.moduleFilters.add(filter);
 						break;
 					}
@@ -349,7 +368,8 @@ public class SqlGenerator {
 	}
 
 	public void setSearchText(String searchText) {
-		this.searchText = searchText == null ? null : searchText.replaceAll("'", "");
+		this.searchText = searchText == null ? null : searchText.replaceAll(
+				"'", "");
 	}
 
 	public String getKeyValue() {
@@ -377,26 +397,5 @@ public class SqlGenerator {
 			this.groupFieldname = null;
 		else
 			this.groupFieldname = groupFieldname;
-	}
-
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
-		
 	}
 }

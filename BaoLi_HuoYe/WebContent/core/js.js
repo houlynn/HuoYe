@@ -5976,6 +5976,7 @@ Ext.define("Jfok.m.factory.ModelFactory", {
                         });
                         for (var i in e.moduleFields) {
                                 var o = e.moduleFields[i];
+                                console.log(o);
                                 if (o.manyToOne || o.oneToOne) t.push({
                                         name: o.manytoone_IdName,
                                         useNull: !0,
