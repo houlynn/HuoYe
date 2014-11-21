@@ -10,7 +10,7 @@ Ext.define('app.view.main.region.Top', {
 
 	/*		uses : ['app.ux.ButtonTransparent', 'app.view.main.menu.ButtonMainMenu',
 					'app.view.main.menu.SettingMenu'],*/
-
+			style:'border-width:0 0 0 0;',
 			defaults : {
 				xtype : 'buttontransparent'
 			},

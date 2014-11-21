@@ -4,6 +4,7 @@
 Ext.define('core.main.view.region.MainMenuTree', {
 			extend : 'Ext.tree.Panel',
 			alias : 'widget.mainmenutree',
+			style:'border-width:0 0 0 0;',
 			title : '系统菜单',
 			listeners: { itemclick: function (view, node, item, index, e, eOpts) {
 				var nodeInfo=node.get("nodeInfo");

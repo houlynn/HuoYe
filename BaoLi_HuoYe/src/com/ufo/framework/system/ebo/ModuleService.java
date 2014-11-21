@@ -194,20 +194,23 @@ public class ModuleService extends Ebo implements ModelEbi {
 	 */
 	@Override
 	public DataInsertResponseInfo add(String moduleName, String inserted, String parentFilter, String navigates, HttpServletRequest request){
-
 		debug("数据insert:" + moduleName + ":" + inserted);
-
+		List<SqlModuleFilter> navs= changeToNavigateFilters(navigates);
 		JSONObject updateJsonObject = JSONObject.fromObject(inserted);
 		request.setAttribute(INSERTJSONOBJECT, updateJsonObject);
-
 		DataInsertResponseInfo result = new DataInsertResponseInfo();
 		_Module module = ApplicationService.getModuleWithName(moduleName);
-
 		Class<?> beanClass = ModuleServiceFunction.getModuleBeanClass(moduleName);
 		try {
 			Object record = Class.forName(beanClass.getName()).newInstance();
 			moduleDAO.updateValueToBean(moduleName, record, updateJsonObject);
-
+			if(navs!=null&&navs.size()>0){
+				SqlModuleFilter moduleFilter=navs.get(0);
+				 Class<? > clazz=  ModuleServiceFunction.getModuleBeanClass(moduleFilter.getModuleName());
+				 Object foreignBean=clazz.newInstance();
+				 ModuleServiceFunction.setValueToRecord(moduleFilter.getPrimarykey(), foreignBean, moduleFilter.getEqualsValue());
+				 ModuleServiceFunction.setValueToRecord("tf__module", record,foreignBean );
+			}
 			save(record);
 			// systemBaseDAO.getHibernateTemplate().evict(record)
 			// 写入数据了以后，可能会有计算字段等 信息，重新读取
@@ -215,9 +218,7 @@ public class ModuleService extends Ebo implements ModelEbi {
 			// System.out.println("idkey : " +
 			// Ognl.getValue(module.getTf_primaryKey(), record));
 			// 写入日志
-
 			result.setResultCode(STATUS_SUCCESS);
-
 			result.setModuleName(moduleName);
 			result.setKey(Ognl.getValue(module.getTf_primaryKey(), record).toString());
 		} catch (DataAccessException e) {

@@ -25,6 +25,7 @@ navigates:[{"moduleName":"City","tableAsName":"_t7012","primarykey":"tf_cityId",
 
 Ext.define('core.app.view.region.Navigate', {
 	   extend: "Ext.panel.Panel",
+		style:'border-width:0 0 0 0;',
        alias: "widget.modulenavigate",
        requires: ["core.app.view.region.NavigateTree"],
        layout: "fit",

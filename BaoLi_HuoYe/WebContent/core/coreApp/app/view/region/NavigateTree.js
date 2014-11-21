@@ -3,6 +3,7 @@ Ext.define("core.app.view.region.NavigateTree", {
         alias: "widget.navigatetree",
         requires: ["core.app.view.region.TreeSearchField"],
         rootVisible: !1,
+    	style:'border-width:0 0 0 0;',
         mixins: {
                 treeFilter: "core.app.view.region.TreeFilter"
         },

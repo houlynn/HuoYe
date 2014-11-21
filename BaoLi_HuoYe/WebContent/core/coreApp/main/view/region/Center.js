@@ -4,13 +4,11 @@
 Ext.define('core.main.view.region.Center', {
 	extend : 'Ext.tab.Panel',
 	alias : 'widget.maincenter',
-
 	 uses : ['core.main.view.region.HomePage','Ext.ux.TabCloseMenu'],
-
 	closeAction : 'hide',
 	autoDestroy : false,
 	tabPosition : 'top',
-
+	style:'border-width:0 0 0 0;',
 	plugins : [{
 
 		ptype : 'tabclosemenu',

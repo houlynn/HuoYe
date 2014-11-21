@@ -16,11 +16,13 @@ Ext.define('core.main.view.Main', {
 						xtype : 'mainmenuregion',
 						region : 'west', // 左边面板
 						title : '导航菜单',
+						style:'border-width:0 0 0 0;',
 						width : 220,
 						collapsible : true,
 						split : true,
 					}, {
 						region : 'center', // 中间面版
-						xtype : 'maincenter'
+						xtype : 'maincenter',
+						style:'border-width:0 0 0 0;',
 					}]
 		});

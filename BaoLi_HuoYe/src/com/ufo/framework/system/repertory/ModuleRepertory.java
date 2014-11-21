@@ -112,11 +112,14 @@ public class ModuleRepertory extends HibernateRepertory implements IModelReperto
 	 * @see com.ufo.framework.system.repertory.ModelDao#updateValueToBean(java.lang.String, java.lang.Object, net.sf.json.JSONObject)
 	 */
 
+	
 	@Override
 	@SuppressWarnings("unchecked")
 	public void updateValueToBean(String moduleName, Object record, JSONObject keyValue)
 			throws OgnlException {
 		//_Module module = ApplicationService.getModuleWithName(moduleName);
+		System.out.println("key=======================");
+		System.out.println(keyValue.size());
 		Iterator<String> keyIterator = keyValue.keys();
 		while (keyIterator.hasNext()) {
 			String key = keyIterator.next();
@@ -126,6 +129,7 @@ public class ModuleRepertory extends HibernateRepertory implements IModelReperto
 			ModuleServiceFunction.setValueToRecord(key, record, value);
 		}
 	}
+
 
 
 	/* (non-Javadoc)

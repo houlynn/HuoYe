@@ -4,7 +4,7 @@
 Ext.define('core.main.view.region.Left', {
 			extend : 'Ext.panel.Panel',
 			alias : 'widget.mainmenuregion',
-
+			style:'border-width:0 0 0 0;',
 			uses : ['core.main.view.region.MainMenuTree',/*'app.view.main.menu.AccordionMainMenu'*/],
 
 			layout : {

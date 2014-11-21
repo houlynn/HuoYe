@@ -12,6 +12,7 @@ Ext.define('core.app.view.region.BaseWindow', {
 			closeAction : 'hide',
 			bodyStyle : 'padding : 2px 2px 0',
 			shadowOffset : 30,
+			style:'border-width:0 0 0 0;',
 			layout : 'fit',
 			initComponent : function() {
 				this.maxHeight = document.body.clientHeight * 0.98;

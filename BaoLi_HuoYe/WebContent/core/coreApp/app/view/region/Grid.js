@@ -5,6 +5,7 @@
 Ext.define('core.app.view.region.Grid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.modulegrid',
+	style:'border-width:0 0 0 0;',
 	uses : ['core.app.view.region.GridToolbar',
 			'core.app.module.factory.ColumnsFactory',
 			'core.util.GridActionUtil'

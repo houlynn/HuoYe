@@ -6,7 +6,7 @@ Ext.define('core.main.view.region.Bottom', {
 			extend : 'Ext.toolbar.Toolbar',
 
 			alias : 'widget.mainbottom',
-
+			style:'border-width:0 0 0 0;',
 	   //	uses : ['app.ux.ButtonTransparent'],
 
 			defaults : {

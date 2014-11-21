@@ -6,6 +6,7 @@
 
 Ext.define('core.app.view.region.BaseForm', {
 			extend : 'Ext.form.Panel',
+			style:'border-width:0 0 0 0;',
 			/*		alias : 'widget.baseform',
 		autoScroll : true,
 			buttonAlign : 'center',

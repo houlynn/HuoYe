@@ -4,6 +4,7 @@
 Ext.define('core.app.view.region.GridToolbar', {
 			extend : 'Ext.toolbar.Toolbar',
 			alias : 'widget.gridtoolbar',
+			style:'border-width:0 0 0 0;',
 			uses : ['baseUx.GridSearchField'],
 			initComponent : function() {
 				var self=this;
