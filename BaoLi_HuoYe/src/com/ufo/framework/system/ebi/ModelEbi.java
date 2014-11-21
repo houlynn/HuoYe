@@ -2,7 +2,9 @@ package com.ufo.framework.system.ebi;
 
 import java.util.List;
 import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
+
 import com.ufo.framework.common.core.web.SortParameter;
 import com.ufo.framework.system.repertory.SqlModuleFilter;
 import com.ufo.framework.system.shared.module.DataDeleteResponseInfo;
@@ -61,8 +63,7 @@ public interface ModelEbi extends Ebi{
 			HttpServletRequest request);
 
 	// @Override
-	public abstract DataInsertResponseInfo add(String moduleName,
-			String inserted, HttpServletRequest request);
+	public DataInsertResponseInfo add(String moduleName, String inserted, String parentFilter, String navigates, HttpServletRequest request);
 
 	public abstract DataUpdateResponseInfo changeRecordId(String moduleName,
 			String id, String oldid);

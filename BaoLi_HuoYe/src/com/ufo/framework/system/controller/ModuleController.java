@@ -134,19 +134,24 @@ public class ModuleController implements LogerManager {
 	 */
 	@RequestMapping(value = "/create.do", method = RequestMethod.POST)
 	public @ResponseBody
-	DataInsertResponseInfo addWithNoPrimaryKey(String moduleName, @RequestBody String inserted,
+	DataInsertResponseInfo addWithNoPrimaryKey(String moduleName,  String inserted,
+			 String parentFilter,
+			 String navigates,
 			HttpServletRequest request) {
 
-		return add(moduleName, inserted, request);
+		System.out.println("navigates : "+navigates);
+		System.out.println(moduleName);
+		return add(moduleName, inserted,  parentFilter, navigates,request);
 	}
 
 	@RequestMapping(value = "/create.do/{id}", method = RequestMethod.POST)
 	public @ResponseBody
-	DataInsertResponseInfo add(String moduleName, @RequestBody String inserted,
+	DataInsertResponseInfo add(String moduleName,  String inserted, String parentFilter,
+			 String navigates,
 			HttpServletRequest request) {
 		DataInsertResponseInfo result = null;
 		try {
-			result = moduleService.add(moduleName, inserted, request);
+			result = moduleService.add(moduleName, inserted, parentFilter,navigates, request);
 			if (result.getKey() != null) // 如果是空的话，那么就没有保存，错误原因已经在errorMessage里了
 				result.getRecords().add(
 						moduleDAO.getModuleRecord(moduleName, result.getKey(), request).toString());
