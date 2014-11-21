@@ -154,7 +154,7 @@ Ext.define('core.app.module.factory.ModelFactory', {
 				  var modue=system.getModuleDefine(fd.tf_fieldType);
 				  field.manytoone_IdName="_"+modue.tf_moduleId+"___"+modue.tf_primaryKey;
 				  field.manytoone_TitleName="_"+modue.tf_moduleId+"___"+modue.tf_nameFields;
-				  field.name=field.manytoone_IdName;
+				 // field.name=field.manytoone_IdName;
 			     }
 				field.tf_haveAttachment = fd.tf_haveAttachment;
 				fields.push(field);

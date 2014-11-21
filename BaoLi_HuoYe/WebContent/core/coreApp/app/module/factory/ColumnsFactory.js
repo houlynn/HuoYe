@@ -188,11 +188,23 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 							else
 								Ext.apply(field, {});
 							break;
-
 						default :
 							break;
 					}
-
+                   if(fd.manyToOne==true){
+                	   var modue=system.getModuleDefine(fd.tf_fieldType);
+                       var t=modue.tf_fieldName;
+                	     Ext.apply(field, {
+                             renderer: Ext.util.Format.manytoOneFieldRenderer,
+                             manytooneIdName: modue.tableAsName + "___" + modue.tf_primaryKey,
+                             moduleName: modue.tf_moduleName,
+                             editor:null
+                     })
+                	   
+                   }
+					
+					
+					
 					if (field.xtype == 'numbercolumn') {
 						Ext.apply(field, {
 									listeners : { // 将标题栏的内容居中，靠右的话有时候显示不全

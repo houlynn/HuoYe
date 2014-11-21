@@ -251,12 +251,12 @@ public class ModuleRepertory extends HibernateRepertory implements IModelReperto
 		String sql = generator.getSqlStatment();
 		Session session = getSf().getCurrentSession();
 		System.out.println("sql:"+sql);
-		SQLQuery query = session.createSQLQuery(sql).addScalar("tf_title");
+		SQLQuery query = session.createSQLQuery(sql);
 		if (startRow != -1) {
 			query.setFirstResult(startRow);
 			query.setMaxResults(endRow - startRow + 1);
 		}
-		generator.addScalar(query);
+		//generator.addScalar(query);
 
 		List<?> results = null;
 		try {
@@ -278,6 +278,30 @@ public class ModuleRepertory extends HibernateRepertory implements IModelReperto
 				object.putAll(objMap, JsonDateProcessor.us_jsonConfig);
 				resultArray.add(object);
 			}
+		/**
+		 * /*		JSONArray resultArray = new JSONArray();
+	    session.doWork(conn->{
+		 Statement smnt= conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
+		 System.out.println(" max row =============");
+		   smnt.setMaxRows(endRow);
+			ResultSet resut= smnt.executeQuery(sql);
+			ResultSetMetaData reData = resut.getMetaData();
+			resut.relative(startRow); 
+		     while(resut.next()){
+		  	   for(int i=1;i<reData.getColumnCount();i++){
+    				Map<String, Object> objMap = new LinkedHashMap<String, Object>();
+    				JSONObject object = new JSONObject();
+    				for (SqlField field : generator.getFieldList())
+    					objMap.put(field.getFieldasScalar(), resut.getObject(i));
+    				for (SqlField field : generator.getJoinField())
+    					objMap.put(field.getFieldasScalar(), resut.getObject(i));
+    				object.putAll(objMap, JsonDateProcessor.us_jsonConfig);
+    				resultArray.add(object);
+		    	   }
+		     }
+		     smnt.close();
+			
+		});*/
 		return resultArray;
 	}
 

@@ -59,7 +59,10 @@ Ext.define('core.app.module.factory.FormFieldFactory', {
 		 * 判断字段类型
 		 */
 		getFieldXType : function(fieldDefine, field) {
-		
+			    console.log("=========fieldDefine========getFieldXType==================");
+		        console.log(fieldDefine);
+			
+			
 				switch (fieldDefine.tf_fieldType) {
 					case 'Date' :
 						return {
@@ -151,6 +154,27 @@ Ext.define('core.app.module.factory.FormFieldFactory', {
 									}
 								}
 							};
+					default :
+						  if(fieldDefine.manyToOne){
+							  return {
+									maxLength : len == 0 ? Number.MAX_VALUE : len,
+									enforceMaxLength : true,
+									anchor : '100%',
+									grow : true,
+									growMax : 200,
+									growMin : 40,
+									xtype : 'textareafield',
+									readOnly:true
+								}
+							  
+						  }
+						
+						
+						break;
+							
+							
+							
+							
 
 				}
 		},

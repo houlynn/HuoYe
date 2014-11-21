@@ -121,7 +121,14 @@ var ajax = function(config) {
 				// 对模块的namefields字段加粗显示
 				nameFieldRenderer : function(val, rd, model, row, col, store, gridview) {
 					return ('<strong>' + val + '</strong>');
-				}
+				},
+				  manytoOneFieldRenderer: function(e, t, i, o, n, a, l) {
+		                var r = e;
+		                try {
+		                        r = '<span class="gridNameField"><a onclick="javascript:return false;" href="#">' + filterTextSetBk(a, e) + "</a></span>"
+		                } catch(u) {}
+		                return r
+		        }
 
 			})
 		};

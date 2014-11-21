@@ -72,6 +72,7 @@ public class SqlGenerator {
 							field.getTf_DBfieldName(), field
 									.getTf_DBformula(), field
 									.getTf_fieldType());
+				   sqlField.setFieldAsName(chile_Moduel.getTableAsName()+sqlField.getFieldName());
 				  // sqlField.setFieldAsName("_"+chile_Moduel.getTableAsName()+chile_Moduel.getTf_nameFields());
 				   sqlField.setFieldasScalar(field.getTf_fieldName());
 				   getJoinField().add(sqlField);
@@ -83,10 +84,7 @@ public class SqlGenerator {
 						field.getTf_DBfieldName(), field
 								.getTf_DBformula(), field
 								.getTf_fieldType());
-				if(field.getTf_fieldName().equals(module.getTf_nameFields())){
-					//String fileName="_"+module.getTableAsName()+field.getTf_fieldName();
-					//sqlField.setFieldAsName(fileName);
-				}
+				   sqlField.setFieldAsName(sqlField.getTableAsName()+sqlField.getFieldName());
 				getFieldList().add(sqlField);
 			
 
