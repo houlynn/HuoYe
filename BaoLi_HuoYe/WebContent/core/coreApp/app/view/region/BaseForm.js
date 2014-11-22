@@ -7,49 +7,8 @@
 Ext.define('core.app.view.region.BaseForm', {
 			extend : 'Ext.form.Panel',
 			style:'border-width:0 0 0 0;',
-			/*		alias : 'widget.baseform',
-		autoScroll : true,
-			buttonAlign : 'center',
-			initComponent : function() {
-				var items=[];
-			  	items=Ext.apply(items,this.config);
-				var me = this;
-				this.buttons = [];
-				this.buttons.push({
-							text : '保存',
-							itemId : 'save',
-							glyph : 0xf0c7,
-							handler : function(button){
-								var form = button.up('form');
-								button.up('form').updateRecord();
-								button.up('form').getForm().getRecord().save();
-							}
-						},{
-							text : '关闭',
-							itemId : 'close',
-							glyph : 0xf148,
-							handler : function(button){
-								button.up('window').hide();
-							}
-						});
-				     me.items = items;
-				     me.callParent(arguments);
-			},
-			initForm : function() {
-			},
-			setData : function(model) {
-				this.data = model;
-				if (this.data) {
-					this.getForm().loadRecord(this.data);
-				} else
-					this.getForm().reset();
-			}
-
-		});*/
-			
 			alias : 'widget.baseform',
 			autoScroll : true,
-
 			buttonAlign : 'center',
 			initComponent : function() {
 				var me = this;
@@ -61,10 +20,10 @@ Ext.define('core.app.view.region.BaseForm', {
 							glyph : 0xf0c7,
 							handler : function(button){
 								var form = button.up('form');
-								button.up('form').updateRecord();
-								//button.up('form').getForm().getRecord().save();
+								//button.up('form').updateRecord();
+								button.up('form').getForm().getRecord().save();
 								system.smileInfo("保存成功!")
-					            self.up("basewindow").grid.getStore().sync();
+					            self.up("basewindow").grid.getStore().reload();
 								this.setDisabled(true);
 								
 							}
@@ -78,6 +37,8 @@ Ext.define('core.app.view.region.BaseForm', {
 						});
 				me.items = [];
 
+				console.log("from formScheme");
+				console.log(this.formScheme);
 				var groups = this.formScheme.tf_schemeGroups, hasTab = false;
 				var hasInTabPanel = false; // 是否有嵌在页里面的tab,
 				var inTabPanel;

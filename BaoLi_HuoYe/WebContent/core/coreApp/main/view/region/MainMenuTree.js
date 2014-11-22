@@ -15,18 +15,14 @@ Ext.define('core.main.view.region.MainMenuTree', {
             	var nodeInfoType=node.get("nodeInfoType");
             	var addPanel={};
             	 var module={};
-                if("FUNC"==nodeInfoType){
-                var viewModel=comm.get("viewModel").getModuleDefine(node.get("code"));
-                module =Ext.create("core.app.module.ModuleModel");
-    			Ext.apply(module.data, viewModel);
-                }
                 	addPanel= Ext.createWidget(config[0],{
-                		  viewModel:module,
                 		  title:node.get("text"),
                 		  id:node.data.id,
+                		  code:node.get("code"),
                 		  closable : true
                 	});
-             var   oldPanel=maincenter.getComponent(node.data.id);
+                	
+       var   oldPanel=maincenter.getComponent(node.data.id);
 				     if(oldPanel){
 				    	return;
 				     }

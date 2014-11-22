@@ -267,7 +267,18 @@ var ajax = function(config) {
                         r = '<span class="gridNameField"><a onclick="javascript:__smr(\'' + d.moduleName + "','" + s + '\');return false;" href="#">' + filterTextSetBk(a, e) + "</a></span>"
                 } catch(u) {}
                 return r
+        },
+        getViewModel:function (modueId){
+        	 var module=system.getModuleDefine(modueId);
+        	 viewModel =Ext.create("core.app.module.ModuleModel");
+ 			 Ext.apply(viewModel.data, module);
+ 			 return viewModel;
         }
+        
+        
+        
+        
+        
 });
 	
 	Ext.define('core.app.main.MainModel', {

@@ -53,12 +53,12 @@ Ext.define('core.app.store.GridStore', {
 				this.pageSize = 20;
 				this.extraParams = {};
 				this.navigates = [];
-				console.log(param.modulePanel);
+			/*	console.log(param.modulePanel);
 				// 有创建时加进来的导航约束
 				if (param.modulePanel.param) {
 					var dnv = param.modulePanel.param.defaultNavigateValues;
 					this.setDefaultNavigates(dnv);
-				}
+				}*/
 				// ///////////
 				this.callParent(arguments);
 			},

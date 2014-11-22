@@ -1,12 +1,11 @@
 Ext.define("core.util.GridActionUtil", {
 	requires : ['Ext.MessageBox', 'Ext.ux.Toast'],
 	statics : {
-		editRecord : function(btn) {
-			var modulegrid=btn.up("modulegrid");
-			var modulePanle =modulegrid.ownerCt;
-			var module=modulePanle.viewModel;
-			var window = Ext.widget('basewindow', {
-				viewModel:module,
+		editRecord : function(btn,modulegrid) {
+			var modueId=modulegrid.ownerCt.code;
+			var viewModel=system.getViewModel(modueId);
+			var window = Ext.create('core.app.view.region.BaseWindow', {
+				viewModel:viewModel,
 				grid:modulegrid
 			});
 	        console.log(modulegrid.getSelectionModel().getSelection()[0]);
@@ -126,11 +125,13 @@ Ext.define("core.util.GridActionUtil", {
 		
 		// 选中的记录发生变化过后的事件
 		selectionChange : function(view, model, selected, eOpts) {
+			
+			var modueId=view.ownerCt.code;
+			var viewModel=system.getViewModel(modueId);
 			// 设置删除按钮的状态
 			view.up('modulepanel').down('toolbar button#delete')[selected.length > 0
 					? 'enable'
 					: 'disable']();
-			var viewModel =view.up('modulepanel').viewModel;
 			// 下面将组织选中的记录的name显示在title上，有二种方案可供选择，一种是用下面的MVVM特性，第二种是调用refreshTitle()
 			var selectedNames =viewModel.get("tf_title");
 			if (selected.length > 0) {

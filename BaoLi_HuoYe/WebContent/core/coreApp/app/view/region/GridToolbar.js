@@ -8,7 +8,7 @@ Ext.define('core.app.view.region.GridToolbar', {
 			uses : ['baseUx.GridSearchField'],
 			initComponent : function() {
 				var self=this;
-				var viewModel = this.grid.store.modulePanel.viewModel;
+				var viewModel = this.viewModel;
 				this.items = [{
 							text : '显示',
 							glyph : 0xf022
@@ -70,7 +70,8 @@ Ext.define('core.app.view.region.GridToolbar', {
 							glyph : 0xf044,
 							itemId : 'edit',
 							handler : function(btn){
-								core.util.GridActionUtil.editRecord(btn);
+								var grid= btn.ownerCt.ownerCt;
+								core.util.GridActionUtil.editRecord(btn,grid);
 							}
 						}, {
 							text : '删除',

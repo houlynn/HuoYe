@@ -1,7 +1,6 @@
 /**
  * 模块数据的主显示区域，继承自Grid
  */
-
 Ext.define('core.app.view.region.Grid', {
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.modulegrid',
@@ -9,7 +8,6 @@ Ext.define('core.app.view.region.Grid', {
 	uses : ['core.app.view.region.GridToolbar',
 			'core.app.module.factory.ColumnsFactory',
 			'core.util.GridActionUtil'
-			//'app.view.module.widget.GridSchemeCombo'
 			],
 	requires : ['Ext.selection.CellModel', 'Ext.grid.*', 'Ext.data.*',
 			'Ext.util.*'],
@@ -26,7 +24,10 @@ Ext.define('core.app.view.region.Grid', {
 	},
 	initComponent : function() {
 		this.store.modulegrid = this;
-		var viewModel=this.store.modulePanel.viewModel;
+		var viewModel=this.viewModel;
+		console.log(viewModel);
+		//var viewModel=this.ownerCt;
+			//this.store.modulePanel.viewModel;
 		var title = viewModel.get('tf_title');
 		this.setTitle(title);
 		// 可以在grid中进行行编辑的设置
@@ -78,7 +79,9 @@ Ext.define('core.app.view.region.Grid', {
 		this.dockedItems = [{
 					xtype : 'gridtoolbar', // 按钮toolbar
 					dock : 'top',
-					grid : this
+					grid : this,
+					viewModel:viewModel,
+					
 				}, {
 					xtype : 'pagingtoolbar', // grid数据分页
 					store : this.store,

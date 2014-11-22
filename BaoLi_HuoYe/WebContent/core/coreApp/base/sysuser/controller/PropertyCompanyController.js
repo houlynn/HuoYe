@@ -7,13 +7,13 @@ Ext.define("core.base.101.controller.PropertyCompanyController",{
 		});
 	},
 	views:[
-	"core.base.101.view.PropertyCompanyGrid",
+/*	"core.base.101.view.PropertyCompanyGrid",
 	"core.base.101.view.PropertyCompanyPanel",
 	"core.base.101.view.PropertyCompanyForm",
 	"core.app.view.region.GridToolbar",
-	"core.app.view.region.BaseWindow"
+	"core.app.view.region.BaseWindow"*/
 	],
 	stores:[
-	        "core.base.101.store.PropertyCompanyStore"
+	       // "core.base.101.store.PropertyCompanyStore"
 		]
 });
