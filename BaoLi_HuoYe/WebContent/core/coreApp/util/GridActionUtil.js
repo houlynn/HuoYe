@@ -67,7 +67,8 @@ Ext.define("core.util.GridActionUtil", {
 		deleteRecords : function(btn) {
 			var modulegrid=btn.up("modulegrid");
 			var modulePanle =modulegrid.ownerCt;
-			var module=modulePanle.viewModel;
+			var code=modulePanle.code;
+			var module=system.getViewModel(code);
 			var selection=modulegrid.getSelectionModel().getSelection();
 			var message='';
 			var infoMessage='';

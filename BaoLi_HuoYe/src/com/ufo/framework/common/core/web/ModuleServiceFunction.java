@@ -21,7 +21,7 @@ import ognl.OgnlException;
 
 public class ModuleServiceFunction {
 
-	private static final String HIBERNATEPACKAGEPATH_ROOT = "com.jfok.server.hibernate";
+	private static final String HIBERNATEPACKAGEPATH_ROOT = "com.model.hibernate";
 
 	private static List<String> beanDirs = null;
 
@@ -41,17 +41,6 @@ public class ModuleServiceFunction {
 	}
 	
 	public static Class<?> getModuleBeanClass(String moduleName) {
-/*		Class<?> moduleClass = null;
-		for (String dir : getBeanDirs()) {
-			try {
-				moduleClass = Class.forName(dir + "." + moduleName);
-				break;
-			} catch (ClassNotFoundException e) {
-			}
-		}
-		if (moduleClass == null)
-			System.out.println("未找到：" + moduleName + "的定义文件");
-		return moduleClass;*/
 		Class<?> moduleClass = null;
 		try {
 			List<String> clazzs=ClassUtil.getClassName("com.model.hibernate", true).parallelStream()

@@ -1,4 +1,4 @@
-Ext.define("core.rbac.user.store.DeptStore",{
+Ext.define("core.rbac.user.store.LevelStore",{
 	extend:"Ext.data.TreeStore",
 	defaultRootId:"ROOT",
 	model:factory.ModelFactory.getModelByName("com.ufo.framework.system.model.ui.JSONTreeNode","checked").modelName,

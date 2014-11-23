@@ -135,8 +135,10 @@ public class SqlGenerator {
 				+ getSelectFields() + (distinct ? " , 1 as ____c " : " ");
 		sql = sql + " from " + getFrom();
 		sql = sql + getLeftJoin();
-		// sql = sql + getWhere();
-		// sql = sql + getSortByString();
+		System.out.println(this.moduleFilters.size());
+		System.out.println("=============moduleFilters size==================================");
+		sql = sql + getWhere();
+		sql = sql + getSortByString();
 		System.out.println(" 凭借sql:" + sql);
 		return sql;
 	}
@@ -188,6 +190,7 @@ public class SqlGenerator {
 	// 生成各个模块加入的条件的ＳＱＬ，全部用ＡＮＤ连接
 	protected String getModuleFilterString() {
 		if (moduleFilters.size() > 0) {
+			System.out.println(" moduefilt=========================================================");
 			String result = "";
 			for (SqlModuleFilter filter : moduleFilters)
 				result = result + filter.getFilterSql() + " and ";
@@ -307,8 +310,10 @@ public class SqlGenerator {
 					continue;
 				}
 				// 检查filters 在当前的 parents 中是否有
-				for (SqlLeftJoin join : joinOn)
-					if (join.getTableAsName().equals(filter.getTableAsName())) {
+				for (SqlLeftJoin join : joinOn){
+					System.out.println(join.getTableAsName());
+				    System.out.println(filter.getTableAsName());
+					if (join.getChildTableAsName().equals(filter.getTableAsName())) {
 
 						// if
 						// (join.getModuleName().equals(filter.getModuleName()))
@@ -316,6 +321,7 @@ public class SqlGenerator {
 						this.moduleFilters.add(filter);
 						break;
 					}
+				}
 			}
 	}
 

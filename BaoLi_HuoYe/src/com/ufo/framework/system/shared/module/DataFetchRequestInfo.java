@@ -1,8 +1,10 @@
 package com.ufo.framework.system.shared.module;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.ufo.framework.common.core.web.SortParameter;
+import com.ufo.framework.system.repertory.SqlModuleFilter;
 /**
  * 前台listgrid fetch 数据时，传入后台的数据
  *
@@ -13,6 +15,7 @@ import com.ufo.framework.common.core.web.SortParameter;
 @SuppressWarnings("serial")
 public class DataFetchRequestInfo implements Serializable {
 
+	private   List<SqlModuleFilter> moduleFilters;
 	private String moduleId; // moduleID
 	private String moduleName; // moduleName
 	private Integer startRow; // 起始行
@@ -100,6 +103,14 @@ public class DataFetchRequestInfo implements Serializable {
 
 	public void setModuleName(String moduleName) {
 		this.moduleName = moduleName;
+	}
+
+	public List<SqlModuleFilter> getModuleFilters() {
+		return moduleFilters;
+	}
+
+	public void setModuleFilters(List<SqlModuleFilter> moduleFilters) {
+		this.moduleFilters = moduleFilters;
 	}
 
 

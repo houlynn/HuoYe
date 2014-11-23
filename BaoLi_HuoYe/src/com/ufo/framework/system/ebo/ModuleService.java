@@ -4,26 +4,21 @@ package com.ufo.framework.system.ebo;
 import java.util.ArrayList;import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
 import ognl.Ognl;
-
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.model.hibernate.system._Module;
 import com.ufo.framework.common.core.web.ModuleServiceFunction;
 import com.ufo.framework.common.core.web.SortParameter;
-import com.ufo.framework.common.model.Model;
 import com.ufo.framework.system.ebi.ModelEbi;
 import com.ufo.framework.system.irepertory.IModelRepertory;
 import com.ufo.framework.system.repertory.SqlModuleFilter;
@@ -86,6 +81,10 @@ public class ModuleService extends Ebo implements ModelEbi {
 		System.out.println("sort: "+sort+"query :"+query+" columns: "+columns +" navigates ："+navigates +" parentFilter ");
 	    System.out.println(parentFilter);
 		SortParameter sorts[] = SortParameter.changeToSortParameters(sort);
+		
+		
+		
+		
 		List<SqlModuleFilter> navigateFilters = changeToNavigateFilters(navigates);
 		SqlModuleFilter pFilter = null;
 		if (parentFilter != null && parentFilter.length() > 1) {
@@ -128,7 +127,7 @@ public class ModuleService extends Ebo implements ModelEbi {
 		dsRequest.setStartRow(start);
 		dsRequest.setEndRow(start + limit - 1);
 		dsRequest.setSorts(sorts);
-
+		dsRequest.setModuleFilters(navigateFilters);
 		GridFilterData gridFilterData = new GridFilterData();
 		if (pFilter != null) {
 			gridFilterData.setParentModuleFilter(pFilter);
@@ -209,7 +208,8 @@ public class ModuleService extends Ebo implements ModelEbi {
 				 Class<? > clazz=  ModuleServiceFunction.getModuleBeanClass(moduleFilter.getModuleName());
 				 Object foreignBean=clazz.newInstance();
 				 ModuleServiceFunction.setValueToRecord(moduleFilter.getPrimarykey(), foreignBean, moduleFilter.getEqualsValue());
-				 ModuleServiceFunction.setValueToRecord("tf__module", record,foreignBean );
+				 String foreignKey="tf_"+moduleFilter.getModuleName(). toLowerCase();
+				 ModuleServiceFunction.setValueToRecord(foreignKey, record,foreignBean );
 			}
 			save(record);
 			// systemBaseDAO.getHibernateTemplate().evict(record)
@@ -236,88 +236,6 @@ public class ModuleService extends Ebo implements ModelEbi {
 
 		return result;
 	}
-
-	
-	
-	
-	
-/*	// @Override
-	 (non-Javadoc).
-	 * @see com.ufo.framework.system.ebo.ModelEbi#add(java.lang.String, java.lang.String, javax.servlet.http.HttpServletRequest)
-	 
-	@Override
-	public DataInsertResponseInfo add(String moduleName, String inserted, String parentFilter, String navigates, HttpServletRequest request) {
-
-		debug("数据insert:" + moduleName + ":" + inserted);
-		//List<SqlModuleFilter> navs= changeToNavigateFilters(navigates);
-		
-		JSONObject updateJsonObject = JSONObject.fromObject(inserted);
-		request.setAttribute(INSERTJSONOBJECT, updateJsonObject);
-		DataInsertResponseInfo result = new DataInsertResponseInfo();
-		_Module module = ApplicationService.getModuleWithName(moduleName);
-
-		Class<?> beanClass = ModuleServiceFunction.getModuleBeanClass(moduleName);
-		try {
-			Object record = Class.forName(beanClass.getName()).newInstance();
-			moduleDAO.updateValueToBean(moduleName, record, updateJsonObject);
-			if(navs!=null&&navs.size()>0){
-				SqlModuleFilter moduleFilter=navs.get(0);
-				 Class<? > clazz=  ModuleServiceFunction.getModuleBeanClass(moduleName);
-				 Object foreignBean=clazz.newInstance();
-				 ModuleServiceFunction.setValueToRecord(moduleFilter.getPrimarykey(), foreignBean, moduleFilter.getEqualsValue());
-				 ModuleServiceFunction.setValueToRecord("tf__module", record,foreignBean );
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-			}
-			
-			save(record);
-			// systemBaseDAO.getHibernateTemplate().evict(record)
-			// 写入数据了以后，可能会有计算字段等 信息，重新读取
-			record = findById(beanClass, Ognl.getValue(module.getTf_primaryKey(), record));
-			// System.out.println("idkey : " +
-			// Ognl.getValue(module.getTf_primaryKey(), record));
-			// 写入日志
-
-			result.setResultCode(STATUS_SUCCESS);
-
-			result.setModuleName(moduleName);
-			result.setKey(Ognl.getValue(module.getTf_primaryKey(), record).toString());
-		} catch (DataAccessException e) {
-			e.printStackTrace();
-			// 这个出错是不会执行到的，这是没有加事务的出错 检查，
-			ModuleServiceFunction.addExceptionCauseToErrorMessage(e, result.getErrorMessage(),
-					module.getTf_primaryKey());
-			result.setResultCode(STATUS_VALIDATION_ERROR);
-		} catch (Exception e) {
-			e.printStackTrace();
-			result.getErrorMessage().put("error", e.getMessage());
-			result.setResultCode(STATUS_FAILURE);
-		}
-		debug("insert返回值：" + result.toString());
-
-		return result;
-	}*/
 
 	/* (non-Javadoc)
 	 * @see com.ufo.framework.system.ebo.ModelEbi#changeRecordId(java.lang.String, java.lang.String, java.lang.String)
@@ -382,6 +300,7 @@ public class ModuleService extends Ebo implements ModelEbi {
 			for (SqlModuleFilter f : navigateFilters)
 				result.add(f);
 		}
+		result.parallelStream().forEach(item->System.out.println(item.getFilterSql()));
 		return result;
 
 	}

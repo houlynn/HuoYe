@@ -142,14 +142,18 @@ public class ModuleRepertory extends HibernateRepertory implements IModelReperto
 		_Module module = ApplicationService.getModuleWithName(moduleName);
 
 		// 所有的导航tree产生的过滤条件
-		List<SqlModuleFilter> treeAndParentFilters = new ArrayList<SqlModuleFilter>();
-
+		//List<SqlModuleFilter> treeAndParentFilters = new ArrayList<SqlModuleFilter>();
+		List<SqlModuleFilter> treeAndParentFilters=dsRequest.getModuleFilters();
 		addParentModuleFiltToSQLFilters(module, gridFilterData.getParentModuleFilter(),
 				treeAndParentFilters);
-
+		System.out.println("==========treeAndParentFilters;=============");
+		System.out.println(treeAndParentFilters.size());
 		SqlGenerator generator = new SqlGenerator(module);
-
 		generator.setModuleFilters(treeAndParentFilters);
+		System.out.println("==========generator.setModuleFilters(treeAndParentFilters);=============");
+		System.out.println(generator.getModuleFilters().size());
+		
+		
 		generator.setGridColumnNames(gridFilterData.getGridColumnNames());
 		generator.setSearchText(gridFilterData.getSearchText());
 		generator.setSorts(dsRequest.getSorts());
@@ -282,30 +286,6 @@ public class ModuleRepertory extends HibernateRepertory implements IModelReperto
 				object.putAll(objMap, JsonDateProcessor.us_jsonConfig);
 				resultArray.add(object);
 			}
-		/**
-		 * /*		JSONArray resultArray = new JSONArray();
-	    session.doWork(conn->{
-		 Statement smnt= conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE);
-		 System.out.println(" max row =============");
-		   smnt.setMaxRows(endRow);
-			ResultSet resut= smnt.executeQuery(sql);
-			ResultSetMetaData reData = resut.getMetaData();
-			resut.relative(startRow); 
-		     while(resut.next()){
-		  	   for(int i=1;i<reData.getColumnCount();i++){
-    				Map<String, Object> objMap = new LinkedHashMap<String, Object>();
-    				JSONObject object = new JSONObject();
-    				for (SqlField field : generator.getFieldList())
-    					objMap.put(field.getFieldasScalar(), resut.getObject(i));
-    				for (SqlField field : generator.getJoinField())
-    					objMap.put(field.getFieldasScalar(), resut.getObject(i));
-    				object.putAll(objMap, JsonDateProcessor.us_jsonConfig);
-    				resultArray.add(object);
-		    	   }
-		     }
-		     smnt.close();
-			
-		});*/
 		return resultArray;
 	}
 
