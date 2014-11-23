@@ -30,7 +30,9 @@
 	     <mapping class="com.model.hibernate.property.PropertyCompany"/>
 	     <mapping class="com.model.hibernate.property.Agreement2"/>
 		  <mapping class="com.model.hibernate.property.Agreement"/>
-		     <mapping class="com.model.hibernate.property.Village"/>
+		  <mapping class="com.model.hibernate.property.Village"/>
+		  <mapping class="com.model.hibernate.property.LevelInfo"/>
+		     
 		  
 		  
 	     <mapping class="com.model.hibernate.system.shared.Position"/>
