@@ -92,6 +92,9 @@ public class EndUser extends BaseEntity {
 	private Date createTime;
 	
 	
+
+	
+	
 	
 	@Id
 	@GeneratedValue(generator="systemUUID")

@@ -1,13 +1,14 @@
-Ext.define("core.rbac.user.view.MainLayout",{
-	extend:"Ext.panel.Panel",
-	alias : 'widget.rbac.mainlayout',
+Ext.define("core.base.102.view.MainLayout",{
+	extend:"Ext.container.Container",
+	alias : 'widget.102.mainlayout',
 	layout : 'border',
 	items : [{
-		xtype:"rbac.depttree",
+		xtype:"102.levelTree",
 		region:"west",
 		width:comm.get("clientWidth")*0.18
 	},{
-		xtype:"rbac.centerlayout",
+		xtype:"panel",
+		title:'用户信息',
 		region:"center"
 	}]
 })

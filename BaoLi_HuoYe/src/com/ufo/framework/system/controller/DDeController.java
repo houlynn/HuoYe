@@ -44,10 +44,11 @@ public class DDeController extends SimpleBaseController<Dictionary> {
 			@RequestParam(value="whereSql",required=false,defaultValue="") String whereSql
 			) {
 		String strData = "[]";
+		System.out.println("===========whereSql=================");
+		System.out.println(whereSql);
 		try {
 			if (StringUtil.isNotEmpty(model.getDdCode())) {
 				if (DDCache.get(model.getDdCode()) != null) {
-					System.out.println(model.getDdCode());
 					toWrite(response, DDCache.get(model.getDdCode()));
 				} else {
 					// 查询数据字典项
@@ -58,6 +59,7 @@ public class DDeController extends SimpleBaseController<Dictionary> {
 						List<DictionaryItem> items=new ArrayList<>();
 						if(StringUtil.isNotEmpty(dict.getModelName())&&"OTHER".equals(dict.getDdType())){
 							items=getItemByModelName(dict.getModelName(),whereSql);
+							System.out.println("===============dd items===========================");
 						}else{
 							items = (List<DictionaryItem>) ebi
 								.queryByHql(" from DictionaryItem where dictionary='"
@@ -213,7 +215,7 @@ public class DDeController extends SimpleBaseController<Dictionary> {
 		 List<Field> listFields=clazz.newInstance().fielsColection(new ArrayList<Field>());
 		 DictionaryItem item=null;
 		 
-		 List<?> list=ebi.queryByHql(" from "+clazz.getSimpleName()+" where enabled='1' "+wherSql);
+		 List<?> list=ebi.queryByHql(" from "+clazz.getSimpleName()+" "+wherSql);
 		 System.out.println("获取到：："+modelName+list.size());
 		 Field codeField =listFields.parallelStream().filter(o->o.isAnnotationPresent(DDItemCode.class)).collect(Collectors.toList()).get(0);
 		 listFields.remove(codeField);
@@ -222,7 +224,7 @@ public class DDeController extends SimpleBaseController<Dictionary> {
 		 {
 			item=new DictionaryItem();
 			String fieldName=codeField.getName();
-			String itemCode=(String) EntityUtil.getPropertyValue(o,fieldName);
+			String itemCode=EntityUtil.getPropertyValue(o,fieldName)+"";
 			item.setItemCode(itemCode);
 			String itemName="";
 			for(Field f : listFields){

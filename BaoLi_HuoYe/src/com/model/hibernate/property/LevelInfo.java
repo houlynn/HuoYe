@@ -6,14 +6,18 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.Transient;
+
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
+
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.NodeType;
 import com.ufo.framework.annotation.TableInfo;
 import com.ufo.framework.common.core.ext.TreeNodeType;
+import com.ufo.framework.common.core.properties.PropUtil;
 import com.ufo.framework.common.model.BaseEntity;
 
 /**
@@ -43,6 +47,10 @@ public class LevelInfo extends BaseEntity {
 	@JoinColumn(name="tf_viid")
 	@FieldInfo(title = "楼宇名称", uniqueField = true, number = 30)
 	private Village tf_village;
+	
+	@JsonIgnore
+	@Transient
+	private String icon=PropUtil.get("sys.leve.LevelInfo");
 	public String getTf_leveId() {
 		return tf_leveId;
 	}
@@ -65,6 +73,14 @@ public class LevelInfo extends BaseEntity {
 
 	public void setTf_village(Village tf_village) {
 		this.tf_village = tf_village;
+	}
+
+	public String getIcon() {
+		return icon;
+	}
+
+	public void setIcon(String icon) {
+		this.icon = icon;
 	}
 	
 	

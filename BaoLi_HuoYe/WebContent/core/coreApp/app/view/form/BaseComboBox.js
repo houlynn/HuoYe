@@ -4,6 +4,7 @@ Ext.define("core.app.view.form.BaseComboBox",{
 	queryMode: 'local',
 	displayField: 'itemName',
 	valueField: 'itemCode',
+    margin:"1 1 0 0 0",
 	trigger1Cls: Ext.baseCSSPrefix + 'form-clear-trigger',
     trigger2Cls: Ext.baseCSSPrefix + 'form-arrow-trigger',
 //    trigger3Cls: Ext.baseCSSPrefix + 'form-search-trigger',	

@@ -1,10 +1,10 @@
-Ext.define("core.rbac.user.store.LevelStore",{
+Ext.define("core.base.102.store.LevelStore",{
 	extend:"Ext.data.TreeStore",
 	defaultRootId:"ROOT",
 	model:factory.ModelFactory.getModelByName("com.ufo.framework.system.model.ui.JSONTreeNode","checked").modelName,
 	proxy:{
 		type:"ajax",
-		url:"/rbacDept/getTree.action",
+		url:"/102/getTree.action",
 		extraParams :{excludes: 'checked'},
 		reader:{
 			type:"json"
@@ -13,5 +13,5 @@ Ext.define("core.rbac.user.store.LevelStore",{
 			type:"json"
 		}
 	},
-	autoLoad:true
+	autoLoad:false
  });

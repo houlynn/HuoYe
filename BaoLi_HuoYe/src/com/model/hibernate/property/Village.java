@@ -12,6 +12,8 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
+import com.ufo.framework.annotation.DDItemCode;
+import com.ufo.framework.annotation.DDItemName;
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.NodeType;
 import com.ufo.framework.annotation.TableInfo;
@@ -32,11 +34,13 @@ import com.ufo.framework.common.model.BaseEntity;
 public class Village extends BaseEntity {
 	
 	
+	@DDItemCode
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
 	@FieldInfo(title = "ID号", number = 10, hidden = true)
 	private int tf_viid;
+	@DDItemName
 	@Column(length=300)
 	@FieldInfo(title="小区名称",number=20,uniqueField=true)
 	private String  tf_name;

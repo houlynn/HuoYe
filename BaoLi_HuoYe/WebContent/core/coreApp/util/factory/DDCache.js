@@ -12,8 +12,14 @@ Ext.define("factory.DDCache",{
 			if(Ext.isEmpty(ddCode)){
 				return [];			
 			}
-			var params={
+			
+			var params={};
+			if(typeof(ddCode)=='string'){
+			    params={
 				ddCode:ddCode
+			}
+			}else{
+			Ext.apply(params, ddCode);
 			}
 			var ddItem=[];
 			if(!this.ddItems.containsKey(ddCode)){

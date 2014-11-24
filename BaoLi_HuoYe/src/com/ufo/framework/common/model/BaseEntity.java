@@ -7,7 +7,7 @@ import javax.persistence.MappedSuperclass;
 @SuppressWarnings("serial")
 @MappedSuperclass
 public class BaseEntity implements Model {
-	@Column(length = 50,nullable=false)
+	@Column(length = 50,nullable=true)
 	private String xcode;
 	
 	private int orderIndex;

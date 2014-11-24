@@ -104,6 +104,9 @@ public abstract class SimpleBaseController<M extends Model> implements LogerMana
 		}
 	}
 
+	
+	
+	
 	/**
 	 * 默认的保存方法
 	 */
