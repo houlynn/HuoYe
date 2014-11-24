@@ -35,7 +35,7 @@ public class LevelInfo extends BaseEntity {
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
 	@FieldInfo(title = "ID号", number = 10, hidden = true)
-	private String tf_leveId;
+	private int tf_leveId;
 	
 	@FieldInfo(title = "楼宇名称", uniqueField = true, number = 20)
 	@Column(length = 50, nullable = false)
@@ -51,11 +51,12 @@ public class LevelInfo extends BaseEntity {
 	@JsonIgnore
 	@Transient
 	private String icon=PropUtil.get("sys.leve.LevelInfo");
-	public String getTf_leveId() {
+
+	public int getTf_leveId() {
 		return tf_leveId;
 	}
 
-	public void setTf_leveId(String tf_leveId) {
+	public void setTf_leveId(int tf_leveId) {
 		this.tf_leveId = tf_leveId;
 	}
 

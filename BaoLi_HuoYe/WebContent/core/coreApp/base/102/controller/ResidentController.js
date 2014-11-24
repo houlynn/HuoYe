@@ -51,9 +51,10 @@ Ext.define("core.base.102.controller.ResidentController",{
 						 	system.errorInfo("请选择小区再进行添加操作","错误提示");
 						 	return;
 						 }
-	 Ext.MessageBox.prompt('设置楼宇', '请输入楼宇名称', function(btn, text) {
+	 Ext.MessageBox.prompt('设置楼宇', '请输入楼宇名称', function(btn, leveName) {
          if(btn=="ok"){
-         	
+         	var params={vid:vid,leveName:leveName}
+         	var resObj=self.ajax({url:"/102/A001.action",params:params});
       } });
 						 
 						 
