@@ -124,6 +124,9 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 								if (type == 'click')
 									return false;
 							};
+						     editor : {
+											xtype : 'checkcolumn'
+							}
 							break;
 
 						case 'Integer' :
@@ -138,6 +141,19 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 										}
 									});
 							break;
+							case 'int' :
+							Ext.apply(field, {
+										align : 'right',
+										xtype : 'numbercolumn',
+										format : '#',
+										renderer : Ext.util.Format.intRenderer,
+										// formatter : 'intRenderer',
+										editor : {
+											xtype : 'numberfield',
+		                                    decimalPrecision:0
+										}
+									});
+							break;
 
 						// 金额字段
 						case 'Money' :
@@ -147,7 +163,8 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 										width : 110,
 										renderer : Ext.util.Format.monetaryRenderer,
 										editor : {
-											xtype : 'numberfield'
+											xtype : 'numberfield',
+											decimalPrecision:3
 										}
 									});
 							break;
@@ -157,6 +174,24 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 								align : 'right',
 								xtype : 'numbercolumn',
 								width : 110,
+								editor : {
+											xtype : 'numberfield',
+		                                    decimalPrecision:3
+										},
+								renderer : Ext.util.Format.floatRenderer
+									// formatter : 'floatRenderer' // 这种方法不可以
+								});
+								
+							break;
+						case 'double' :
+							Ext.apply(field, {
+								align : 'right',
+								xtype : 'numbercolumn',
+								width : 110,
+								editor : {
+											xtype : 'numberfield',
+		                                    decimalPrecision:3
+										},
 								renderer : Ext.util.Format.floatRenderer
 									// formatter : 'floatRenderer' // 这种方法不可以
 								});
