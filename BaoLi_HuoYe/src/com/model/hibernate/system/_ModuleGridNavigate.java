@@ -34,7 +34,7 @@ public class _ModuleGridNavigate implements Model {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "tf_moduleId", nullable = false)
 	@FieldInfo(title = "所属模块", number = 20)
-	private _Module tf__module;
+	private _Module tf_Module;
 	@FieldInfo(title = "序号", number = 60)
 	private int tf_order;
 	@FieldInfo(title = "导航属性", number = 60)
@@ -59,12 +59,6 @@ public class _ModuleGridNavigate implements Model {
 	}
 	public void setTf_navigatesetId(int tf_navigatesetId) {
 		this.tf_navigatesetId = tf_navigatesetId;
-	}
-	public _Module getTf__module() {
-		return tf__module;
-	}
-	public void setTf__module(_Module tf__module) {
-		this.tf__module = tf__module;
 	}
 	public int getTf_order() {
 		return tf_order;
@@ -113,6 +107,12 @@ public class _ModuleGridNavigate implements Model {
 	}
 	public void setTf_reverseOrder(boolean tf_reverseOrder) {
 		this.tf_reverseOrder = tf_reverseOrder;
+	}
+	public _Module getTf_Module() {
+		return tf_Module;
+	}
+	public void setTf_Module(_Module tf_Module) {
+		this.tf_Module = tf_Module;
 	}
 
 }

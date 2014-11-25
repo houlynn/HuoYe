@@ -4,7 +4,7 @@ Ext.define("core.base.102.store.LevelStore",{
 	model:factory.ModelFactory.getModelByName("com.ufo.framework.system.model.ui.JSONTreeNode","checked").modelName,
 	proxy:{
 		type:"ajax",
-		url:"/102/getTree.action",
+		url:"/102/L001.action",
 		extraParams :{excludes: 'checked'},
 		reader:{
 			type:"json"

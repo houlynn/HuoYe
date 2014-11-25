@@ -19,6 +19,10 @@ public class DataInsertResponseInfo implements Serializable {
 
 	private Integer resultCode;
 	private List<Object> records; // extjs需要返回的是一个数组，单条记录也要加到数组里
+	
+	private String defaultMsg="添加成功!";
+	
+	
 	private Map<String, String> errorMessage;
 
 	// 如果是新增和修改后，将模块名称和主键保存在这里，在controller层再取得 record 返回
@@ -81,6 +85,14 @@ public class DataInsertResponseInfo implements Serializable {
 
 	public void setKey(String key) {
 		this.key = key;
+	}
+
+	public String getDefaultMsg() {
+		return defaultMsg;
+	}
+
+	public void setDefaultMsg(String defaultMsg) {
+		this.defaultMsg = defaultMsg;
 	}
 	
 	

@@ -20,6 +20,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.annotation.TreeItemName;
+import com.ufo.framework.annotation.TreeItemValue;
 import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 
@@ -38,6 +40,7 @@ public class _ModuleGridSchemeGroup  implements Model{
 
 	public static final String GRIDGROUPID = "tf_gridGroupId";
 
+	@TreeItemValue
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
@@ -54,6 +57,7 @@ public class _ModuleGridSchemeGroup  implements Model{
 	@Column(nullable = false)
 	private Integer tf_gridGroupOrder;
 
+	@TreeItemName
 	@FieldInfo(title = "分组名称", uniqueField = true, number = 40)
 	@Column(length = 50, nullable = false)
 	private String tf_gridGroupName;

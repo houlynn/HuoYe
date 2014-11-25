@@ -29,7 +29,7 @@ import com.ufo.framework.common.model.BaseEntity;
 @DynamicUpdate(true)
 @DynamicInsert(true)
 @Entity
-@TableInfo(group = "基础信息", id = 102, title = "楼宇信息")
+@TableInfo(group = "基础信息", id = 103, title = "楼宇信息")
 public class LevelInfo extends BaseEntity {
 	@Id
 	@GeneratedValue(generator = "increment")
@@ -45,7 +45,7 @@ public class LevelInfo extends BaseEntity {
 	@JsonIgnore
 	@ManyToOne(optional=true,fetch=FetchType.LAZY)
 	@JoinColumn(name="tf_viid")
-	@FieldInfo(title = "楼宇名称", uniqueField = true, number = 30)
+	@FieldInfo(title = "楼宇名称", number = 30)
 	private Village tf_village;
 	
 	@JsonIgnore

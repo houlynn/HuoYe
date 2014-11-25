@@ -39,6 +39,7 @@ public class _ModuleField implements Model  {
 	public static final String ONETOONE = "OneToOne";
 	public static final String ONETOMANY = "OneToMany";
 
+
 	@Id
 	@FieldInfo(title = "字段序号", number = 10)
 	@Column(nullable = false)

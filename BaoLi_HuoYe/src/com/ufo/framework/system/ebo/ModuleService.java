@@ -208,7 +208,11 @@ public class ModuleService extends Ebo implements ModelEbi {
 				 Class<? > clazz=  ModuleServiceFunction.getModuleBeanClass(moduleFilter.getModuleName());
 				 Object foreignBean=clazz.newInstance();
 				 ModuleServiceFunction.setValueToRecord(moduleFilter.getPrimarykey(), foreignBean, moduleFilter.getEqualsValue());
-				 String foreignKey="tf_"+moduleFilter.getModuleName(). toLowerCase();
+				 
+				 
+				 
+				 
+				 String foreignKey="tf"+moduleFilter.getModuleName();
 				 ModuleServiceFunction.setValueToRecord(foreignKey, record,foreignBean );
 			}
 			save(record);
@@ -267,19 +271,11 @@ public class ModuleService extends Ebo implements ModelEbi {
 		debug("数据delete:模块" + moduleName + ",主键" + id);
 		DataDeleteResponseInfo result = new DataDeleteResponseInfo();
 		Class<?> beanClass = ModuleServiceFunction.getModuleBeanClass(moduleName);
-		try {
 			Object record = findById(beanClass, id);
 			delete(record);
 			result.setResultCode(STATUS_SUCCESS);
-		} catch (DataIntegrityViolationException e) {
-			result.setResultMessage(-1, "请检查与本记录相关联的其他数据是否全部清空！");
-			e.printStackTrace();
-		} catch (Exception e) {
-			result.setResultMessage(-1, e.getMessage());
-			e.printStackTrace();
-		}
-		debug("delete返回值：" + result.toString());
-		return result;
+		    debug("delete返回值：" + result.toString());
+		    return result;
 	}
 
 	/**

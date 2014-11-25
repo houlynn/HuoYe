@@ -16,6 +16,8 @@ public class DataDeleteResponseInfo implements Serializable {
 	private Integer resultCode;
 	private List<String> okMessageList;
 	private List<String> errorMessageList;
+	
+	private String defaultMsg="删除成功!";
 
 	public DataDeleteResponseInfo() {
 		super();
@@ -59,6 +61,14 @@ public class DataDeleteResponseInfo implements Serializable {
 
 	public void setOkMessageList(List<String> okMessageList) {
 		this.okMessageList = okMessageList;
+	}
+
+	public String getDefaultMsg() {
+		return defaultMsg;
+	}
+
+	public void setDefaultMsg(String defaultMsg) {
+		this.defaultMsg = defaultMsg;
 	}
 
 }

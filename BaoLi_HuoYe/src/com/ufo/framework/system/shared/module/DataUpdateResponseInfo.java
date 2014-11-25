@@ -18,6 +18,8 @@ public class DataUpdateResponseInfo implements Serializable {
 	private Integer resultCode;
 	private List<Object> records; // extjs需要返回的是一个数组，单条记录也要加到数组里
 	private Map<String, String> errorMessage;
+	
+	private String defaultMsg="更新成功!";
 
 	public DataUpdateResponseInfo() {
 		super();
@@ -49,4 +51,14 @@ public class DataUpdateResponseInfo implements Serializable {
 	public void setErrorMessage(Map<String, String> errorMessage) {
 		this.errorMessage = errorMessage;
 	}
+
+	public String getDefaultMsg() {
+		return defaultMsg;
+	}
+
+	public void setDefaultMsg(String defaultMsg) {
+		this.defaultMsg = defaultMsg;
+	}
+	
+	
 }

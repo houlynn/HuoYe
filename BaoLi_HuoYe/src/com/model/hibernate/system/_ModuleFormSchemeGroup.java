@@ -20,6 +20,8 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.annotation.TreeItemName;
+import com.ufo.framework.annotation.TreeItemValue;
 import com.ufo.framework.common.model.BaseEntity;
 import com.ufo.framework.common.model.Model;
 @Table(name="_ModuleFormSchemeGroup")
@@ -31,6 +33,7 @@ public class _ModuleFormSchemeGroup  implements Model {
 
 	public static final String FORMGROUPID = "tf_formGroupId";
 
+	@TreeItemValue
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
@@ -47,6 +50,7 @@ public class _ModuleFormSchemeGroup  implements Model {
 	@Column(nullable = false)
 	private Integer tf_formGroupOrder;
 
+	@TreeItemName
 	@FieldInfo(title = "分组名称", uniqueField = true, number = 40)
 	@Column(nullable = false, length = 50)
 	private String tf_formGroupName;

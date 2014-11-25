@@ -11,9 +11,15 @@ Ext.define("core.util.SuppleUtil",{
 			async:false,
 			success:function(response){
 				data = Ext.decode(Ext.value(response.responseText,'{}'));
+				if(data.defaultMsg){
+				  system.smileInfo(data.defaultMsg);
+				}
 			},
 			failure : function(response){
-		    	alert('数据请求出错了！！！！\n错误信息：\n'+response.responseText);
+				var  errorinfo = Ext.decode(Ext.value(response.responseText,'{}'));
+				 system.errorAlertInfo(errorinfo.errorInfo.errorMessage.error,"错误提示")
+		    	
+		    	return; 
 		    }
 		};
 		var request=Ext.apply(request,config);

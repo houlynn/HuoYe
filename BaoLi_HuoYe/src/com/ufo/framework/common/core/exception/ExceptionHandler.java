@@ -40,7 +40,7 @@ public class ExceptionHandler extends HandlerExceptionResolverComposite implemen
 			error("删除数据异常");
 		}else{
 			errorInfo.setResultCode(ResponseErrorInfo.STATUS_FAILURE);
-			errorInfo.getErrorMessage().put("msg", "未知错误!");
+			errorInfo.getErrorMessage().put("error", "未知错误!");
 		}
 		error( e.getMessage(),e);
 		return new ModelAndView("jsonView").addObject("errorInfo", errorInfo);
