@@ -81,10 +81,6 @@ public class ModuleService extends Ebo implements ModelEbi {
 		System.out.println("sort: "+sort+"query :"+query+" columns: "+columns +" navigates ："+navigates +" parentFilter ");
 	    System.out.println(parentFilter);
 		SortParameter sorts[] = SortParameter.changeToSortParameters(sort);
-		
-		
-		
-		
 		List<SqlModuleFilter> navigateFilters = changeToNavigateFilters(navigates);
 		SqlModuleFilter pFilter = null;
 		if (parentFilter != null && parentFilter.length() > 1) {
@@ -208,10 +204,6 @@ public class ModuleService extends Ebo implements ModelEbi {
 				 Class<? > clazz=  ModuleServiceFunction.getModuleBeanClass(moduleFilter.getModuleName());
 				 Object foreignBean=clazz.newInstance();
 				 ModuleServiceFunction.setValueToRecord(moduleFilter.getPrimarykey(), foreignBean, moduleFilter.getEqualsValue());
-				 
-				 
-				 
-				 
 				 String foreignKey="tf"+moduleFilter.getModuleName();
 				 ModuleServiceFunction.setValueToRecord(foreignKey, record,foreignBean );
 			}

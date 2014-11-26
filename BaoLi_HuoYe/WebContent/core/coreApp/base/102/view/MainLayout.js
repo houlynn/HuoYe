@@ -7,8 +7,9 @@ Ext.define("core.base.102.view.MainLayout",{
 		region:"west",
 		width:comm.get("clientWidth")*0.18
 	},{
-		xtype:"modulepanel",
+		xtype:"gridModue",
 		title:'用户信息',
-		region:"center"
+		region:"center",
+		
 	}]
 })

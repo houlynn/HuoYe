@@ -49,8 +49,8 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 							columns.push(group);
 						}
 					}
-					console.log("===================grid clunmm===================")
-					console.log(columns)
+				    console.log("===========colunn======================")
+					console.log(columns);
 					return columns;
 				},
 
@@ -118,15 +118,21 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 							break;
 
 						case 'Boolean' :
-							field.xtype = 'checkcolumn';
-							field.stopSelection = false;
-							field.processEvent = function(type) { // 加入这一句，可以防止点中修改
-								if (type == 'click')
-									return false;
-							};
-						     editor : {
-											xtype : 'checkcolumn'
-							}
+							Ext.apply(field, {
+										align : 'right',
+										xtype : 'checkcolumn',
+										stopSelection:false,
+										processEvent:function(type) { // 加入这一句，可以防止点中修改
+								         if (type == 'click')
+									     return false;
+							             },
+							             editor:{
+									           xtype : "basecombobox",
+					                           ddCode : "BOLEAN",
+					                           allowBlank : false,
+					                           hideTrigger : false
+							             }
+									});
 							break;
 
 						case 'Integer' :
