@@ -60,7 +60,7 @@ Ext.define('core.app.module.factory.FormFieldFactory', {
 		 */
 		getFieldXType : function(fieldDefine, field) {
 			    console.log("=========fieldDefine========getFieldXType==================");
-		        console.log(fieldDefine);
+		        console.log(fieldDefine.tf_fieldType);
 			
 			
 				switch (fieldDefine.tf_fieldType) {
@@ -101,6 +101,26 @@ Ext.define('core.app.module.factory.FormFieldFactory', {
 								}
 							}
 						};
+						case 'int' :
+						return {
+							minValue : -9999999999,
+							maxValue : 9999999999,
+							fieldStyle : "text-align:right",
+							size : this.integerDefaultSize,
+							xtype : 'numberfield',
+							enableKeyEvents : true,
+							listeners : {
+								keydown : function(field, e, eOpts) {
+									if (e.getKey() == Ext.EventObject.ENTER) {
+										var f = field.nextSibling('field[readOnly=false]');
+										if (!!f)
+											f.focus();
+										return false;
+									}
+								}
+							}
+						};
+						
 					case 'Money' :
 						return {
 							size : this.moneyDefaultSize,
@@ -117,6 +137,15 @@ Ext.define('core.app.module.factory.FormFieldFactory', {
 							hideTrigger : true,
 							xtype : 'numberfield'
 						};
+						case 'double' :
+						return {
+							minValue : -9999999999,
+							maxValue : 9999999999,
+							size : this.moneyDefaultSize,
+							hideTrigger : true,
+							xtype : 'numberfield'
+						};
+						
 					case 'Percent' :
 						return {
 							size : this.moneyDefaultSize,

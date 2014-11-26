@@ -179,6 +179,7 @@ Ext.define('core.app.module.factory.ModelFactory', {
 				case 'Datetime' :
 					return 'date';
 				case 'Double' :
+					return 'double';
 				case 'Money' :
 				case 'Percent' :
 					return 'float';
