@@ -4,10 +4,10 @@
  * 
  */
 
-Ext.define('core.app.view.region.BaseForm', {
+Ext.define('core.base.102.view.BaseForm', {
 			extend : 'Ext.form.Panel',
 			style:'border-width:0 0 0 0;',
-			alias : 'widget.baseform',
+			alias : 'widget.basemodueform',
 			autoScroll : true,
 			buttonAlign : 'center',
 			initComponent : function() {

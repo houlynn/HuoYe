@@ -204,7 +204,13 @@ public class ModuleService extends Ebo implements ModelEbi {
 				 Class<? > clazz=  ModuleServiceFunction.getModuleBeanClass(moduleFilter.getModuleName());
 				 Object foreignBean=clazz.newInstance();
 				 ModuleServiceFunction.setValueToRecord(moduleFilter.getPrimarykey(), foreignBean, moduleFilter.getEqualsValue());
-				 String foreignKey="tf"+moduleFilter.getModuleName();
+				 String foreignKey;
+				 if(moduleFilter.getModuleName().contains("_")){
+					 foreignKey="tf"+moduleFilter.getModuleName();
+				 }else{
+					 foreignKey="tf_"+moduleFilter.getModuleName(); 
+				 }
+			
 				 ModuleServiceFunction.setValueToRecord(foreignKey, record,foreignBean );
 			}
 			save(record);

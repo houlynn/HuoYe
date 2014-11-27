@@ -52,7 +52,7 @@
 			  <list>
 			  <value>classpath*:hibernate.cfg.xml</value>  
 			  </list>
-</property>
+            </property>
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.show_sql">false</prop>

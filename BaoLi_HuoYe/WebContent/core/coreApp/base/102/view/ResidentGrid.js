@@ -31,7 +31,7 @@ Ext.define("core.base.102.view.ResidentGrid",{
    initComponent : function() {
    	  var self=this;
    	   var  thar = [
-   		{text : '新增',  ref:'addButton', xtype : 'splitbutton',itemId : 'new',glyph : 0xf016,menu : [{text : '复制新增', ref:'copyadd', tooltip : '新增时先将当前记录添入到新记录中',itemId : 'newwithcopy',glyph : 0xf0c5,
+   		{text : '新增',   ref:'addButton', xtype : 'splitbutton',itemId : 'new',glyph : 0xf016,menu : [{text : '复制新增', ref:'copyadd', tooltip : '新增时先将当前记录添入到新记录中',itemId : 'newwithcopy',glyph : 0xf0c5,
 				  listeners : {
 								click:function(){
 								   var grid=self;
@@ -97,7 +97,7 @@ Ext.define("core.base.102.view.ResidentGrid",{
 	if(!this.thar){
 	  barItem=thar
 	}else{
-	 barItem=this.thar;
+	 barItem=Ext.apply(thar,this.thar);
 	}
    	var viewModel=system.getViewModel(104)
    		this.model = core.app.module.factory.ModelFactory.getModelByModule(viewModel.data);

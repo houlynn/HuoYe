@@ -2,6 +2,7 @@ package com.model.hibernate.property;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
@@ -9,6 +10,7 @@ import javax.persistence.ManyToOne;
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
+import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
@@ -21,6 +23,8 @@ import com.ufo.framework.common.model.BaseEntity;
 public class ResidentInfo  extends BaseEntity{
 
 	@Id
+	@GeneratedValue(generator = "increment")
+	@GenericGenerator(name = "increment", strategy = "increment")
 	@FieldInfo(title = "ID号", number = 10, hidden = false)
 	private int tf_residentId;
 	  ///////////////业主信息///////////////////////////////

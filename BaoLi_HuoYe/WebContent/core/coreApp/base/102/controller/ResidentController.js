@@ -11,7 +11,6 @@ Ext.define("core.base.102.controller.ResidentController",{
 		var self=this
 		//事件注册
 		this.control({
-			
 		"container[xtype=gridModue] button[ref=addButton]":{
 								click : function (btn){
 	                             var modulegrid = btn.up("gridModue");
@@ -133,17 +132,32 @@ Ext.define("core.base.102.controller.ResidentController",{
 								}
 				},
 			"container[xtype=102.levelTree]":{
-				itemclick:function(treeview,record,item,index,e,eOpts){
+				itemclick:function(treeview,node,item,index,e,eOpts){
 					var tree=treeview.ownerCt;
 					var treeDel=tree.down("button[ref=treeDel]");
 					treeDel.setDisabled(false);
-		/*			var store=userGrid.getStore();
-					var proxy=store.getProxy();
-					proxy.extraParams={
-						whereSql:" and deptId in("+ids.join(",")+")"					
-					};
-					store.load();
-					*/
+					var gridModue=treeview.ownerCt.ownerCt.down("gridModue");
+					var modue=system.getModuleDefine(node.raw.nodeInfo);
+		         var navigate={
+                			moduleName:node.raw.nodeInfo,
+                			tableAsName:"_t"+modue.tf_moduleId,
+                			text:node.raw.text,
+                			primarykey:modue.tf_primaryKey,
+                		    fieldtitle:node.raw.description,
+                		    equalsValue:node.raw.code,
+                		    isCodeLevel:false
+                	};
+                	console.log(navigate);
+                	
+                	var store=gridModue.store;
+                	if(store.navigates){
+                		store.navigates.splice(0,store.navigates.length);
+                		store.navigates.push(navigate);
+                	}
+                  	var proxy=store.getProxy();
+                  	console.log(proxy.extraParams);
+					proxy.extraParams.navigates=Ext.encode(store.navigates);
+					store.load();	  
 				}
 			},
 			

@@ -6,15 +6,21 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import net.sf.json.JSONObject;
+
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.model.hibernate.property.LevelInfo;
+import com.model.hibernate.property.ResidentInfo;
 import com.model.hibernate.property.Village;
+import com.model.hibernate.system._Module;
 import com.ufo.framework.common.constant.RequestPathConstants;
 import com.ufo.framework.common.core.exception.DeleteException;
 import com.ufo.framework.common.core.exception.InsertException;
@@ -26,7 +32,9 @@ import com.ufo.framework.common.core.web.ModuleServiceFunction;
 import com.ufo.framework.common.log.LogerManager;
 import com.ufo.framework.system.ebi.Ebi;
 import com.ufo.framework.system.ebi.ModelEbi;
+import com.ufo.framework.system.ebo.ApplicationService;
 import com.ufo.framework.system.ebo.ModuleService;
+import com.ufo.framework.system.irepertory.IModelRepertory;
 import com.ufo.framework.system.shared.module.DataDeleteResponseInfo;
 import com.ufo.framework.system.shared.module.DataInsertResponseInfo;
 @Controller
@@ -43,6 +51,8 @@ public class ResidentController implements LogerManager {
 		this.ebi = ebi;
 	}
 	
+	@Resource
+	private IModelRepertory moduleDAO;
 	@Resource
 	private ModelEbi moduleService;
 	
@@ -68,10 +78,11 @@ public class ResidentController implements LogerManager {
 			JSONTreeNode node=new JSONTreeNode();
 			node.setId(l.getTf_leveId()+"");
 			node.setText(l.getTf_leveName());
-			node.setCode(l.getTf_village().getTf_viid()+"");
+			node.setCode(l.getTf_leveId()+"");
 			node.setNodeInfo("LevelInfo");
 			node.setIcon(l.getIcon());
-			//node.setOrderIndex(r.getOrderIndex());
+			node.setDescription("tf_leveName");
+			node.setCount(100);
 			lists.add(node);
 		}
 		}catch(Exception e){
@@ -120,6 +131,80 @@ public class ResidentController implements LogerManager {
 					}
 					return result;
 			 }
+	
+	
+/*	
+
+	@RequestMapping(value = "/create", method = RequestMethod.POST)
+	public @ResponseBody
+	DataInsertResponseInfo add(String moduleName, @RequestBody String inserted,
+			HttpServletRequest request) throws Exception {
+		DataInsertResponseInfo result =new DataInsertResponseInfo();
+		 String parentFilter=request.getParameter("parentFilter");
+		 String navigates=request.getParameter("navigates");
+		 _Module module=ApplicationService.getModuleWithName(moduleName);
+		try {
+			JSONObject updateJsonObject = JSONObject.fromObject(inserted);
+			ResidentInfo record=new ResidentInfo();
+			moduleDAO.updateValueToBean(moduleName, record, updateJsonObject);
+			String hql="  "
+			record.seTf_residentId(record.getTf_levelInfo().getTf_leveId())
+			
+		
+			
+			
+			result = moduleService.add(moduleName, inserted, parentFilter,navigates, request);
+			if (result.getKey() != null) // 如果是空的话，那么就没有保存，错误原因已经在errorMessage里了
+				result.getRecords().add(
+						moduleDAO.getModuleRecord(moduleName, result.getKey(), request).toString());
+		
+			
+			
+			
+			
+			
+			
+			
+			
+		} catch (DataAccessException e) {
+		      error("DataAccessException异常", e);
+			if (e.getRootCause().getMessage().toLowerCase().indexOf("primary") != -1){
+				getInsertException(module.getTf_moduleName(),module.getTf_primaryKey() +"插入记录的主键值与数据库中原有的值重复!",ResponseErrorInfo.STATUS_VALIDATION_ERROR);
+		}else{
+			
+			getInsertException(module.getTf_moduleName(),e.getMessage(),ResponseErrorInfo.STATUS_VALIDATION_ERROR);
+		}
+	}catch (Exception e) {
+		error("添加异常", e);
+		// TODO Auto-generated catch block
+		getInsertException(moduleName,"添加业主信息失败!",ResponseErrorInfo.STATUS_FAILURE);
+	}
+		
+		return result;
+	}
+	*/
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	public void getInsertException(String modeuName,String msg,int code) throws InsertException{
 		 InsertException exception=	 new InsertException(); 

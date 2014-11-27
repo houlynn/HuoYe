@@ -64,7 +64,6 @@ Ext.define("core.app.view.region.NavigateTree", {
                 	console.log(grid);
                 	grid.setTitle(title);
                 	var modue=system.getModuleDefine(node.raw.nodeInfo);
-                	console.log(modue);
                 	navigates:[{"moduleName":"City","tableAsName":"_t7012","primarykey":"tf_cityId","fieldtitle":"\u5e02","equalsValue":"0301","equalsMethod":null,"text":"\u77f3\u5bb6\u5e84\u5e02","isCodeLevel":false}]
                 	var navigate={
                 			moduleName:node.raw.nodeInfo,
@@ -77,6 +76,7 @@ Ext.define("core.app.view.region.NavigateTree", {
                 	};
                 	var store=grid.store;
                 	if(store.navigates){
+                		store.navigates.splice(0,store.navigates.length);
                 		store.navigates.push(navigate);
                 	}
                   	var proxy=store.getProxy();
