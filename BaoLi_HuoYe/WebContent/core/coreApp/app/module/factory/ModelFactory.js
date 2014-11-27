@@ -26,7 +26,9 @@ Ext.define('core.app.module.factory.ModelFactory', {
 						read : 'rest/module/fetchdata.do',
 						update : 'rest/module/update.do',
 						create : 'rest/module/create.do',
-						destroy : 'rest/module/remove.do'
+						destroy : 'rest/module/remove.do',
+						errorInfo:{},
+						
 					},
 					actionMethods : {
 						create : 'POST',
@@ -48,14 +50,21 @@ Ext.define('core.app.module.factory.ModelFactory', {
 		
 					listeners : {
 						exception : function(proxy, response, operation) {
-							// 将出错信息加到proxy中去，传递到store的sync中显示出错信息，显示后将此属性删除
+							  errors.clear();
+							 // 将出错信息加到proxy中去，传递到store的sync中显示出错信息，显示后将此属性删除
+							var errorInfo= Ext.decode(response.responseText, true);
+							system.errorAlertInfo(errorInfo.errorInfo.errorMessage.error);
+							
+							
+							
+					/*		// 将出错信息加到proxy中去，传递到store的sync中显示出错信息，显示后将此属性删除
 							proxy.errorInfo = Ext.decode(response.responseText, true);
 							// 如果出错信息解析出错，则加入一个缺省的
 							if (!proxy.errorInfo)
 								proxy.errorInfo = {
 									resultCode : -1,
 									errorMessage : '未知原因:' + response.responseText
-								}
+								}*/
 						}
 					}
 				},
@@ -118,7 +127,7 @@ Ext.define('core.app.module.factory.ModelFactory', {
 			return model;
 		},
 		
-		getModelByModule : function(module,apiConfig) {
+		getModelByModuleConfig : function(module,apiConfig) {
 			
 			var api={
 				// 在这里加rest/是因为在web.xml中
@@ -168,14 +177,14 @@ Ext.define('core.app.module.factory.ModelFactory', {
 		
 					listeners : {
 						exception : function(proxy, response, operation) {
+							alert(0);
 							// 将出错信息加到proxy中去，传递到store的sync中显示出错信息，显示后将此属性删除
-							proxy.errorInfo = Ext.decode(response.responseText, true);
+							var  errorInfo = Ext.decode(response.responseText, true);
+							  proxy.errorInfo=errorInfo;
+							  system.errorAlertInfo(errorInfo.error);
+							  return ;
+							  
 							// 如果出错信息解析出错，则加入一个缺省的
-							if (!proxy.errorInfo)
-								proxy.errorInfo = {
-									resultCode : -1,
-									errorMessage : '未知原因:' + response.responseText
-								}
 						}
 					}
 				},

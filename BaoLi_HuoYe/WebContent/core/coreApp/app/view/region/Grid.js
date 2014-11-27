@@ -43,14 +43,15 @@ Ext.define('core.app.view.region.Grid', {
 			// 每一行编辑完保存之后，都提交数据
 			e.grid.getStore().sync({
 						callback : function(data,store) {
-							 e.record.commit();
+							   e.record.commit();
+							   
 							  system.smileInfo("保存成功!")
 						}
 					});
 			var proxy= e.grid.getStore().getProxy();
 			var errorInfo=proxy.proxy;
 			if(errorInfo){
-				
+				system.errorAlertInfo(errorInfo.errorMessage);
 			}else{
 				showMsg("添加信息","添加成功!",1);
 			}

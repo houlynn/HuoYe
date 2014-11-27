@@ -22,9 +22,11 @@ Ext.define('core.app.view.region.BaseForm', {
 								var form = button.up('form');
 								console.log(button.up('form').getForm().getRecord());
 								button.up('form').updateRecord();
-							    var store= self.up("basewindow").grid.getStore();
-								 button.up('form').getForm().getRecord().save();
-							     store.reload();
+								button.up('form').getForm().getRecord().save();
+								system.smileInfo("保存成功!")
+					            self.up("basewindow").grid.getStore().reload();
+								this.setDisabled(true);
+								
 							}
 						},{
 							text : '关闭',

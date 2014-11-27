@@ -31,6 +31,8 @@ Ext.Loader.setPath({
 
 /**静态变量声明*/
  var comm = Ext.create("Ext.util.MixedCollection");
+ 
+var errors = Ext.create("Ext.util.MixedCollection");
  /**声明主控制器*/
  var coreApp=null;
  /**持久化登录用户信息*/

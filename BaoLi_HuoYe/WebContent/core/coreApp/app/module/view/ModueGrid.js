@@ -43,13 +43,6 @@ Ext.define('core.app.module.view.ModueGrid', {
 							  system.smileInfo("保存成功!")
 						}
 					});
-			var proxy= e.grid.getStore().getProxy();
-			var errorInfo=proxy.proxy;
-			if(errorInfo){
-				
-			}else{
-				showMsg("添加信息","添加成功!",1);
-			}
 		});
 
 		this.viewConfig = {
