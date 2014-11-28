@@ -8,7 +8,7 @@ Ext.define('core.app.view.region.BaseForm', {
 			extend : 'Ext.form.Panel',
 			style:'border-width:0 0 0 0;',
 			alias : 'widget.baseform',
-			autoScroll : true,
+			autoScroll : false,
 			buttonAlign : 'center',
 			initComponent : function() {
 				var me = this;
@@ -23,8 +23,11 @@ Ext.define('core.app.view.region.BaseForm', {
 								console.log(button.up('form').getForm().getRecord());
 								button.up('form').updateRecord();
 							    var store= self.up("basewindow").grid.getStore();
-								 button.up('form').getForm().getRecord().save();
-							     store.reload();
+							      if (form.isValid()) {
+							    		 button.up('form').getForm().getRecord().save();
+									     store.reload();
+							      }
+							
 							}
 						},{
 							text : '关闭',
