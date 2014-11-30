@@ -380,6 +380,7 @@ public class ModuleController implements LogerManager {
 				treeNode.setCode(fieldvalueV+"");//val
 				treeNode.setExpanded(true);
 				treeNode.setNodeInfo(modue); //modue 
+				treeNode.setCount(100);
 				treeNode.setDescription(fieldName);
 				treeNode.setNodeInfoType(CommConstants.NODE_TYPE_FIELDQUERY);//isCodeLevel
 				return treeNode;

@@ -6,6 +6,11 @@ Ext.define('core.main.view.region.MainMenuTree', {
 			alias : 'widget.mainmenutree',
 			style:'border-width:0 0 0 0;',
 			title : '系统菜单',
+			collapseNavigate: !1,
+			split: !0,
+            collapsible: !0,
+            collapsed: !0,
+           collapseMode: "mini",
 			listeners: { itemclick: function (view, node, item, index, e, eOpts) {
 				var nodeInfo=node.get("nodeInfo");
 	        	var config=nodeInfo.split(",");

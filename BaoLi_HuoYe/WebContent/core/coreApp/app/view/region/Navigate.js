@@ -83,6 +83,16 @@ Ext.define('core.app.view.region.Navigate', {
                        for (var i in e) t.navigateValues.add(i, e[i])
                }))
        },
+       getSettingMenu: function() {
+                return this.settingMenu || (this.settingMenu = Ext.create("core.app.view.region.SettingMenu", {
+                        navigate: this
+                })),
+                this.settingMenu
+        },
+       
+       
+       
+       
        applyNavigateMode: function(e) {
                this.navigateMode = e;
                var t;

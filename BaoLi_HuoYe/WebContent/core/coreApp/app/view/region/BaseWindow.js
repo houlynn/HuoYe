@@ -14,6 +14,10 @@ Ext.define('core.app.view.region.BaseWindow', {
 			shadowOffset : 30,
 			style:'border-width:0 0 0 0;',
 			layout : 'fit',
+			module: void 0,
+			formScheme: void 0,
+            formtype: void 0,
+            form: void 0,
 			 listeners: {
 		            hide: function (win, eOpts) {
 		                //关闭动作自动清除item，也可单独写到工具条外面
@@ -23,7 +27,6 @@ Ext.define('core.app.view.region.BaseWindow', {
 			initComponent : function() {
 				this.maxHeight = document.body.clientHeight * 0.98;
 				var me = this;
-				console.log( this.viewModel);
 				this.formScheme = this.viewModel.get('tf_formSchemes')[0]; // 取得第一个form方案
 				this.title = this.viewModel.get('tf_title');
 				this.glyph = this.viewModel.get('tf_glyph');
