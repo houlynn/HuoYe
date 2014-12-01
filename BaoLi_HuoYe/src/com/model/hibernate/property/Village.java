@@ -17,6 +17,8 @@ import com.ufo.framework.annotation.DDItemName;
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.NodeType;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.annotation.TreeItemName;
+import com.ufo.framework.annotation.TreeItemValue;
 import com.ufo.framework.common.core.ext.ExtFieldType;
 import com.ufo.framework.common.core.ext.TreeNodeType;
 import com.ufo.framework.common.model.BaseEntity;
@@ -34,6 +36,7 @@ import com.ufo.framework.common.model.BaseEntity;
 public class Village extends BaseEntity {
 	
 	
+	@TreeItemValue
 	@DDItemCode
 	@Id
 	@GeneratedValue(generator = "increment")
@@ -42,6 +45,7 @@ public class Village extends BaseEntity {
 	private int tf_viid;
 	@DDItemName
 	@Column(length=300)
+	@TreeItemName
 	@FieldInfo(title="小区名称",number=20,uniqueField=true)
 	private String  tf_name;
 	@Type(type="text")  
