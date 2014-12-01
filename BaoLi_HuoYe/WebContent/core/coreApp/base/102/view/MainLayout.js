@@ -10,6 +10,7 @@ Ext.define("core.base.102.view.MainLayout",{
 		xtype:"gridModue",
 		title:'用户信息',
 		region:"center",
+		code:104,
 		
 	}]
 })

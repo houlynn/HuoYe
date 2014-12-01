@@ -13,17 +13,12 @@ Ext.define("core.base.102.controller.ResidentController",{
 		this.control({
 		"container[xtype=gridModue] button[ref=addButton]":{
 								click : function (btn){
-	                         /*    var modulegrid = btn.up("gridModue");
-			                     var model = Ext.create(modulegrid.getStore().model);
-			                     model.set(model.idProperty, null); // 设置主键为null,可自动
-			                     // 插入空记录到第一条
-			                       modulegrid.getStore().insert(0, model);
-			                       // 编辑第一条
-			                       modulegrid.rowEditing.startEdit(0,0); */
 							var modulegrid = btn.up("gridModue");	
 						     var model = Ext.create(modulegrid.getStore().model);
 			                 model.set(model.idProperty, null); // 设置主键为null,可自动
-			                var viewModel=modulegrid.viewModel;
+			               var viewModel=system.getViewModel(modulegrid.code)
+			                console.log("===============addButton========================")
+			                console.log(modulegrid);
 			                 var window = Ext.create('core.app.view.region.BaseWindow', {
 				                          viewModel:viewModel,
 				                            grid:modulegrid
