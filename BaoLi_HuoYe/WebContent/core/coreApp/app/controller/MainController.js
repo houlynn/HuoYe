@@ -9,6 +9,7 @@ Ext.define("core.app.controller.MainController",{
 		gridCtr:"core.app.controller.GridController",
 		panelCtr:"core.app.controller.PanelController",
 		queryCtr:"core.app.controller.QueryController",
+		basisCtr:"core.app.controller.BasisController",
 		gridActionUtil:"core.util.GridActionUtil",
 		suppleUtil:"core.util.SuppleUtil",
 		messageUtil:"core.util.MessageUtil",
@@ -26,6 +27,7 @@ Ext.define("core.app.controller.MainController",{
 		self.initGrid();
 		self.initPanel();
 		self.initQuery();
+		self.initBasis();
 		//注册事件
 		this.control(self.ctr);
 	},
@@ -34,6 +36,7 @@ Ext.define("core.app.controller.MainController",{
 		"core.app.base.BaseForm",
 		"core.app.base.BasePanel",
 		"core.app.base.BaseQueryPanel",
-		"core.app.base.BaseCenterPanel"
+		"core.app.base.BaseCenterPanel",
+		"core.app.basis.BasisGrid"
 		]
 });

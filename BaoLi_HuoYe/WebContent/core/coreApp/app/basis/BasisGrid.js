@@ -1,33 +1,27 @@
-Ext.define("core.base.102.view.ResidentGrid",{
+Ext.define("core.app.basis.BasisGrid",{
 	extend : 'Ext.grid.Panel',
 	alias : 'widget.gridModue',
 	style:'border-width:0 0 0 0;',
-   columnLines : true, // 加上表格线
+   columnLines : true, 
 	multiSelect : true,
 	width:"100%",
-	enableLocking : true, // 使grid可以锁定列
+	enableLocking : true, 
     tools : [{type : 'gear'}],
-    	listeners : {
-		 selectionChange : function(model, selected, eOpts){
+    
+    listeners : {
+		    selectionChange : function(model, selected, eOpts){
 			var viewModel=this.viewModel;
-			// 设置删除按钮的状态
-		   this.down('toolbar button#delete')[selected.length > 0
-					? 'enable'
-					: 'disable']();
-			// 下面将组织选中的记录的name显示在title上，有二种方案可供选择，一种是用下面的MVVM特性，第二种是调用refreshTitle()
+		    this.down('toolbar button#delete')[selected.length > 0? 'enable': 'disable']();
 			var selectedNames =viewModel.get("tf_title");
 			if (selected.length > 0) {
 				if (!!selected[0].getNameValue()){
-					selectedNames = selectedNames + '　『<em>' + selected[0].getNameValue()
-							+ '</em>'
-							+ (selected.length > 1 ? ' 等' + selected.length + '条' : '') + '』';
-				this.setTitle(selectedNames);
+					selectedNames = selectedNames + '　『<em>' + selected[0].getNameValue()+ '</em>'+ (selected.length > 1 ? ' 等' + selected.length + '条' : '') + '』';
+				    this.setTitle(selectedNames);
 				}
 			}
-			
-		 	
 		}
 	},
+	
    initComponent : function() {
    	  var self=this;
    	   var  thar = [
@@ -86,7 +80,6 @@ Ext.define("core.base.102.view.ResidentGrid",{
 						}, '-',  '-', '筛选', {
 							width : 60,
 							xtype : 'gridsearchfield',
-							// store : this.grid.getStore() // 现在用的local数据，不可以进行筛选
 							store : Ext.create('Ext.data.Store', {
 										proxy : {
 											type : 'rest'
@@ -109,6 +102,7 @@ Ext.define("core.base.102.view.ResidentGrid",{
 					this.dockedItems = [{
 					xtype : 'toolbar', // 按钮toolbar
 					dock : 'top',
+				   style:'border-width:0 0 0 0;',
 					items:barItem,
 					grid : this,
 					viewModel:viewModel
@@ -118,10 +112,7 @@ Ext.define("core.base.102.view.ResidentGrid",{
 					store : this.store,
 					displayInfo : true,
 					prependButtons : true,
-					dock : 'bottom',
-					items : [{ // 在最前面加入grid方案的选择Combo
-						//xtype : 'gridschemecombo'
-					}]
+					dock : 'bottom'
 				}];	
 		this.store.modulegrid = this;
 		this.viewModel=viewModel;
@@ -130,20 +121,18 @@ Ext.define("core.base.102.view.ResidentGrid",{
 		// 可以在grid中进行行编辑的设置
 		this.rowEditing = new Ext.grid.plugin.RowEditing({
 			     saveBtnText: '保存', 
-                   cancelBtnText: "取消", 
-					clicksToEdit : 2
+                 cancelBtnText: "取消", 
+				 clicksToEdit : 2
 				});
 		this.plugins = [this.rowEditing];
 		this.selType = 'rowmodel';
-		
-		
 		this.on('edit', function(editor, e) {
 					// 每一行编辑完保存之后，都提交数据
 			// 每一行编辑完保存之后，都提交数据
 			e.grid.getStore().sync({
 						callback : function(data,store) {
-							 e.record.commit();
-							  system.smileInfo("保存成功!")
+							    e.record.commit();
+							   system.smileInfo("保存成功!")
 						}
 					});
 			var proxy= e.grid.getStore().getProxy();
@@ -165,67 +154,16 @@ Ext.define("core.base.102.view.ResidentGrid",{
 					enableDrop : false  // 设为false，不允许在本grid中拖动
 					}]
 
-			};
-
-/*
-		// 创建grid列
-		// 默认第一个grid方案
-		this.gridSchemeId = viewModel.get('tf_gridSchemes')[0].tf_schemeOrder;
-		// 将第一个方案的columns生成，第一个方案是要先设置好，并不是gridschemecombo触发来生成的
-		this.columns = core.app.module.factory.ColumnsFactory.getColumns(viewModel);
-		console.log("======colun,m,,=======")
-		console.log(this.columns);
-		this.dockedItems = [{
-					xtype : 'gridtoolbar', // 按钮toolbar
-					dock : 'top',
-					grid : this,
-					viewModel:viewModel,
-					
-				}, {
-					xtype : 'pagingtoolbar', // grid数据分页
-					store : this.store,
-					displayInfo : true,
-					prependButtons : true,
-					dock : 'bottom',
-					items : [{ // 在最前面加入grid方案的选择Combo
-						//xtype : 'gridschemecombo'
-					}]
-				}];
-		this.callParent();
-	},
-
-	*//**
-	 * 在选中的记录发生变化时，修改当前title，这是不用MVVM特性的做法
-	 *//*
-	refreshTitle : function() {
-		var viewModel = this.up('modulepanel').viewModel;
-		var selected = this.getSelectionModel().getSelection();
-		var title = viewModel.get('tf_title');
-		if (selected.length > 0) {
-			if (!!selected[0].getNameValue())
-				title = title + '　〖<em>' + selected[0].getNameValue() + '</em>'
-						+ (selected.length > 1 ? ' 等' + selected.length + '条' : '') + '〗';
-		}
-		this.setTitle(title);
-	},
-
-	*//**
-	 * 重新适应所有列的宽度
-	 *//*
+			}
+				this.callParent();
+   },
+   
+   
 	columnAutoSize : function() {
 		Ext.Array.forEach(this.columnManager.getColumns(), function(column) {
 					if (!column.autoSizeDisabled) {
 						column.autoSize();
 					}
-				})
-	},
-*/
-				
-				
-				
-		this.callParent();
-   	
-   }
-    
-	
+				});
+	}
 })

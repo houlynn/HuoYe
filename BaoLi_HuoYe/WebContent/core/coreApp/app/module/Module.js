@@ -34,7 +34,7 @@ Ext.define('core.app.module.Module', {
 							modulePanel : this
 						});
 				this.items = [ {
-					xtype : 'modulegrid', // 模块的grid显示区域
+					xtype : 'gridModue', // 模块的grid显示区域
 					region : 'center',
 					modulePanel: this,
 					viewModel:viewModel,

@@ -10,22 +10,32 @@ Ext.define("core.base.102.controller.ResidentController",{
 	init:function(){
 		var self=this
 		//事件注册
-		this.control({
-		"container[xtype=gridModue] button[ref=addButton]":{
+	this.control({
+			/*"container[xtype=gridModue] button[ref=addButton]":{
 								click : function (btn){
-							var modulegrid = btn.up("gridModue");	
+							 var modulegrid = btn.up("gridModue");	
+							 var store=modulegrid.getStore();
+							 var store=modulegrid.store;
+							 
+							 	 var viewModel=system.getViewModel(modulegrid.code);
+							 console.log("===========viewm Moodel========================")
+							 console.log(viewModel);
+							 
+							 
+                	         if(!store.navigates||store.navigates.length==0){
+                	         	system.errorInfo("请选择小区再进行添加操作","错误提示");
+                	         	return;
+                	          }
+							 
 						     var model = Ext.create(modulegrid.getStore().model);
 			                 model.set(model.idProperty, null); // 设置主键为null,可自动
-			               var viewModel=system.getViewModel(modulegrid.code)
-			                console.log("===============addButton========================")
-			                console.log(modulegrid);
+			                 var viewModel=system.getViewModel(modulegrid.code)
 			                 var window = Ext.create('core.app.view.region.BaseWindow', {
 				                          viewModel:viewModel,
 				                            grid:modulegrid
 			                                 });
 			                    window.down('baseform').setData(model);
 	                            window.show();
-									
 								}, // 这里不要用handler，而要用click,因为下面要发送click事件
 								// 删除按钮在渲染后加入可以Drop的功能
 								render : function(btn) {
@@ -136,7 +146,7 @@ Ext.define("core.base.102.controller.ResidentController",{
 												}
 											})
 								}
-				},
+				},*/
 			"container[xtype=102.levelTree]":{
 				itemclick:function(treeview,node,item,index,e,eOpts){
 					var tree=treeview.ownerCt;
@@ -153,8 +163,6 @@ Ext.define("core.base.102.controller.ResidentController",{
                 		    equalsValue:node.raw.code,
                 		    isCodeLevel:false
                 	};
-                	console.log(navigate);
-                	
                 	var store=gridModue.store;
                 	if(store.navigates){
                 		store.navigates.splice(0,store.navigates.length);
@@ -202,7 +210,6 @@ Ext.define("core.base.102.controller.ResidentController",{
 			
 			"container[xtype=102.levelTree] button[ref=treechildIns]":{
 				click:function(btn){
-					alert(0);
 					var tree=btn.up("panel[xtype=rbac.depttree]");
 					var records=tree.getSelectionModel().getSelection();
 					if(records.length<=0){

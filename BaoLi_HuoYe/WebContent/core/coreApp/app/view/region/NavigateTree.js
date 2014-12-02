@@ -43,12 +43,12 @@ Ext.define("core.app.view.region.NavigateTree", {
                 hidden: !0
         }],
         listeners: {
-                load: function() {
+              load: function() {
                         this.getView().refresh(),
                         this.calcMaxLevel(this.getRootNode()),
                         this.setLevel(1)
                 },
-                afterrender: function(e) { - 1 == this.path.search("--") && this.down("tool[type=pin]").setVisible(!1),
+             afterrender: function(e) { - 1 == this.path.search("--") && this.down("tool[type=pin]").setVisible(!1),
                         e.getHeader().insert(5, {
                                 xtype: "treesearchfield",
                                 emptyText: "\u8f93\u5165\u7b5b\u9009\u503c",
@@ -58,6 +58,7 @@ Ext.define("core.app.view.region.NavigateTree", {
                                 treePanel: e
                         })
                 },
+                   /*
                 itemclick: function (view, node, item, index, e, eOpts){
                 	var grid=view.ownerCt.ownerCt.ownerCt.ownerCt.ownerCt.down("modulegrid");
                 	var moduelPanel=view.ownerCt.ownerCt.ownerCt.ownerCt.ownerCt;
@@ -92,7 +93,7 @@ Ext.define("core.app.view.region.NavigateTree", {
                 	
                 	
                 	
-                }
+                }*/
                 
         },
         initComponent: function() {

@@ -6,7 +6,6 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 
 			statics : {
 				getColumns : function(moduleModel, schemeOrderId) {
-					console.log("================moduleModel==========================");
 					var scheme = moduleModel.get('tf_gridSchemes')[0]; // 取得第一个grid的方案
 					if (schemeOrderId) { // 查找到相应的scheme
 						Ext.Array.each(moduleModel.get('tf_gridSchemes'), function(s) {
@@ -16,8 +15,6 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 									}
 								})
 					}
-					console.log('加入列表方案');
-					console.log(scheme);
 					var columns = [];
 					for (var i in scheme.tf_schemeGroups) {
 						var sg = scheme.tf_schemeGroups[i];
@@ -49,8 +46,6 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 							columns.push(group);
 						}
 					}
-				    console.log("===========colunn======================")
-					console.log(columns);
 					return columns;
 				},
 
@@ -97,8 +92,6 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 										align : 'center',
 										width : 100,
 										renderer : Ext.util.Format.dateRenderer,
-										// formatter : 'dateRenderer', //
-										// 定义在Ext.util.Format中的渲染函数可以用这种方法调用
 										editor : { // 如果需要行内修改，需要加入此属性
 											xtype : 'datefield',
 											format : 'Y-m-d',
@@ -113,7 +106,6 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 								align : 'center',
 								width : 130,
 								renderer : Ext.util.Format.dateRenderer
-									// formatter : 'dateRenderer'
 								});
 							break;
 
@@ -141,7 +133,6 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 										xtype : 'numbercolumn',
 										format : '#',
 										renderer : Ext.util.Format.intRenderer,
-										// formatter : 'intRenderer',
 										editor : {
 											xtype : 'numberfield'
 										}
@@ -153,7 +144,6 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 										xtype : 'numbercolumn',
 										format : '#',
 										renderer : Ext.util.Format.intRenderer,
-										// formatter : 'intRenderer',
 										editor : {
 											xtype : 'numberfield',
 		                                    decimalPrecision:0
@@ -241,11 +231,7 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
                              moduleName: modue.tf_moduleName,
                              editor:null
                      })
-                	   
                    }
-					
-					
-					
 					if (field.xtype == 'numbercolumn') {
 						Ext.apply(field, {
 									listeners : { // 将标题栏的内容居中，靠右的话有时候显示不全
@@ -257,14 +243,12 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 									}
 								})
 					}
-
 					if (fd.tf_allowSummary) {
 						Ext.apply(field, {
 									hasSummary : true,
 									summaryType : 'sum'
 								})
 					}
-
 					if (gf.tf_columnWidth > 0)
 						field.width = gf.tf_columnWidth;
 					else if (gf.tf_columnWidth == -1) {
