@@ -4,9 +4,12 @@ Ext.define("core.base.resident.view.FeesSettingPanel",{
 	layout:"border",
 		items : [{
 		region:"north",
+		title:"from",
 		xtype:"resident.feesettingfrom"
 	},{
 		region:"center",
-		xtype:"resident.feesettinggrid"
+		title:"panel",
+		xtype:"panel"
+		//xtype:"resident.feesettinggrid"
 	}]
 });

@@ -240,8 +240,8 @@ init:function(){
    		     	       
    		     	       alert(0)
                		    var window= Ext.create("Ext.window.Window",{
-               		    
-               		    	items:[{xtype:"resident.feesettingpanel"}]
+               		          title:"hahh",
+               		    	items:[{xtype:"resident.feesettingfrom",title:"asa"}]
                		    	
                		    	
                		    	
@@ -284,7 +284,6 @@ init:function(){
 	'core.base.resident.view.MainLayout',
 	'core.base.resident.view.LevelTree',
 	"core.base.resident.view.ResidentGrid",
-	"core.app.view.region.GridToolbar",
 	"core.base.resident.view.FeeSettingGrid",
 	"core.base.resident.view.FeeSettingFrom",
 	"core.base.resident.view.FeesSettingPanel"

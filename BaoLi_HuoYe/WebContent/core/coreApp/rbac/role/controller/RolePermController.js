@@ -351,7 +351,8 @@ Ext.define("core.rbac.role.controller.RolePermController",{
 		"core.rbac.role.view.CenterLayout",
 		"core.rbac.role.view.RoleForm",
 		"core.rbac.role.view.UserGrid",
-		"core.rbac.role.view.ModuleTree"
+		"core.rbac.role.view.ModuleTree",
+		"core.app.view.query.MtssWindow"
 	],
 	stores:[
 		"core.rbac.role.store.RoleStore",
