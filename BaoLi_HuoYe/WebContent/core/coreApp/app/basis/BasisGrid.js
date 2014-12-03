@@ -22,6 +22,7 @@ Ext.define("core.app.basis.BasisGrid",{
 		}
 	},
 	
+	
    initComponent : function() {
    	  var self=this;
    	   var  thar = [
@@ -96,7 +97,8 @@ Ext.define("core.app.basis.BasisGrid",{
    		this.model = core.app.module.factory.ModelFactory.getModelByModule(viewModel.data);
 				this.store = Ext.create('core.app.store.GridStore', {
 							model : this.model,
-							gridModue : this
+							gridModue : this,
+							modulePanel : this
 						});
 		this.columns = core.app.module.factory.ColumnsFactory.getColumns(viewModel);	
 					this.dockedItems = [{

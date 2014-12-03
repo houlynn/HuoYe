@@ -1,4 +1,4 @@
-Ext.define("core.base.102.controller.ResidentController",{
+Ext.define("core.base.resident.controller.ResidentController",{
 	extend:"Ext.app.Controller",
 	mixins: {
 		suppleUtil:"core.util.SuppleUtil",
@@ -7,21 +7,15 @@ Ext.define("core.base.102.controller.ResidentController",{
 		treeUtil:"core.util.TreeUtil",
 		gridActionUtil:"core.util.GridActionUtil"
 	},
-	init:function(){
+init:function(){
 		var self=this
 		//事件注册
 	this.control({
-			/*"container[xtype=gridModue] button[ref=addButton]":{
-								click : function (btn){
-							 var modulegrid = btn.up("gridModue");	
+			"container[xtype=resident.gridModue] button[ref=addButton]":{
+							click : function (btn){
+							 var modulegrid = btn.up("grid[xtype=resident.gridModue]");	
 							 var store=modulegrid.getStore();
-							 var store=modulegrid.store;
-							 
-							 	 var viewModel=system.getViewModel(modulegrid.code);
-							 console.log("===========viewm Moodel========================")
-							 console.log(viewModel);
-							 
-							 
+							 var viewModel=system.getViewModel(modulegrid.code);
                 	         if(!store.navigates||store.navigates.length==0){
                 	         	system.errorInfo("请选择小区再进行添加操作","错误提示");
                 	         	return;
@@ -40,10 +34,10 @@ Ext.define("core.base.102.controller.ResidentController",{
 								// 删除按钮在渲染后加入可以Drop的功能
 								render : function(btn) {
 									// 可以使Grid中选中的记录拖到到此按钮上来进行复制新增
-									var modulegrid= btn.up("gridModue");
+									var modulegrid= btn.up("resident.gridModue");
 									btn.dropZone = new Ext.dd.DropZone(btn.getEl(), {
 												// 此处的ddGroup需要与Grid中设置的一致
-												ddGroup : 'DD_grid_' + modulegrid.viewModel.get('tf_moduleName'),
+												ddGroup : 'DD_grid_' + viewModel.get('tf_moduleName'),
 												getTargetFromEvent : function(e) {
 													return e.getTarget('');
 												},
@@ -60,24 +54,22 @@ Ext.define("core.base.102.controller.ResidentController",{
 								}
 				},
 				
-			"container[xtype=gridModue]  button[ref=editButton] ":{
+			"container[xtype=resident.gridModue]  button[ref=editButton] ":{
 		   click:function(btn){
-			var modulegrid = btn.up("gridModue");	
+			var modulegrid = btn.up("grid[xtype=resident.gridModue]");	
 			var viewModel=modulegrid.viewModel;
 			var window = Ext.create('core.app.view.region.BaseWindow', {
 				viewModel:viewModel,
 				grid:modulegrid
 			});
-	        console.log(modulegrid.getSelectionModel().getSelection()[0]);
-	       console.log(modulegrid.getStore().getAt(0));
 	       window.down('baseform').setData(modulegrid.getSelectionModel().getSelection()[0]);
 	       window.show();
 				}
 			},	
 			
-		"container[xtype=gridModue]  button[ref=removeButton] ":{
+		"container[xtype=resident.gridModue]  button[ref=removeButton] ":{
 			click:function(btn){
-			var modulegrid=btn.up("gridModue");
+			var modulegrid=btn.up("grid[xtype=resident.gridModue]");
 			var module=modulegrid.viewModel;
 			var selection=modulegrid.getSelectionModel().getSelection();
 			var message='';
@@ -146,13 +138,14 @@ Ext.define("core.base.102.controller.ResidentController",{
 												}
 											})
 								}
-				},*/
-			"container[xtype=102.levelTree]":{
+				},
+				
+			"container[xtype=resident.levelTree]":{
 				itemclick:function(treeview,node,item,index,e,eOpts){
 					var tree=treeview.ownerCt;
 					var treeDel=tree.down("button[ref=treeDel]");
 					treeDel.setDisabled(false);
-					var gridModue=treeview.ownerCt.ownerCt.down("gridModue");
+					var gridModue=treeview.ownerCt.ownerCt.down("grid[xtype=resident.gridModue]");
 					var modue=system.getModuleDefine(node.raw.nodeInfo);
 		         var navigate={
                 			moduleName:node.raw.nodeInfo,
@@ -175,7 +168,7 @@ Ext.define("core.base.102.controller.ResidentController",{
 				}
 			},
 			
-			"container[xtype=102.levelTree] button[ref=treeIns]":{
+			"container[xtype=resident.levelTree] button[ref=treeIns]":{
 				click:function(btn){
 						var tree=btn.ownerCt.ownerCt;
 						var commbox=tree.down("basecombobox[ref=vicombobox]");
@@ -196,7 +189,7 @@ Ext.define("core.base.102.controller.ResidentController",{
            
 				}
 			},
-			"container[xtype=102.levelTree] basecombobox[ref=vicombobox]":{
+			"container[xtype=resident.levelTree] basecombobox[ref=vicombobox]":{
 				 select:function(combo,record,opts) {  
 				 	 var  vid=record[0].get("itemCode");
 				 	 var tree= combo.ownerCt.ownerCt;
@@ -208,7 +201,7 @@ Ext.define("core.base.102.controller.ResidentController",{
 				}
 			},
 			
-			"container[xtype=102.levelTree] button[ref=treechildIns]":{
+			"container[xtype=resident.levelTree] button[ref=treechildIns]":{
 				click:function(btn){
 					var tree=btn.up("panel[xtype=rbac.depttree]");
 					var records=tree.getSelectionModel().getSelection();
@@ -241,14 +234,34 @@ Ext.define("core.base.102.controller.ResidentController",{
 					}
 				}
 			},
-			"container[xtype=102.levelTree] button[ref=treeDel]":{
+		  "container[xtype=resident.gridModue]  button[ref=seting]": {
+   		     click:function(btn){
+   		     	
+   		     	       
+   		     	       alert(0)
+               		    var window= Ext.create("Ext.window.Window",{
+               		    
+               		    	items:[{xtype:"resident.feesettingpanel"}]
+               		    	
+               		    	
+               		    	
+               		    });   
+               		    window.show();
+   		     
+   		     
+   		     }
+		  },
+			"container[xtype=resident.levelTree] button[ref=treeDel]":{
 				click:function(btn){
-				var tree=btn.up("container[xtype=102.levelTree]");
+				var tree=btn.up("container[xtype=resident.levelTree]");
 				var records=tree.getSelectionModel().getSelection();
 			    if(records.length<=0){
 				system.warnInfo('请选中节点！')
 				return;
 			    }
+						Ext.MessageBox.confirm('确定删除', '确定要删除 ' + records[0].get("text"),
+					function(btn) {
+						if (btn == 'yes') {
 			 var params={
 			 tf_leveId:records[0].get("id")
 			 };
@@ -260,23 +273,24 @@ Ext.define("core.base.102.controller.ResidentController",{
                 var proxy=store.getProxy();
 				proxy.extraParams.vid=vid;
 			    store.load();	
-			    
-			    
-			    
+							
+						}
+					});
 				}
 			}
 		});
 	},
 	views:[
-	'core.base.102.view.MainLayout',
-	'core.base.102.view.LevelTree',
-	"core.base.102.view.ResidentGrid",
-	"core.base.102.view.104Panel",
+	'core.base.resident.view.MainLayout',
+	'core.base.resident.view.LevelTree',
+	"core.base.resident.view.ResidentGrid",
 	"core.app.view.region.GridToolbar",
-	
-	
+	"core.base.resident.view.FeeSettingGrid",
+	"core.base.resident.view.FeeSettingFrom",
+	"core.base.resident.view.FeesSettingPanel"
 	],
 	stores:[
-	'core.base.102.store.LevelStore'
+	'core.base.resident.store.LevelStore',
+	"core.base.resident.store.SettingStore"
 	]
 });

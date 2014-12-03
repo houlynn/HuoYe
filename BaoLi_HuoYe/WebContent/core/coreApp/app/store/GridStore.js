@@ -86,7 +86,7 @@ Ext.define('core.app.store.GridStore', {
 
 				load : function(store) {
 					//console.log(this.modulePanel.down('modulegrid'));
-				//	this.modulePanel.down('modulegrid').columnAutoSize();
+					//this.modulePanel.down('gridModue').columnAutoSize();
 					for (var i in store.extraParams)
 						delete store.proxy.extraParams[i];
 				}

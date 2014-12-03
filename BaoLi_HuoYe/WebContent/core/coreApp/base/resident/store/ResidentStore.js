@@ -1,4 +1,4 @@
-Ext.define("core.base.102.store.LevelStore",{
+Ext.define("core.base.resident.store.LevelStore",{
 	  extend: "core.app.store.GridStore"
 	  
 	  

@@ -1,9 +1,9 @@
-Ext.define("core.base.102.view.LevelTree",{
+Ext.define("core.base.resident.view.LevelTree",{
 	extend:"Ext.tree.Panel",
-	alias : "widget.102.levelTree",
+	alias : "widget.resident.levelTree",
 	displayField : "text",
 	rootVisible : false,
-	store : "core.base.102.store.LevelStore",
+	store : "core.base.resident.store.LevelStore",
 	title:"楼宇列表",
     dockedItems: [{
        	 xtype: 'toolbar',dock: 'top',layout : 'hbox',items: [

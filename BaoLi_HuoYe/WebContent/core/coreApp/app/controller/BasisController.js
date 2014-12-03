@@ -7,6 +7,9 @@ Ext.define("core.app.controller.BasisController",{
 		"container[xtype=gridModue] button[ref=addButton]":{
 							 click : function (btn){
 							 var modulegrid = btn.up("gridModue");	
+							 var  moduelPanel=modulegrid.up("modulepanel");
+							 var  navigatetree=moduelPanel.down("navigatetree");
+							 var node=navigatetree.getSelectionModel().getSelection()[0];;
 							 var store=modulegrid.getStore();
 							 var store=modulegrid.store;
 							 var viewModel=system.getViewModel(modulegrid.code);
@@ -21,7 +24,7 @@ Ext.define("core.app.controller.BasisController",{
                 	               console.log(f);
                 	               var fidldName=f.name;
                 	               if(f.manytoone_TitleName){
-                	                model.set(fidldName,"保利小区");
+                	                model.set(fidldName,node.raw.text);
                 	               }
                 	          });
 							 }

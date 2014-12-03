@@ -1,6 +1,6 @@
-Ext.define("core.base.102.view.ResidentGrid",{
+Ext.define("core.base.resident.view.ResidentGrid",{
 	extend : 'Ext.grid.Panel',
-	alias : 'widget.gridModue',
+	alias : 'widget.resident.gridModue',
 	style:'border-width:0 0 0 0;',
    columnLines : true, // 加上表格线
 	multiSelect : true,
@@ -83,7 +83,16 @@ Ext.define("core.base.102.view.ResidentGrid",{
 							glyph : 0xf014,
 							ref:"removeButton",
 							itemId : 'delete'
-						}, '-',  '-', '筛选', {
+						},
+						 {
+							text : '设置收费项目',
+							glyph : 0xf014,
+							ref:"seting",
+							itemId : 'setting'
+						}
+						
+						
+						, '-',  '-', '筛选', {
 							width : 60,
 							xtype : 'gridsearchfield',
 							// store : this.grid.getStore() // 现在用的local数据，不可以进行筛选
@@ -193,7 +202,6 @@ Ext.define("core.base.102.view.ResidentGrid",{
 				}];
 		this.callParent();
 	},
-
 	*//**
 	 * 在选中的记录发生变化时，修改当前title，这是不用MVVM特性的做法
 	 *//*
@@ -208,7 +216,6 @@ Ext.define("core.base.102.view.ResidentGrid",{
 		}
 		this.setTitle(title);
 	},
-
 	*//**
 	 * 重新适应所有列的宽度
 	 *//*

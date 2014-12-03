@@ -1,13 +1,13 @@
-Ext.define("core.base.102.view.MainLayout",{
+Ext.define("core.base.resident.view.MainLayout",{
 	extend:"Ext.container.Container",
-	alias : 'widget.102.mainlayout',
+	alias : 'widget.resident.mainlayout',
 	layout : 'border',
 	items : [{
-		xtype:"102.levelTree",
+		xtype:"resident.levelTree",
 		region:"west",
 		width:comm.get("clientWidth")*0.18
 	},{
-		xtype:"gridModue",
+		xtype:"resident.gridModue",
 		title:'用户信息',
 		region:"center",
 		code:104,

@@ -1,4 +1,4 @@
-Ext.define("core.base.102.store.LevelStore",{
+Ext.define("core.base.resident.store.LevelStore",{
 	  extend: "Ext.data.TreeStore",
 	//defaultRootId:"ROOT",
 	 model:factory.ModelFactory.getModelByName("com.ufo.framework.system.model.ui.JSONTreeNode","checked").modelName,
