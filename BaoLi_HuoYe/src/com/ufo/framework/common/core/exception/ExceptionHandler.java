@@ -38,7 +38,12 @@ public class ExceptionHandler extends HandlerExceptionResolverComposite implemen
 			WebAppException appException=(WebAppException)e;
 			errorInfo=appException.getErrorInfo();
 			error("删除数据异常");
-		}else{
+		}else if (e instanceof TimeoutException) {
+			WebAppException appException=(WebAppException)e;
+			errorInfo=appException.getErrorInfo();
+			error("回话过期!");
+		}
+		else{
 			errorInfo.setResultCode(ResponseErrorInfo.STATUS_FAILURE);
 			errorInfo.getErrorMessage().put("error", "未知错误!");
 		}

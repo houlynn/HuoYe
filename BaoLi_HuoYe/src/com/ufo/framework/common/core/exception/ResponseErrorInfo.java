@@ -18,6 +18,7 @@ public class ResponseErrorInfo implements Serializable {
 	public static final int STATUS_SERVER_TIMEOUT = -100;
 	public static final int STATUS_SUCCESS = 0;
 	public static final int STATUS_TRANSPORT_ERROR = -90;
+	public static final int STATUS_TIME_OUT = -1000;
 	
 	public static final int STATUS_VALIDATION_ERROR = -4;
 	

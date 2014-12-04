@@ -236,12 +236,8 @@ init:function(){
 			},
 		  "container[xtype=resident.gridModue]  button[ref=seting]": {
    		     click:function(btn){
-   		     	
-   		     	       
-   		     	       alert(0)
                		    var window= Ext.create("Ext.window.Window",{
-               		          title:"hahh",
-               		    	items:[{xtype:"resident.feesettingfrom",title:"asa"}]
+               		    	items:[{xtype:"resident.feesettingfrom"}]
                		    	
                		    	
                		    	
@@ -251,6 +247,8 @@ init:function(){
    		     
    		     }
 		  },
+		  
+		  
 			"container[xtype=resident.levelTree] button[ref=treeDel]":{
 				click:function(btn){
 				var tree=btn.up("container[xtype=resident.levelTree]");
@@ -277,7 +275,82 @@ init:function(){
 						}
 					});
 				}
-			}
+			},
+			/**
+			 * 添加收费项目
+			 */
+			"form[xtype=resident.feesettingfrom] button[ref=addBtn]":{
+				click:function(btn){
+				 
+				
+				}
+			},
+			/**
+			 * 设置收费项目
+			 */
+				"form[xtype=resident.feesettingfrom] button[ref=settingBtan]":{
+				click:function(btn){
+				
+				}
+			},
+		    /**
+			 * 设置收费项目
+			 */
+				"gridpanel[xtype=resident.feesettinggrid] #clearBtn":{
+				   click:function(btn){
+				   	
+				   	
+				
+				}
+	         },
+	         /**
+	          * 加载combox数据
+	          */
+	         "form[xtype=resident.feesettingfrom] #feeeItemCombobox":{
+	         	  render:function(combo) {
+	         	  	var from= combo.ownerCt;
+	         	  	var vid=from.vid;
+	         	    var ddCode ={
+                           whereSql:' and tf_Village=1'
+                        }
+                  Ext.apply(combo.ddCode,ddCode);
+                  var store=combo.store;
+                  var proxy=store.getProxy();
+				  proxy.extraParams=combo.ddCode;
+			      store.load();	
+				   
+	         	  	
+	         	  }
+	         	
+	         },
+	         
+	          "form[xtype=resident.feesettingfrom] #hasEndDateTrue":{
+	         	    change: function (cb, nv, ov) {
+                         if(cb.getValue()==true){
+	                           var from=cb.ownerCt.ownerCt.ownerCt.ownerCt;
+	                           var endDate=from.down("#endDate");
+	                           	endDate.setDisabled(false);
+	                           	
+                             }
+                           }
+                          },
+                "form[xtype=resident.feesettingfrom] #hasEndDateFalse":{
+	         	    change: function (cb, nv, ov) {
+                         if(cb.getValue()==true){
+	                        
+	                           var from=cb.ownerCt.ownerCt.ownerCt.ownerCt;
+	                           var endDate=from.down("#endDate");
+	                           endDate.setValue(null);
+	                         	endDate.setDisabled(true);
+                              }
+                           }
+                          }
+	         	
+	         
+	         
+
+
+			
 		});
 	},
 	views:[
@@ -286,7 +359,7 @@ init:function(){
 	"core.base.resident.view.ResidentGrid",
 	"core.base.resident.view.FeeSettingGrid",
 	"core.base.resident.view.FeeSettingFrom",
-	"core.base.resident.view.FeesSettingPanel"
+	"core.base.resident.view.FeesSettingPanel",
 	],
 	stores:[
 	'core.base.resident.store.LevelStore',

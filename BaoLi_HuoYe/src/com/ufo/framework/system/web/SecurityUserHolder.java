@@ -5,6 +5,9 @@ import org.apache.shiro.subject.Subject;
 
 import com.model.hibernate.system.shared.Department;
 import com.model.hibernate.system.shared.EndUser;
+import com.ufo.framework.common.core.exception.DeleteException;
+import com.ufo.framework.common.core.exception.ResponseErrorInfo;
+import com.ufo.framework.common.core.exception.TimeoutException;
 
 /**
  * 
@@ -67,5 +70,26 @@ public class SecurityUserHolder {
 		return null;
 
 	}
+	
+	public static String  getIdentification() throws Exception{
+		Subject currentUser = SecurityUtils.getSubject();
+		String indent="";
+		if (currentUser.isAuthenticated()) {
+			EndUser user = (EndUser) currentUser.getSession().getAttribute(
+					"currentUser");
+			indent=user.getXcode();
+		}else{
+			TimeoutException exception=	 new TimeoutException(); 
+			 ResponseErrorInfo errorInfo= new ResponseErrorInfo();
+			 errorInfo.getErrorMessage().put("error", "用户未登陆，或回话过期!");
+			 errorInfo.setResultCode(ResponseErrorInfo.STATUS_TIME_OUT);
+			 exception.setErrorInfo(errorInfo);
+			 throw exception;
+			
+		}
+		return "7DA9BE06-14B0-DBAC-F5EF-FD2E3C600E59";
+		
+	}
+	 
 
 }

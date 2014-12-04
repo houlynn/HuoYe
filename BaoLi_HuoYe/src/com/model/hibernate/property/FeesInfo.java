@@ -13,6 +13,8 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.ufo.framework.annotation.DDItemCode;
+import com.ufo.framework.annotation.DDItemName;
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
 import com.ufo.framework.common.model.BaseEntity;
@@ -22,6 +24,7 @@ import com.ufo.framework.common.model.BaseEntity;
 @TableInfo(group="基础信息",id=106,title="收费标准")
 @Entity
 public class FeesInfo extends BaseEntity {
+	@DDItemCode
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
@@ -29,6 +32,7 @@ public class FeesInfo extends BaseEntity {
 	private int tf_feesid;
 	 @FieldInfo(title = "名称", number = 20,uniqueField=true)
 	 @Column(length=120,nullable=false,unique=true)
+	 @DDItemName
 	private String tf_freesName;
 	 @FieldInfo(title = "单价", number = 30)
 	 @Column(nullable=false)

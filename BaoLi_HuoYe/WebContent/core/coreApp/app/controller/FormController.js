@@ -23,6 +23,7 @@ Ext.define("core.app.controller.FormController",{
 		"core.app.view.form.BaseComboBox",
 		"core.app.view.form.BaseQueryField",
 		"core.app.view.form.BaseQueryLoad",
-		 "core.app.view.form.ComboBoxTree"
+		 "core.app.view.form.ComboBoxTree",
+		 "core.app.view.form.ModueComBox"
 	]
 });

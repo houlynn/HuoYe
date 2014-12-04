@@ -35,7 +35,10 @@ Ext.define("factory.DDCache",{
 							
 						}
 					});
-				this.ddItems.add(ddCode,ddItem);
+				if(typeof(ddCode)=='string'){
+					this.ddItems.add(ddCode,ddItem);
+				}
+			
 			}else{
 				ddItem=this.ddItems.get(ddCode);
 			}

@@ -23,12 +23,13 @@ import com.ufo.framework.common.constant.StringVeriable;
 import com.ufo.framework.common.core.utils.EntityUtil;
 import com.ufo.framework.common.core.utils.ModelUtil;
 import com.ufo.framework.common.core.utils.StringUtil;
+import com.ufo.framework.common.core.web.ModuleServiceFunction;
 import com.ufo.framework.common.model.Model;
+import com.ufo.framework.system.web.SecurityUserHolder;
 /**
- * 
-* @author 作者 yingqu: 
-* @version 创建时间：2014年6月22日 下午9:47:39 
 * version 2.0
+* @author HouLynn
+* @date 2014年12月4日
  */
 @Controller("ddAction")
 @RequestMapping("/coreDDe")
@@ -41,12 +42,15 @@ public class DDeController extends SimpleBaseController<Dictionary> {
 	@SuppressWarnings("unchecked")
 	@RequestMapping("/getDDItemByDDCode")
 	public void getDDItemByDDCode(Dictionary model, HttpServletResponse response,
-			@RequestParam(value="whereSql",required=false,defaultValue="") String whereSql
+			@RequestParam(value="modeuName",required=false,defaultValue="") String modeuName,
+			@RequestParam(value="whereSql",required=false,defaultValue="") String whereSql,
+			@RequestParam(value="marking",required=false,defaultValue="") String marking,
+			@RequestParam(value="identification",required=false,defaultValue="") String identification
+			
 			) {
 		String strData = "[]";
-		System.out.println("===========whereSql=================");
-		System.out.println(whereSql);
 		try {
+			
 			if (StringUtil.isNotEmpty(model.getDdCode())) {
 				if (DDCache.get(model.getDdCode()) != null) {
 					toWrite(response, DDCache.get(model.getDdCode()));
@@ -59,7 +63,6 @@ public class DDeController extends SimpleBaseController<Dictionary> {
 						List<DictionaryItem> items=new ArrayList<>();
 						if(StringUtil.isNotEmpty(dict.getModelName())&&"OTHER".equals(dict.getDdType())){
 							items=getItemByModelName(dict.getModelName(),whereSql);
-							System.out.println("===============dd items===========================");
 						}else{
 							items = (List<DictionaryItem>) ebi
 								.queryByHql(" from DictionaryItem where dictionary='"
@@ -74,8 +77,25 @@ public class DDeController extends SimpleBaseController<Dictionary> {
 					toWrite(response, strData);
 				}
 			} else {
+				
+				if("1".equals(marking)){
+					String hql=" where 1=1  ";
+					if("1".equals(identification)){
+						hql+=" and xcode='"+ SecurityUserHolder.getIdentification()+"'";
+					}
+					hql+=whereSql;
+					Class<?> moduleClass = ModuleServiceFunction.getModuleBeanClass(modeuName);
+					List<DictionaryItem> items=new ArrayList<>();
+					items=getItemByModelName(moduleClass.getName(),hql);
+					strData = jsonBuilder.buildObjListToJson(
+							new Long(items.size()), items, false);
+					
+				}
 				toWrite(response, strData);
 			}
+			
+			
+			
 		} catch (Exception e) {
 
 			e.printStackTrace();
