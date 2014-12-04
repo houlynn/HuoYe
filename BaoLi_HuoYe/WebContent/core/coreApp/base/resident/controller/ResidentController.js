@@ -236,11 +236,16 @@ init:function(){
 			},
 		  "container[xtype=resident.gridModue]  button[ref=seting]": {
    		     click:function(btn){
+   		     	       var tree= btn.ownerCt.ownerCt.ownerCt.down("container[xtype=resident.levelTree]");
+   		     	      	var commbox=tree.down("basecombobox[ref=vicombobox]");
+				        var vid=commbox.getValue();
+   		     	       if(!vid){
+						 	system.errorInfo("请选择小区再进行添加操作","错误提示");
+						 	return;
+						 }
+						 alert(vid);
                		    var window= Ext.create("Ext.window.Window",{
-               		    	items:[{xtype:"resident.feesettingfrom"}]
-               		    	
-               		    	
-               		    	
+               		    	items:[{xtype:"resident.feesettingfrom",tag:vid}]
                		    });   
                		    window.show();
    		     
@@ -308,8 +313,8 @@ init:function(){
 	          */
 	         "form[xtype=resident.feesettingfrom] #feeeItemCombobox":{
 	         	  render:function(combo) {
-	         	  	var from= combo.ownerCt;
-	         	  	var vid=from.vid;
+	         	  	var from= combo.ownerCt.ownerCt.ownerCt;
+	         	  	var vid=from.tag;
 	         	    var ddCode ={
                            whereSql:' and tf_Village=1'
                         }
