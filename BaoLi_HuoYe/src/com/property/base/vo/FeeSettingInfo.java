@@ -1,7 +1,5 @@
 package com.property.base.vo;
 
-import java.util.Date;
-
 public class FeeSettingInfo {
 	
 	/**
@@ -11,38 +9,51 @@ public class FeeSettingInfo {
 	/**
 	 * 收费标准ID
 	 */
-	private  int itemId;
+	private  Integer itemId;
 	/**]
 	 * 开始收费时间
 	 */
-	private  Date startdate;
+	private  String startdate;
 	/**
 	 * 结束时间
 	 */
-	private  Date enddate;
+	private  String enddate;
+
+	/**
+	 * 是否有结束时间
+	 */
+	private String hasEndDate;
+	
 	public String getItemName() {
 		return itemName;
 	}
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
 	}
-	public int getItemId() {
-		return itemId;
-	}
-	public void setItemId(int itemId) {
-		this.itemId = itemId;
-	}
-	public Date getStartdate() {
+	public String getStartdate() {
 		return startdate;
 	}
-	public void setStartdate(Date startdate) {
+	public void setStartdate(String startdate) {
 		this.startdate = startdate;
 	}
-	public Date getEnddate() {
+	public String getEnddate() {
 		return enddate;
 	}
-	public void setEnddate(Date enddate) {
+	public void setEnddate(String enddate) {
 		this.enddate = enddate;
 	}
+	public String getHasEndDate() {
+		return hasEndDate;
+	}
+	public void setHasEndDate(String hasEndDate) {
+		this.hasEndDate = hasEndDate;
+	}
+	public Integer getItemId() {
+		return itemId;
+	}
+	public void setItemId(Integer itemId) {
+		this.itemId = itemId;
+	}
+
 
 }

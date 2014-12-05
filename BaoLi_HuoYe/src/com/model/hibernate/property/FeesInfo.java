@@ -40,7 +40,7 @@ public class FeesInfo extends BaseEntity {
 	 @FieldInfo(title = "备注", number = 40)
 	 @Column(length=900)
 	 private String tf_remark;
-   @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
   @JoinColumn(name = "tf_viid",nullable=false)
  @FieldInfo(title = "所属小区", number = 120)
 	 private Village tf_Village;

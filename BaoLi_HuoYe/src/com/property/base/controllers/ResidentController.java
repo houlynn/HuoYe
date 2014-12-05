@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import net.sf.json.JSONObject;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
@@ -21,6 +22,7 @@ import com.model.hibernate.property.LevelInfo;
 import com.model.hibernate.property.ResidentInfo;
 import com.model.hibernate.property.Village;
 import com.model.hibernate.system._Module;
+import com.property.base.ebi.ResidentEbi;
 import com.ufo.framework.common.constant.RequestPathConstants;
 import com.ufo.framework.common.core.exception.DeleteException;
 import com.ufo.framework.common.core.exception.InsertException;
@@ -50,7 +52,15 @@ public class ResidentController implements LogerManager {
 	public void setEbi(Ebi ebi) {
 		this.ebi = ebi;
 	}
-	
+	@Autowired
+	private ResidentEbi  rebi;
+	public ResidentEbi getRebi() {
+		return rebi;
+	}
+
+	public void setRebi(ResidentEbi rebi) {
+		this.rebi = rebi;
+	}
 	@Resource
 	private IModelRepertory moduleDAO;
 	@Resource
@@ -131,6 +141,29 @@ public class ResidentController implements LogerManager {
 					}
 					return result;
 			 }
+	@RequestMapping("/setting")
+	public @ResponseBody DataInsertResponseInfo setting(
+			@RequestParam(value="dataStr",required=true) String dataStr,
+			@RequestParam(value="ids",required=true) int[] ids
+			) throws Exception{
+		DataInsertResponseInfo result=new DataInsertResponseInfo();
+			 try {
+				 rebi.settingFeesItem(dataStr, ids);
+				} catch (Exception e) {
+					error("添加异常", e);
+					// TODO Auto-generated catch block
+					getInsertException("LevelInfo","设置收费项目失败!",ResponseErrorInfo.STATUS_FAILURE);
+				}
+		return result;
+		
+	}
+	
+	
+	
+	
+	
+	
+	
 	
 	
 /*	

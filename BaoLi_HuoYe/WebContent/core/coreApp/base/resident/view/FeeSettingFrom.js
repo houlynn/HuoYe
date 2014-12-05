@@ -36,6 +36,12 @@ Ext.define("core.base.resident.view.FeeSettingFrom",{
 						});
 				me.bodyStyle = 'padding : 5px 5px 0';
 				me.callParent(arguments);
+				var grid=this.down("gridpanel[xtype=resident.feesettinggrid]");
+				grid.getStore().removeAll();
+					this.getForm().reset();
+				var model=Ext.create(grid.getStore().model);
+				this.getForm().loadRecord(model);
+			
 			},
 			
 			 items: [
@@ -49,7 +55,7 @@ Ext.define("core.base.resident.view.FeeSettingFrom",{
                     xtype: "fieldcontainer",
                     layout: "hbox",
                     items: [
-                        { xtype: "moduecombobox", name: "feeeItem", fieldLabel: "收费标准", flex: 1, 	itemId : 'feeeItemCombobox', ddCode :{
+                        { xtype: "moduecombobox", name: "itemId", fieldLabel: "收费标准", flex: 1, allowBlank : false,	itemId : 'feeeItemCombobox', ddCode :{
                            modeuName:"FeesInfo",
                            marking:'1',
                            identification:'1'
@@ -61,7 +67,7 @@ Ext.define("core.base.resident.view.FeeSettingFrom",{
                     xtype: "fieldcontainer",
                     layout: "hbox",
                     items: [
-                        { xtype: "datefield", 	submitFormat : 'Y-m-d', name: "startDate", fieldLabel: "开始收费时间", flex: 2},
+                        {	xtype : 'datefield',submitFormat : 'Y-m-d', 	format : 'Y-m-d', allowBlank : false, name: "startdate", fieldLabel: "开始收费时间", flex: 2},
 						
                     ]
                 },
@@ -74,12 +80,11 @@ Ext.define("core.base.resident.view.FeeSettingFrom",{
                     labelWidth:100,
                     items: [
                      {  xtype : "radiogroup",items:[
-                         {xtype:"radiofield",fieldLabel:"有", labelWidth:30,  inputValue: true,name:"hasEndDate", itemId:"hasEndDateTrue" },
-                         {xtype:"radiofield",fieldLabel:"无",  labelWidth:30, inputValue: false,name:"hasEndDate",checked:true,itemId:"hasEndDateFalse"}
+                         {xtype:"radiofield",fieldLabel:"有", labelWidth:30,  inputValue: "1",name:"hasEndDate", itemId:"hasEndDateTrue" },
+                         {xtype:"radiofield",fieldLabel:"无",  labelWidth:30, inputValue: "0",name:"hasEndDate",checked:true,itemId:"hasEndDateFalse"}
                      ]},
-                     
                     
-                        {  xtype: "datefield", 	submitFormat : 'Y-m-d', name: "endDate", fieldLabel: "结束时间", flex: 6,itemId:"endDate",disabled:true},
+                        {  	xtype : 'datefield',submitFormat : 'Y-m-d', 	format : 'Y-m-d', name: "enddate", fieldLabel: "结束时间", flex: 6,itemId:"endDate",disabled:true},
                     ]
                 },
                 

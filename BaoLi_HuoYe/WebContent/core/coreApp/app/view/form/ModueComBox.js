@@ -44,14 +44,5 @@ Ext.define("core.app.view.form.ModueComBox",{
 //			me.setConfigInfo();
 		}
 		this.callParent(arguments);
-	},
-	/**
-	 * 获取字典的项名称
-	 * @param {} val
-	 * @return {}
-	 */
-	getText:function(val){
-		var self=this;
-		return self.dic[val];
 	}
 });

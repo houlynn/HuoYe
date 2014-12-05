@@ -238,14 +238,23 @@ init:function(){
    		     click:function(btn){
    		     	       var tree= btn.ownerCt.ownerCt.ownerCt.down("container[xtype=resident.levelTree]");
    		     	      	var commbox=tree.down("basecombobox[ref=vicombobox]");
-				        var vid=commbox.getValue();
+   		     	      	var vid=commbox.getValue();
+   		     	      	var grid= btn.ownerCt.ownerCt;
+   		     	      	var sm= grid.getSelectionModel().getSelection();
+   		     	      	if(sm.length==0){
+   		     	      		system.warnInfo("请选择至少一条业主信息进行操作!")
+   		     	      	 return;
+   		     	      	}
+   		     	      	var ids=[];
+   		     	      	for(var index in sm){
+   		     	      		  ids.push(sm[index].get("tf_residentId"));
+   		     	      	}
    		     	       if(!vid){
 						 	system.errorInfo("请选择小区再进行添加操作","错误提示");
 						 	return;
 						 }
-						 alert(vid);
                		    var window= Ext.create("Ext.window.Window",{
-               		    	items:[{xtype:"resident.feesettingfrom",tag:vid}]
+               		    	items:[{xtype:"resident.feesettingfrom",tag:{vid:vid,ids:ids}}]
                		    });   
                		    window.show();
    		     
@@ -286,7 +295,37 @@ init:function(){
 			 */
 			"form[xtype=resident.feesettingfrom] button[ref=addBtn]":{
 				click:function(btn){
-				 
+				  	var form= btn.ownerCt.ownerCt;
+				    if (form.isValid()) {
+				    var grid=form.down("gridpanel[xtype=resident.feesettinggrid]");
+				    var feeItem={};
+			 	    var model=Ext.create(grid.getStore().model);
+				  		form.getForm().getFields().each(function(f){
+				  		 feeItem[f.getName()]=f.getValue();
+				  		});
+				   var feeCombox=form.down("#feeeItemCombobox");
+				   feeItem["itemName"]=feeCombox.getRawValue( );
+				    var grid=form.down("gridpanel[xtype=resident.feesettinggrid]");
+				    var flag=true;
+				    var store= grid.getStore();
+				    	store.each(function(rec){
+				    	if(rec.get("itemId")==feeItem["itemId"]){
+				    	flag=false;
+				    	}	
+		            });
+		            console.log(feeItem);
+		            if(feeItem["hasEndDate"]==false){
+		            	if(feeItem["enddate"]==null){
+		                    flag=false;
+		                   	system.errorInfo("请填入结束时间","错误提示");
+		            	}
+		            }
+		            if(flag){
+		              grid.getStore().insert(0,feeItem);
+		            }
+				  }
+					
+					
 				
 				}
 			},
@@ -295,7 +334,26 @@ init:function(){
 			 */
 				"form[xtype=resident.feesettingfrom] button[ref=settingBtan]":{
 				click:function(btn){
-				
+					   var form= btn.ownerCt.ownerCt;
+					   var grid=form.down("gridpanel[xtype=resident.feesettinggrid]");
+                       var store=grid.getStore();
+                       var data=[];
+                         var newRecords= grid.getStore().getNewRecords();
+                           console.log(newRecords);
+                            Ext.Array.each(newRecords,function(model){
+                            	var obj={};
+                            	obj["itemName"]=model.get("itemName");
+                            	obj["itemId"]=model.get("itemId");
+                            	obj["startdate"]=Ext.util.Format.date(model.get("startdate"), 'Y-m-d');
+                            	obj["enddate"]=Ext.util.Format.date(model.get("enddate"), 'Y-m-d');
+                            	obj["hasEndDate"]=obj["enddate"]==""||obj["enddate"]==null?false:true;
+                             data.push(obj);
+                             obj={};
+                      });
+                     var dataStr=Ext.encode(data); 
+                     var ids=form.tag.ids;
+                     var params={dataStr:dataStr,ids:ids};
+                     var resObj=self.ajax({url:"/102/setting.action",params:params});
 				}
 			},
 		    /**
@@ -303,7 +361,8 @@ init:function(){
 			 */
 				"gridpanel[xtype=resident.feesettinggrid] #clearBtn":{
 				   click:function(btn){
-				   	
+				   var grid= btn.ownerCt.ownerCt;
+				    grid.getStore().removeAll();
 				   	
 				
 				}
@@ -314,9 +373,9 @@ init:function(){
 	         "form[xtype=resident.feesettingfrom] #feeeItemCombobox":{
 	         	  render:function(combo) {
 	         	  	var from= combo.ownerCt.ownerCt.ownerCt;
-	         	  	var vid=from.tag;
+	         	  	var tag=from.tag;
 	         	    var ddCode ={
-                           whereSql:' and tf_Village=1'
+                           whereSql:' and tf_Village='+tag.vid
                         }
                   Ext.apply(combo.ddCode,ddCode);
                   var store=combo.store;
@@ -369,5 +428,6 @@ init:function(){
 	stores:[
 	'core.base.resident.store.LevelStore',
 	"core.base.resident.store.SettingStore"
-	]
+	],
+    models : ['core.base.resident.model.SettingModel']
 });

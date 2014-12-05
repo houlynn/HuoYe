@@ -42,6 +42,9 @@ public class FeesTypeItem extends BaseEntity {
 	
 	@FieldInfo(title = "结束时间", number = 40)
 	private Date tf_endDate;
+	
+	@FieldInfo(title = "是否有结束时间", number = 50)
+	private String  tf_hasEnd;
 
 	public int getTf_feesTypeItemid() {
 		return tf_feesTypeItemid;
@@ -81,6 +84,14 @@ public class FeesTypeItem extends BaseEntity {
 
 	public void setTf_FeesTypeItem(FeesTypeItem tf_FeesTypeItem) {
 		this.tf_FeesTypeItem = tf_FeesTypeItem;
+	}
+
+	public String getTf_hasEnd() {
+		return tf_hasEnd;
+	}
+
+	public void setTf_hasEnd(String tf_hasEnd) {
+		this.tf_hasEnd = tf_hasEnd;
 	}
 	
 }
