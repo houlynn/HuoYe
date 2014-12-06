@@ -16,6 +16,7 @@ import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
+import com.ufo.framework.common.core.ext.ExtFieldType;
 import com.ufo.framework.common.model.BaseEntity;
 @Entity
 @DynamicInsert(true)
@@ -24,7 +25,7 @@ public class FeesTypeItem extends BaseEntity {
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	@FieldInfo(title = "ID号", number = 10, hidden = true)
+	@FieldInfo(title = "ID号", number = 10, hidden = true,type=ExtFieldType.ID)
 	private int tf_feesTypeItemid;
 	
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
@@ -34,14 +35,14 @@ public class FeesTypeItem extends BaseEntity {
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "tf_feesid",nullable=false)
    @FieldInfo(title = "收费标准", number = 20)
-	private FeesTypeItem tf_FeesTypeItem;
+	private FeesInfo tf_FeesInfo;
 	
 	@Column(nullable=false)
 	@FieldInfo(title = "开始时间", number = 30)
-	private Date tf_beginDate;
+	private String tf_beginDate;
 	
 	@FieldInfo(title = "结束时间", number = 40)
-	private Date tf_endDate;
+	private String tf_endDate;
 	
 	@FieldInfo(title = "是否有结束时间", number = 50)
 	private String  tf_hasEnd;
@@ -62,28 +63,28 @@ public class FeesTypeItem extends BaseEntity {
 		this.tf_ResidentInfo = tf_ResidentInfo;
 	}
 
-	public Date getTf_beginDate() {
+	public String getTf_beginDate() {
 		return tf_beginDate;
 	}
 
-	public void setTf_beginDate(Date tf_beginDate) {
+	public void setTf_beginDate(String tf_beginDate) {
 		this.tf_beginDate = tf_beginDate;
 	}
 
-	public Date getTf_endDate() {
+	public String getTf_endDate() {
 		return tf_endDate;
 	}
 
-	public void setTf_endDate(Date tf_endDate) {
+	public void setTf_endDate(String tf_endDate) {
 		this.tf_endDate = tf_endDate;
 	}
 
-	public FeesTypeItem getTf_FeesTypeItem() {
-		return tf_FeesTypeItem;
+	public FeesInfo getTf_FeesInfo() {
+		return tf_FeesInfo;
 	}
 
-	public void setTf_FeesTypeItem(FeesTypeItem tf_FeesTypeItem) {
-		this.tf_FeesTypeItem = tf_FeesTypeItem;
+	public void setTf_FeesInfo(FeesInfo tf_FeesInfo) {
+		this.tf_FeesInfo = tf_FeesInfo;
 	}
 
 	public String getTf_hasEnd() {

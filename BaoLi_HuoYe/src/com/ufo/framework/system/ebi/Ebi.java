@@ -329,7 +329,9 @@ public interface Ebi extends LogerManager {
 
 	public Object findByPropertyFirstWithOtherCondition(Class<?> className,
 			String propertyName, Object value, String otherCondString);
+	
+	public List<?> findListIn(String modueName, String pk, List<Object> alist);
 
-
+	public <T extends Model> T update(Class<T> clazz,Serializable pk,String updateStr) throws Exception;
 	
 }

@@ -234,5 +234,16 @@ public class Ebo implements Ebi {
 		// TODO Auto-generated method stub
 		return repertory.findByPropertyFirstWithOtherCondition(className, propertyName, value, otherCondString);
 	}
+	@Override
+	public List<?> findListIn(String modueName, String pk, List<Object> alist) {
+		// TODO Auto-generated method stub
+		return repertory.findListIn(modueName, pk, alist);
+	}
+	@Override
+	public <T extends Model> T update(Class<T> clazz, Serializable pk,
+			String updateStr) throws Exception {
+		// TODO Auto-generated method stub
+		return repertory.update(clazz, pk, updateStr);
+	}
 
 }

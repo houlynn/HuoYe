@@ -2,9 +2,11 @@ package com.ufo.framework.system.repertory;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import net.sf.ezmorph.object.DateMorpher;
+import net.sf.json.JSONObject;
 import net.sf.json.util.JSONUtils;
 
 import org.apache.commons.beanutils.BeanUtils;
@@ -22,6 +24,7 @@ import org.springframework.stereotype.Repository;
 import com.ufo.framework.common.core.utils.EntityUtil;
 import com.ufo.framework.common.core.utils.ModelUtil;
 import com.ufo.framework.common.core.utils.StringUtil;
+import com.ufo.framework.common.core.web.ModuleServiceFunction;
 import com.ufo.framework.common.log.AppLoggerFactory;
 import com.ufo.framework.common.model.Model;
 import com.ufo.framework.system.irepertory.ICommonRepertory;
@@ -77,14 +80,37 @@ public class HibernateRepertory implements ICommonRepertory {
 	public <T extends Model> T update(T entity) throws Exception {
 		// TODO Auto-generated method stub
 		String pkName=ModelUtil.getClassPkName(entity.getClass());
-		String pkValue=(String) EntityUtil.getPropertyValue(entity,pkName);
-		//查询当前更新的实体
-		 T model=(T) sf.getCurrentSession().get(entity.getClass(), pkValue);
+		
+		Object pkValueObject= EntityUtil.getPropertyValue(entity,pkName);
+		 T model;
+		if(pkValueObject instanceof Integer ){
+			Integer id=Integer.parseInt(pkValueObject.toString());
+			//查询当前更新的实体
+			model=(T) sf.getCurrentSession().get(entity.getClass(), id);
+		}else{
+			String pkValue=(String) EntityUtil.getPropertyValue(entity,pkName);
+			model=(T) sf.getCurrentSession().get(entity.getClass(), pkValue);
+		}
 		// EntityUtil.copyNewField(model, entity);
 		 BeanUtils.copyProperties(model,entity );
 		sf.getCurrentSession().update(model);
 		return model;
 	}
+	
+	public <T extends Model> T update(Class<T> clazz,Serializable pk,String updateStr) throws Exception {
+		JSONObject updateJsonObject = JSONObject.fromObject(updateStr);
+		 T record= (T) sf.getCurrentSession().load(clazz, pk);
+		 Iterator<String> keyIterator = updateJsonObject.keys();
+			while (keyIterator.hasNext()) {
+				String key = keyIterator.next();
+				Object value = updateJsonObject.get(key);
+				debug("更新字段:" + key + ",value:" + value);
+				ModuleServiceFunction.setValueToRecord(key, record, value);
+			}
+		return record;
+	}
+	
+	
 	@Override
 	public List<?> queryByHql(String hql, Integer start, Integer limit)
 			throws Exception {
@@ -375,6 +401,20 @@ public class HibernateRepertory implements ICommonRepertory {
 	   return list;
 	}
 
+	
+	public List<?> findListIn(String modueName, String pk, List<Object> alist){
+		 List<?> list=new ArrayList<>();
+		 String hql=" from "+modueName+" o where o." +pk+" in (:alist)";
+	     Query query= sf.getCurrentSession().createQuery(hql);
+		 List<?> reslut= query.setParameterList("alist", alist).list();
+		 if(reslut==null){
+			 reslut=list; 
+		 }
+		 return reslut;
+		
+	}
+	
+	
 	
 	
 	

@@ -102,14 +102,31 @@ public class ResidentController implements LogerManager {
 	}
 	
 	@RequestMapping(RequestPathConstants.REQUEST_INSERTPATH)
-	public @ResponseBody DataInsertResponseInfo add(@RequestParam(value="vid",required=true) int vid,@RequestParam(value="leveName",required=true) String leveName ) throws Exception{
+	public @ResponseBody DataInsertResponseInfo add(@RequestParam(value="vid",required=true) int vid,@RequestParam(value="leveName",required=true) String leveName ,
+			@RequestParam(value="level",required=true) String level,
+			@RequestParam(value="parent",required=false) int parent
+			
+			) throws Exception{
+		
+		System.out.println("==============data level=================");
+		System.out.println(level);
+		System.out.println(parent);
+		
+		
 		DataInsertResponseInfo result =new DataInsertResponseInfo();
-	
 				 LevelInfo info=new LevelInfo();
 				 Village village=new Village();
 				 village.setTf_viid(vid);
 				 info.setTf_village(village);
 				 info.setTf_leveName(leveName);
+				 info.setTf_level(level);
+				 if("1".equals(level)){
+					 LevelInfo levelInfo=new LevelInfo();
+					 levelInfo.setTf_leveId(parent);
+					 info.setTf_parent(levelInfo);
+				 }else{
+					 info.setTf_parent(null);
+				 }
 				 try {
 					ebi.save(info);
 				} catch (Exception e) {
@@ -148,7 +165,7 @@ public class ResidentController implements LogerManager {
 			) throws Exception{
 		DataInsertResponseInfo result=new DataInsertResponseInfo();
 			 try {
-				 rebi.settingFeesItem(dataStr, ids);
+				 rebi.updateSettingFeesItem(dataStr, ids);
 				} catch (Exception e) {
 					error("添加异常", e);
 					// TODO Auto-generated catch block

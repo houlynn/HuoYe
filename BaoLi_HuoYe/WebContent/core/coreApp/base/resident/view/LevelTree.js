@@ -30,7 +30,15 @@ Ext.define("core.base.resident.view.LevelTree",{
 			tooltip : '添加楼宇',
 			iconCls : 'tree_model_add',
 			ref : 'treeIns'
-		}, {
+		}, 
+		{
+			xtype : 'button',
+			tooltip : '添加楼层',
+			iconCls : 'tree_func_add',
+			disabled : true,
+			ref : 'treechildIns'
+		},	
+		{
 			xtype : 'button',
 			tooltip : '删除楼宇',
 			iconCls : 'tree_delete',

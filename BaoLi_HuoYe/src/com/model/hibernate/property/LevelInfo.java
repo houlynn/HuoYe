@@ -1,4 +1,10 @@
 package com.model.hibernate.property;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -6,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.Transient;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
@@ -13,6 +21,7 @@ import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
 
+import com.model.hibernate.system._ModuleField;
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.NodeType;
 import com.ufo.framework.annotation.TableInfo;
@@ -48,6 +57,23 @@ public class LevelInfo extends BaseEntity {
 	@FieldInfo(title = "楼宇名称", number = 30)
 	private Village tf_village;
 	
+	
+	@JsonIgnore
+	@ManyToOne(optional=true,fetch=FetchType.LAZY)
+	@JoinColumn(name="tf_pid")
+	@FieldInfo(title = "楼宇", number = 30)
+	private LevelInfo tf_parent;
+	
+	@Column(nullable=false,length=10)
+	@FieldInfo(title = "节点类型", number = 40)
+	private String tf_level;
+	
+	@JsonIgnore
+	@OneToMany(targetEntity = LevelInfo.class, fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+	@JoinColumn(name = "tf_pid")
+	@OrderBy("tf_leveId")
+	private List<LevelInfo> tf_childs=new ArrayList<>();
+	
 	@JsonIgnore
 	@Transient
 	private String icon=PropUtil.get("sys.leve.LevelInfo");
@@ -82,6 +108,30 @@ public class LevelInfo extends BaseEntity {
 
 	public void setIcon(String icon) {
 		this.icon = icon;
+	}
+
+	public LevelInfo getTf_parent() {
+		return tf_parent;
+	}
+
+	public void setTf_parent(LevelInfo tf_parent) {
+		this.tf_parent = tf_parent;
+	}
+
+	public List<LevelInfo> getTf_childs() {
+		return tf_childs;
+	}
+
+	public void setTf_childs(List<LevelInfo> tf_childs) {
+		this.tf_childs = tf_childs;
+	}
+
+	public String getTf_level() {
+		return tf_level;
+	}
+
+	public void setTf_level(String tf_level) {
+		this.tf_level = tf_level;
 	}
 	
 	

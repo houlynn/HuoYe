@@ -144,7 +144,9 @@ init:function(){
 				itemclick:function(treeview,node,item,index,e,eOpts){
 					var tree=treeview.ownerCt;
 					var treeDel=tree.down("button[ref=treeDel]");
+					var treechildIns=tree.down("button[ref=treechildIns]");
 					treeDel.setDisabled(false);
+					treechildIns.setDisabled(false);
 					var gridModue=treeview.ownerCt.ownerCt.down("grid[xtype=resident.gridModue]");
 					var modue=system.getModuleDefine(node.raw.nodeInfo);
 		         var navigate={
@@ -179,7 +181,7 @@ init:function(){
 						 }
 	               Ext.MessageBox.prompt('设置楼宇', '请输入楼宇名称', function(btn, leveName) {
                          if(btn=="ok"){
-         	             var params={vid:vid,leveName:leveName}
+         	             var params={vid:vid,leveName:leveName,level:"0"}
          	            var resObj=self.ajax({url:"/102/A001.action",params:params});
          	            var store=tree.getStore();
                      	var proxy=store.getProxy();
@@ -203,35 +205,30 @@ init:function(){
 			
 			"container[xtype=resident.levelTree] button[ref=treechildIns]":{
 				click:function(btn){
-					var tree=btn.up("panel[xtype=rbac.depttree]");
+					var tree=btn.up("panel[xtype=resident.levelTree]");
 					var records=tree.getSelectionModel().getSelection();
 					if(records.length<=0){
 						alert("请选中节点!");
 						return;
 					}
+						var tree=btn.ownerCt.ownerCt;
+						var commbox=tree.down("basecombobox[ref=vicombobox]");
+						 var vid=commbox.getValue();
+						 if(!vid){
+						 	system.errorInfo("请选择小区再进行添加操作","错误提示");
+						 	return;
+						 }
 					var parent=records[0];
-					var params={
-						layer:parent.getDepth()+1,
-						nodeInfo:"Department",
-						parentId:parent.get("id"),
-						nodeType:"LEAF"
-					}
-					var resObj=self.ajax({url:"/rbacDept/doSave.action",params:params});
-					if(resObj.success){
-						var deptObj=resObj.obj;
-						var nodeObj={
-							id:deptObj.deptId
-						}
-						params.parent=params.parentId;
-						params.id=deptObj.deptId;
-						params.leaf=true;
-						parent.data.leaf=false;
-						parent.data.expanded=true;
-						parent.commit();
-						var node=parent.appendChild(params);
-						tree.selectPath(node.getPath())
-						tree.fireEvent("itemclick",tree.getView(),node);	
-					}
+				alert(parent.get("id"));
+	               Ext.MessageBox.prompt('设置楼宇', '请输入楼层', function(btn, leveName) {
+                         if(btn=="ok"){
+         	            var params={vid:vid,leveName:leveName,level:"1",parent:parent.get("id")}
+         	            var resObj=self.ajax({url:"/102/A001.action",params:params});
+         	            var store=tree.getStore();
+                     	var proxy=store.getProxy();
+											proxy.extraParams.vid=vid;
+											store.load();	
+                       } });
 				}
 			},
 		  "container[xtype=resident.gridModue]  button[ref=seting]": {
