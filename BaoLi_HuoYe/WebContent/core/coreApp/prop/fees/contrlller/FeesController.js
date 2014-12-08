@@ -1,17 +1,13 @@
-Ext.define("core.base.resident.controller.ResidentController",{
+Ext.define("core.prop.fees.controller.FeesController",{
 	extend:"Ext.app.Controller",
 	mixins: {
-		suppleUtil:"core.util.SuppleUtil",
-		messageUtil:"core.util.MessageUtil",
-		formUtil:"core.util.FormUtil",
-		treeUtil:"core.util.TreeUtil",
-		gridActionUtil:"core.util.GridActionUtil"
+		suppleUtil:"core.util.SuppleUtil"
 	},
 init:function(){
 		var self=this
 		//事件注册
 	this.control({
-			"container[xtype=resident.gridModue] button[ref=addButton]":{
+			"container[xtype=fees.gridModue] button[ref=addButton]":{
 							click : function (btn){
 							 var modulegrid = btn.up("grid[xtype=resident.gridModue]");	
 							 var store=modulegrid.getStore();
@@ -66,7 +62,7 @@ init:function(){
 								}
 				},
 				
-			"container[xtype=resident.gridModue]  button[ref=editButton] ":{
+			"container[xtype=fees.gridModue]  button[ref=editButton] ":{
 		   click:function(btn){
 			var modulegrid = btn.up("grid[xtype=resident.gridModue]");	
 			var viewModel=modulegrid.viewModel;
@@ -79,7 +75,7 @@ init:function(){
 				}
 			},	
 			
-		"container[xtype=resident.gridModue]  button[ref=removeButton] ":{
+		"container[xtype=fees.gridModue]  button[ref=removeButton] ":{
 			click:function(btn){
 			var modulegrid=btn.up("grid[xtype=resident.gridModue]");
 			var module=modulegrid.viewModel;
@@ -152,7 +148,7 @@ init:function(){
 								}
 				},
 				
-			"container[xtype=resident.levelTree]":{
+			"container[xtype=fees.levelTree]":{
 				itemclick:function(treeview,node,item,index,e,eOpts){
 					var tree=treeview.ownerCt;
 					var treeDel=tree.down("button[ref=treeDel]");
@@ -182,7 +178,7 @@ init:function(){
 				}
 			},
 			
-			"container[xtype=resident.levelTree] button[ref=treeIns]":{
+			"container[xtype=fees.levelTree] button[ref=treeIns]":{
 				click:function(btn){
 						var tree=btn.ownerCt.ownerCt;
 						var commbox=tree.down("basecombobox[ref=vicombobox]");
@@ -203,7 +199,7 @@ init:function(){
            
 				}
 			},
-			"container[xtype=resident.levelTree] basecombobox[ref=vicombobox]":{
+			"container[xtype=fees.levelTree] basecombobox[ref=vicombobox]":{
 				 select:function(combo,record,opts) {  
 				 	 var  vid=record[0].get("itemCode");
 				 	 var tree= combo.ownerCt.ownerCt;
@@ -215,7 +211,7 @@ init:function(){
 				}
 			},
 			
-			"container[xtype=resident.levelTree] button[ref=treechildIns]":{
+			"container[xtype=fees.levelTree] button[ref=treechildIns]":{
 				click:function(btn){
 					var tree=btn.up("panel[xtype=resident.levelTree]");
 					var records=tree.getSelectionModel().getSelection();
@@ -243,7 +239,7 @@ init:function(){
                        } });
 				}
 			},
-		  "container[xtype=resident.gridModue]  button[ref=seting]": {
+		  "container[xtype=fees.gridModue]  button[ref=seting]": {
    		     click:function(btn){
    		     	       var tree= btn.ownerCt.ownerCt.ownerCt.down("container[xtype=resident.levelTree]");
    		     	      	var commbox=tree.down("basecombobox[ref=vicombobox]");
@@ -272,7 +268,7 @@ init:function(){
 		  },
 		  
 		  
-			"container[xtype=resident.levelTree] button[ref=treeDel]":{
+			"container[xtype=fees.levelTree] button[ref=treeDel]":{
 				click:function(btn){
 				var tree=btn.up("container[xtype=resident.levelTree]");
 				var records=tree.getSelectionModel().getSelection();
@@ -287,6 +283,7 @@ init:function(){
 			 tf_leveId:records[0].get("id")
 			 };
 			    var resObj=self.ajax({url:"/102/D001.action",params:params});
+			    var tree=btn.ownerCt.ownerCt;
 				var commbox=tree.down("basecombobox[ref=vicombobox]");
 				var vid=commbox.getValue();
 			    var store=tree.getStore();
@@ -296,45 +293,6 @@ init:function(){
 							
 						}
 					});
-				}
-			},
-			/**
-			 * 添加收费项目
-			 */
-			"form[xtype=resident.feesettingfrom] button[ref=addBtn]":{
-				click:function(btn){
-				  	var form= btn.ownerCt.ownerCt;
-				    if (form.isValid()) {
-				    var grid=form.down("gridpanel[xtype=resident.feesettinggrid]");
-				    var feeItem={};
-			 	    var model=Ext.create(grid.getStore().model);
-				  		form.getForm().getFields().each(function(f){
-				  		 feeItem[f.getName()]=f.getValue();
-				  		});
-				   var feeCombox=form.down("#feeeItemCombobox");
-				   feeItem["itemName"]=feeCombox.getRawValue( );
-				    var grid=form.down("gridpanel[xtype=resident.feesettinggrid]");
-				    var flag=true;
-				    var store= grid.getStore();
-				    	store.each(function(rec){
-				    	if(rec.get("itemId")==feeItem["itemId"]){
-				    	flag=false;
-				    	}	
-		            });
-		            console.log(feeItem);
-		            if(feeItem["hasEndDate"]==false){
-		            	if(feeItem["enddate"]==null){
-		                    flag=false;
-		                   	system.errorInfo("请填入结束时间","错误提示");
-		            	}
-		            }
-		            if(flag){
-		              grid.getStore().insert(0,feeItem);
-		            }
-				  }
-					
-					
-				
 				}
 			},
 			/**
@@ -363,79 +321,18 @@ init:function(){
                      var params={dataStr:dataStr,ids:ids};
                      var resObj=self.ajax({url:"/102/setting.action",params:params});
 				}
-			},
-		    /**
-			 * 设置收费项目
-			 */
-				"gridpanel[xtype=resident.feesettinggrid] #clearBtn":{
-				   click:function(btn){
-				   var grid= btn.ownerCt.ownerCt;
-				    grid.getStore().removeAll();
-				   	
-				
-				}
-	         },
-	         /**
-	          * 加载combox数据
-	          */
-	         "form[xtype=resident.feesettingfrom] #feeeItemCombobox":{
-	         	  render:function(combo) {
-	         	  	var from= combo.ownerCt.ownerCt.ownerCt;
-	         	  	var tag=from.tag;
-	         	    var ddCode ={
-                           whereSql:' and tf_Village='+tag.vid
-                        }
-                  Ext.apply(combo.ddCode,ddCode);
-                  var store=combo.store;
-                  var proxy=store.getProxy();
-				  proxy.extraParams=combo.ddCode;
-			      store.load();	
-				   
-	         	  	
-	         	  }
-	         	
-	         },
-	         
-	          "form[xtype=resident.feesettingfrom] #hasEndDateTrue":{
-	         	    change: function (cb, nv, ov) {
-                         if(cb.getValue()==true){
-	                           var from=cb.ownerCt.ownerCt.ownerCt.ownerCt;
-	                           var endDate=from.down("#endDate");
-	                           	endDate.setDisabled(false);
-	                           	
-                             }
-                           }
-                          },
-                "form[xtype=resident.feesettingfrom] #hasEndDateFalse":{
-	         	    change: function (cb, nv, ov) {
-                         if(cb.getValue()==true){
-	                        
-	                           var from=cb.ownerCt.ownerCt.ownerCt.ownerCt;
-	                           var endDate=from.down("#endDate");
-	                           endDate.setValue(null);
-	                         	endDate.setDisabled(true);
-                              }
-                           }
-                          }
-	         	
-	         
-	         
+			}
 
 
-			
 		});
 	},
 	views:[
-	'core.base.resident.view.MainLayout',
-	'core.base.resident.view.LevelTree',
-	"core.base.resident.view.ResidentGrid",
-	"core.base.resident.view.FeeSettingGrid",
-	"core.base.resident.view.FeeSettingFrom",
-	"core.base.resident.view.FeesSettingPanel",
+	'core.base.fees.view.MainLayout',
+	'core.base.fees.view.LevelTree',
+	"core.base.fees.view.ResidentGrid",
 	],
 	stores:[
 	'core.base.resident.store.LevelStore',
-	"core.base.resident.store.SettingStore"
 	],
-    models : ['core.base.resident.model.SettingModel']
+    models : []
 });

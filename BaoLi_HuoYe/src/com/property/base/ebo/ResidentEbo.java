@@ -1,18 +1,11 @@
 package com.property.base.ebo;
-
-import java.lang.reflect.Array;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-
 import javax.annotation.Resource;
-
 import net.sf.json.JSONArray;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
-
 import org.springframework.stereotype.Service;
-
 import com.model.hibernate.property.FeesInfo;
 import com.model.hibernate.property.FeesTypeItem;
 import com.model.hibernate.property.ResidentInfo;
@@ -78,5 +71,9 @@ public class ResidentEbo implements ResidentEbi,LogerManager{
 		});
 
 	}
+	
+	
+	
+	
 
 }

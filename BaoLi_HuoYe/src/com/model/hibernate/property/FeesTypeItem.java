@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
@@ -28,8 +29,9 @@ public class FeesTypeItem extends BaseEntity {
 	@FieldInfo(title = "ID号", number = 10, hidden = true,type=ExtFieldType.ID)
 	private int tf_feesTypeItemid;
 	
-	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "tf_residentId",nullable=false)
+	@JsonIgnore
+    @ManyToOne(optional=false)
+    @JoinColumn(name="tf_residentId")
    @FieldInfo(title = "业主", number = 20)
 	private ResidentInfo tf_ResidentInfo;
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)

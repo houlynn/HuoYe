@@ -6,13 +6,11 @@ import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.sf.json.JSONObject;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -21,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.model.hibernate.property.LevelInfo;
 import com.model.hibernate.property.ResidentInfo;
 import com.model.hibernate.property.Village;
-import com.model.hibernate.system._Module;
 import com.property.base.ebi.ResidentEbi;
 import com.ufo.framework.common.constant.RequestPathConstants;
 import com.ufo.framework.common.core.exception.DeleteException;
@@ -29,13 +26,10 @@ import com.ufo.framework.common.core.exception.InsertException;
 import com.ufo.framework.common.core.exception.ResponseErrorInfo;
 import com.ufo.framework.common.core.ext.model.JSONTreeNode;
 import com.ufo.framework.common.core.properties.PropUtil;
-import com.ufo.framework.common.core.utils.StringUtil;
 import com.ufo.framework.common.core.web.ModuleServiceFunction;
 import com.ufo.framework.common.log.LogerManager;
 import com.ufo.framework.system.ebi.Ebi;
 import com.ufo.framework.system.ebi.ModelEbi;
-import com.ufo.framework.system.ebo.ApplicationService;
-import com.ufo.framework.system.ebo.ModuleService;
 import com.ufo.framework.system.irepertory.IModelRepertory;
 import com.ufo.framework.system.shared.module.DataDeleteResponseInfo;
 import com.ufo.framework.system.shared.module.DataInsertResponseInfo;
@@ -83,16 +77,36 @@ public class ResidentController implements LogerManager {
 		List<JSONTreeNode> lists=new ArrayList<JSONTreeNode>();
 		try
 		{
-		List<LevelInfo> leves=(List<LevelInfo>) ebi.queryByHql(" from LevelInfo where 1=1 and tf_village="+vid+ orderSql);
+		List<LevelInfo> leves=(List<LevelInfo>) ebi.queryByHql(" from LevelInfo where 1=1   and  tf_parent=null  and tf_village="+vid+ orderSql);
 		for(LevelInfo l:leves){
 			JSONTreeNode node=new JSONTreeNode();
 			node.setId(l.getTf_leveId()+"");
 			node.setText(l.getTf_leveName());
 			node.setCode(l.getTf_leveId()+"");
 			node.setNodeInfo("LevelInfo");
+			node.setCls("tree_set_perm");
 			node.setIcon(l.getIcon());
 			node.setDescription("tf_leveName");
-			node.setCount(100);
+			node.setExpanded(true);
+			node.setLeaf(false);
+			node.setNodeInfoType("0");
+			if(l.getTf_childs()!=null&&l.getTf_childs().size()>0){
+				List<JSONTreeNode> childrens=new ArrayList<>();
+				for(LevelInfo childleve :l.getTf_childs() ){
+					JSONTreeNode childNode=new JSONTreeNode();
+					childNode.setId(childleve.getTf_leveId()+"");
+					childNode.setText(childleve.getTf_leveName());
+					childNode.setCode(childleve.getTf_leveId()+"");
+					childNode.setNodeInfo("LevelInfo");
+					childNode.setLeaf(true);
+					childNode.setIcon(PropUtil.get("sys.leve.LevelInfoChild"));
+					childNode.setDescription("tf_leveName");
+					childNode.setNodeInfoType("1");
+					childrens.add(childNode);
+					childNode=null;
+				}
+				node.setChildren(childrens);
+			}
 			lists.add(node);
 		}
 		}catch(Exception e){
@@ -104,15 +118,9 @@ public class ResidentController implements LogerManager {
 	@RequestMapping(RequestPathConstants.REQUEST_INSERTPATH)
 	public @ResponseBody DataInsertResponseInfo add(@RequestParam(value="vid",required=true) int vid,@RequestParam(value="leveName",required=true) String leveName ,
 			@RequestParam(value="level",required=true) String level,
-			@RequestParam(value="parent",required=false) int parent
+			@RequestParam(value="parent",required=false) String parent
 			
 			) throws Exception{
-		
-		System.out.println("==============data level=================");
-		System.out.println(level);
-		System.out.println(parent);
-		
-		
 		DataInsertResponseInfo result =new DataInsertResponseInfo();
 				 LevelInfo info=new LevelInfo();
 				 Village village=new Village();
@@ -122,7 +130,7 @@ public class ResidentController implements LogerManager {
 				 info.setTf_level(level);
 				 if("1".equals(level)){
 					 LevelInfo levelInfo=new LevelInfo();
-					 levelInfo.setTf_leveId(parent);
+					 levelInfo.setTf_leveId(Integer.parseInt(parent));
 					 info.setTf_parent(levelInfo);
 				 }else{
 					 info.setTf_parent(null);
@@ -136,12 +144,14 @@ public class ResidentController implements LogerManager {
 				}
 		return result;
 	}
-	
 	@RequestMapping(RequestPathConstants.REQUEST_DELETEPATH)
-  	public @ResponseBody  DataDeleteResponseInfo remove(@RequestParam(value="tf_leveId",required=true) int tf_leveId,HttpServletRequest request) throws Exception {
+  	public @ResponseBody  DataDeleteResponseInfo remove(
+  			@RequestParam(value="tf_leveId",required=true) int tf_leveId
+  			) throws Exception {
 		     DataDeleteResponseInfo result=new DataDeleteResponseInfo();
 					try {
-						result = moduleService.remove("LevelInfo", tf_leveId+"", request);
+						
+						ebi.removeById(tf_leveId, LevelInfo.class);
 					} 
 					catch (DataIntegrityViolationException e) {
 						getDeleteException("LevelInfo", "请检查与本记录相关联的其他数据是否全部清空！", ResponseErrorInfo.STATUS_FAILURE, e);
@@ -158,6 +168,36 @@ public class ResidentController implements LogerManager {
 					}
 					return result;
 			 }
+	
+	
+	
+	@RequestMapping(value = "/remove.do/{id}", method = RequestMethod.DELETE)
+  	public @ResponseBody  DataDeleteResponseInfo remove(String moduleName, @PathVariable("id") String id,HttpServletRequest request) throws Exception {
+		     DataDeleteResponseInfo result=new DataDeleteResponseInfo();
+					try {
+						
+						ebi.removeById(Integer.valueOf(id), ResidentInfo.class);
+					} 
+					catch (DataIntegrityViolationException e) {
+						getDeleteException("LevelInfo", "请检查与本记录相关联的其他数据是否全部清空！", ResponseErrorInfo.STATUS_FAILURE, e);
+						error("删除异常", e);
+					} 
+					catch (DataAccessException e) {
+						String errormessage = ModuleServiceFunction.addPK_ConstraintMessage(e, "LevelInfo");
+						getDeleteException("LevelInfo",  errormessage != null ? errormessage
+								: "请检查与本记录相关联的其他数据是否全部清空！<br/>", ResponseErrorInfo.STATUS_FAILURE, e);
+					} catch (Exception e) {
+						error("删除异常", e);
+						// TODO Auto-generated catch block
+						getDeleteException("LevelInfo", " 删除业主失败!", ResponseErrorInfo.STATUS_FAILURE, e);
+					}
+					return result;
+			 }
+	
+	
+	
+	
+	
 	@RequestMapping("/setting")
 	public @ResponseBody DataInsertResponseInfo setting(
 			@RequestParam(value="dataStr",required=true) String dataStr,

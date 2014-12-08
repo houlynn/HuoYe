@@ -109,7 +109,7 @@ Ext.define("core.base.resident.view.ResidentGrid",{
 	 barItem=Ext.apply(thar,this.thar);
 	}
    	var viewModel=system.getViewModel(this.code)
-   		this.model = core.app.module.factory.ModelFactory.getModelByModule(viewModel.data,{destroy : 'rest/102/remove.do'});
+   		this.model = core.app.module.factory.ModelFactory.getModelByModule(viewModel.data);
 				this.store = Ext.create('core.app.store.GridStore', {
 							model : this.model,
 							gridModue : this

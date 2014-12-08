@@ -1,6 +1,6 @@
 Ext.define('core.app.view.basis.BaseForm', {
 		extend : 'Ext.container.Container',
-       funCode:"massage_main",
+        funCode:"basisPanel",
 	    funData:{
 	        action:"/bl/mesg", //请求Action
 	        whereSql:"",//表格查询条件

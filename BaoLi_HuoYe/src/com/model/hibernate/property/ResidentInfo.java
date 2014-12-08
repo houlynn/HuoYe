@@ -1,4 +1,8 @@
 package com.model.hibernate.property;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -6,12 +10,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
 import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
+import com.model.hibernate.system._ModuleGridScheme;
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
 import com.ufo.framework.common.model.BaseEntity;
@@ -106,6 +115,12 @@ public class ResidentInfo  extends BaseEntity{
 	@JoinColumn(name="tf_leveId")
 	@FieldInfo(title = "楼宇", number = 0)
 	private LevelInfo tf_levelInfo;
+	
+	
+	@JsonIgnore
+	@OneToMany(mappedBy="tf_ResidentInfo",cascade={CascadeType.REMOVE},fetch=FetchType.LAZY)
+    @LazyCollection(LazyCollectionOption.TRUE)
+	private Set<FeesTypeItem> tf_FeesTypeItems=new HashSet<>();
 
 	public int getTf_residentId() {
 		return tf_residentId;
@@ -313,6 +328,14 @@ public class ResidentInfo  extends BaseEntity{
 
 	public void setTf_levelInfo(LevelInfo tf_levelInfo) {
 		this.tf_levelInfo = tf_levelInfo;
+	}
+
+	public Set<FeesTypeItem> getTf_FeesTypeItems() {
+		return tf_FeesTypeItems;
+	}
+
+	public void setTf_FeesTypeItems(Set<FeesTypeItem> tf_FeesTypeItems) {
+		this.tf_FeesTypeItems = tf_FeesTypeItems;
 	}
 	
 	

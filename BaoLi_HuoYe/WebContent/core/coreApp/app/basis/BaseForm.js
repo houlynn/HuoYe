@@ -1,4 +1,4 @@
-
+/
 Ext.define('core.app.view.basis.BaseForm', {
 			extend : 'Ext.form.Panel',
 			style:'border-width:0 0 0 0;',
@@ -12,18 +12,7 @@ Ext.define('core.app.view.basis.BaseForm', {
 				this.buttons.push({
 							text : '保存',
 							itemId : 'save',
-							glyph : 0xf0c7,
-							handler : function(button){
-								var form = button.up('form');
-								console.log(button.up('form').getForm().getRecord());
-								button.up('form').updateRecord();
-							    var store= self.up("basewindow").grid.getStore();
-							      if (form.isValid()) {
-							    		 button.up('form').getForm().getRecord().save();
-									     store.reload();
-							      }
-							
-							}
+							glyph : 0xf0c7
 						},{
 					
 							text : '关闭',

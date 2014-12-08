@@ -46,7 +46,7 @@ Ext.define('core.app.module.factory.ModelFactory', {
 						exception : function(proxy, response, operation) {
 							var  errorInfo = Ext.decode(response.responseText, true);
 							  proxy.errorInfo=errorInfo;
-							  system.errorAlertInfo(errorInfo.error);
+							   system.errorAlertInfo(errorInfo.errorInfo.errorMessage.error,"错误提示")
 						}
 					}
 				},
