@@ -9,21 +9,21 @@ init:function(){
 	this.control({
 			"container[xtype=fees.gridModue] button[ref=addButton]":{
 							click : function (btn){
-							 var modulegrid = btn.up("grid[xtype=resident.gridModue]");	
+							 var modulegrid = btn.up("grid[xtype=fees.gridModue]");	
 							 var store=modulegrid.getStore();
-			                 var tree=modulegrid.ownerCt.down("container[xtype=resident.levelTree]");
+			                 var tree=modulegrid.ownerCt.down("container[xtype=fees.levelTree]");
 			                 var selection=tree.getSelectionModel().getSelection();
 			                 if(!selection&&selection.length==0){
 			                  return ;
 			                 }else{
-			                    if(selection[0].get("nodeInfoType")=="0"){
-			                    system.errorInfo("请选择对应的楼层再进行添加","错误提示");
+			                    if(selection[0].get("nodeInfoType")=="0"||selection[0].get("nodeInfoType")=="1"){
+			                    system.errorInfo("请选择对应的房号在进行添加","错误提示");
 			                    return ;
 			                   }
 			                 }
 			                 
 			                 
-							 var viewModel=system.getViewModel(modulegrid.code);
+							 var viewModel=system.getViewModel(201);
                 	         if(!store.navigates||store.navigates.length==0){
                 	         	system.errorInfo("请选择小区再进行添加操作","错误提示");
                 	         	return;
@@ -151,13 +151,9 @@ init:function(){
 			"container[xtype=fees.levelTree]":{
 				itemclick:function(treeview,node,item,index,e,eOpts){
 					var tree=treeview.ownerCt;
-					var treeDel=tree.down("button[ref=treeDel]");
-					var treechildIns=tree.down("button[ref=treechildIns]");
-					treeDel.setDisabled(false);
-					treechildIns.setDisabled(false);
-					var gridModue=treeview.ownerCt.ownerCt.down("grid[xtype=resident.gridModue]");
+					var gridModue=treeview.ownerCt.ownerCt.down("grid[xtype=fees.gridModue]");
 					var modue=system.getModuleDefine(node.raw.nodeInfo);
-		         var navigate={
+		           var navigate={
                 			moduleName:node.raw.nodeInfo,
                 			tableAsName:"_t"+modue.tf_moduleId,
                 			text:node.raw.text,
@@ -203,7 +199,7 @@ init:function(){
 				 select:function(combo,record,opts) {  
 				 	 var  vid=record[0].get("itemCode");
 				 	 var tree= combo.ownerCt.ownerCt;
-				     var store=tree.getStore();
+			        var store=tree.getStore();
 				   	var proxy=store.getProxy();
 											proxy.extraParams.vid=vid;
 											store.load();	
@@ -327,12 +323,12 @@ init:function(){
 		});
 	},
 	views:[
-	'core.base.fees.view.MainLayout',
-	'core.base.fees.view.LevelTree',
-	"core.base.fees.view.ResidentGrid",
+	'core.prop.fees.view.MainLayout',
+	'core.prop.fees.view.LevelTree',
+	"core.prop.fees.view.FeesGrid",
 	],
 	stores:[
-	'core.base.resident.store.LevelStore',
+	'core.prop.fees.store.LevelStore',
 	],
     models : []
 });

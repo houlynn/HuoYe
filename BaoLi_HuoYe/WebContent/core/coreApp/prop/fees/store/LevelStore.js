@@ -6,7 +6,7 @@ Ext.define("core.prop.fees.store.LevelStore",{
         constructor: function() {
           this.proxy = {
                    	type:"ajax",
-		             url:"/102/L001.action",
+		             url:"/201/loadLR.action",
                         extraParams: arguments[0]
                 },
                 this.callParent(arguments)
