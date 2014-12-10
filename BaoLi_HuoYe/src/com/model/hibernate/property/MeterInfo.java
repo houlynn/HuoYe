@@ -10,6 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Transient;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
 import org.hibernate.annotations.DynamicInsert;
 import org.hibernate.annotations.DynamicUpdate;
 import org.hibernate.annotations.GenericGenerator;
@@ -43,6 +44,7 @@ public class MeterInfo extends BaseEntity {
 	@Column(length=25)
 	@FieldInfo(title = "抄表人员", number =50)
 	private String tf_mtermane;
+	@JsonIgnore
 	@ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
 	@JoinColumn(name = "tf_residentId",nullable=false)
 	@FieldInfo(title = "业主", number =60)
@@ -58,6 +60,10 @@ public class MeterInfo extends BaseEntity {
 	@Column(length=10)
 	@FieldInfo(title = "种类", number =80)
 	private String tf_mtype;
+	
+	
+	
+
 	
 
 	public int getTf_MeterId() {

@@ -5,12 +5,19 @@ Ext.define("core.prop.fees.view.FeesGrid", {
 			columnLines : true, // 加上表格线
 			multiSelect : true,
 			width : "100%",
-			columns : [{
+			/*columns : [{
 						align : "right",
-						dataIndex : "tf_residenNub",
+						dataIndex : "tf_ResidentInfo",
 						maxWidth : 800,
 						width : 110,
-						text : "房号"
+						text : "房号",
+						renderer: function(e, t, i, o, n, a, l) {
+		              var r = e;
+		                try {
+		                        r = '<span class="gridNameField"><a onclick="javascript:return false;" href="#">' + filterTextSetBk(a, e) + "</a></span>"
+		                } catch(u) {}
+		                return r
+						}
 
 					}, {
 						align : "right",
@@ -42,7 +49,7 @@ Ext.define("core.prop.fees.view.FeesGrid", {
 						xtype : "numbercolumn"
 					}, {
 						align : "center",
-						dataIndex : "tf_residentBirthDate",
+						dataIndex : "tf_meterdate",
 						editor : {
 							editable : false,
 							format : "Y-m-d",
@@ -66,14 +73,6 @@ Ext.define("core.prop.fees.view.FeesGrid", {
 						triStateSort : false,
 						width : 100
 					}, {
-						dataIndex : "tf_ResidentInfo",
-						locked : false,
-						maxWidth : 800,
-						sortable : true,
-						text : "联系地址",
-						triStateSort : false,
-						width : 100
-					}, {
 						dataIndex : "tf_state",
 						locked : false,
 						maxWidth : 800,
@@ -89,7 +88,7 @@ Ext.define("core.prop.fees.view.FeesGrid", {
 						text : "备注",
 						triStateSort : false,
 						width : 300
-					}],
+					}],*/
 
 			enableLocking : true, // 使grid可以锁定列
 			tools : [{
@@ -120,6 +119,20 @@ Ext.define("core.prop.fees.view.FeesGrid", {
 			},
 			initComponent : function() {
 				var self = this;
+					var viewModel = system.getViewModel(this.code)
+					this.viewModel = viewModel;
+						this.model = core.app.module.factory.ModelFactory
+						.getModelByModule(viewModel.data,{
+						read : 'rest/201/fetchdata.do',
+					    update : 'rest/module/update.do',
+						create : 'rest/module/create.do',
+						destroy : 'rest/module/remove.do'
+						});
+					this.store = Ext.create('core.app.store.GridStore', {
+							model : this.model,
+							gridModue : this
+						});
+						
 				var thar = [{
 					text : '新增',
 					ref : 'addButton',
@@ -229,19 +242,9 @@ Ext.define("core.prop.fees.view.FeesGrid", {
 						//xtype : 'gridschemecombo'
 					}]
 				}];	
-				
-				
-				var viewModel = system.getViewModel(this.code)
-				this.model = core.app.module.factory.ModelFactory
-						.getModelByModule(viewModel.data);
-				this.store = Ext.create('core.app.store.GridStore', {
-							model : this.model,
-							gridModue : this
-						});
-				
-				 
+				 this.columns = core.app.module.factory.ColumnsFactory.getColumns(viewModel);	
 				this.store.modulegrid = this;
-				this.viewModel = viewModel;
+			
 				var title = viewModel.get('tf_title');
 				this.setTitle(title);
 				// 可以在grid中进行行编辑的设置

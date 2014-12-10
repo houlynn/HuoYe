@@ -21,22 +21,21 @@ init:function(){
 			                    return ;
 			                   }
 			                 }
-			                 
-			                 
 							 var viewModel=system.getViewModel(201);
                 	         if(!store.navigates||store.navigates.length==0){
-                	         	system.errorInfo("请选择小区再进行添加操作","错误提示");
+                	            system.errorInfo("请选择对应的房号在进行添加","错误提示");
                 	         	return;
                 	          }
 							 
 						     var model = Ext.create(modulegrid.getStore().model);
 			                 model.set(model.idProperty, null); // 设置主键为null,可自动
-			                 var viewModel=system.getViewModel(modulegrid.code)
-			                 var window = Ext.create('core.app.view.region.BaseWindow', {
-				                          viewModel:viewModel,
-				                            grid:modulegrid
-			                                 });
-			                    window.down('baseform').setData(model);
+			                 var  window=  Ext.createWidget("fees.window",{
+			                   viewModel:viewModel,
+				                grid:modulegrid
+			                 });
+			                    window.down('form[xtype=baseform]').setData(model);
+			                    var title=selection[0].get("text")+" 水表信息录入";
+			                    window.setTitle(title);
 	                            window.show();
 								}, // 这里不要用handler，而要用click,因为下面要发送click事件
 								// 删除按钮在渲染后加入可以Drop的功能
@@ -64,7 +63,7 @@ init:function(){
 				
 			"container[xtype=fees.gridModue]  button[ref=editButton] ":{
 		   click:function(btn){
-			var modulegrid = btn.up("grid[xtype=resident.gridModue]");	
+			var modulegrid = btn.up("grid[xtype=fees.gridModue]");	
 			var viewModel=modulegrid.viewModel;
 			var window = Ext.create('core.app.view.region.BaseWindow', {
 				viewModel:viewModel,
@@ -77,7 +76,7 @@ init:function(){
 			
 		"container[xtype=fees.gridModue]  button[ref=removeButton] ":{
 			click:function(btn){
-			var modulegrid=btn.up("grid[xtype=resident.gridModue]");
+			var modulegrid=btn.up("grid[xtype=fees.gridModue]");
 			var module=modulegrid.viewModel;
 			var selection=modulegrid.getSelectionModel().getSelection();
 			var message='';
@@ -153,7 +152,8 @@ init:function(){
 					var tree=treeview.ownerCt;
 					var gridModue=treeview.ownerCt.ownerCt.down("grid[xtype=fees.gridModue]");
 					var modue=system.getModuleDefine(node.raw.nodeInfo);
-		           var navigate={
+					var nodeInfoType=node.raw.nodeInfoType;
+					var navigate={
                 			moduleName:node.raw.nodeInfo,
                 			tableAsName:"_t"+modue.tf_moduleId,
                 			text:node.raw.text,
@@ -169,30 +169,9 @@ init:function(){
                 	}
                   	var proxy=store.getProxy();
                   	console.log(proxy.extraParams);
+                    proxy.extraParams.nodeInfoType=nodeInfoType;
 					proxy.extraParams.navigates=Ext.encode(store.navigates);
 					store.load();	  
-				}
-			},
-			
-			"container[xtype=fees.levelTree] button[ref=treeIns]":{
-				click:function(btn){
-						var tree=btn.ownerCt.ownerCt;
-						var commbox=tree.down("basecombobox[ref=vicombobox]");
-						 var vid=commbox.getValue();
-						 if(!vid){
-						 	system.errorInfo("请选择小区再进行添加操作","错误提示");
-						 	return;
-						 }
-	               Ext.MessageBox.prompt('设置楼宇', '请输入楼宇名称', function(btn, leveName) {
-                         if(btn=="ok"){
-         	             var params={vid:vid,leveName:leveName,level:"0"}
-         	            var resObj=self.ajax({url:"/102/A001.action",params:params});
-         	            var store=tree.getStore();
-                     	var proxy=store.getProxy();
-											proxy.extraParams.vid=vid;
-											store.load();	
-                       } });
-           
 				}
 			},
 			"container[xtype=fees.levelTree] basecombobox[ref=vicombobox]":{
@@ -205,119 +184,8 @@ init:function(){
 											store.load();	
 											
 				}
-			},
-			
-			"container[xtype=fees.levelTree] button[ref=treechildIns]":{
-				click:function(btn){
-					var tree=btn.up("panel[xtype=resident.levelTree]");
-					var records=tree.getSelectionModel().getSelection();
-					if(records.length<=0){
-						alert("请选中节点!");
-						return;
-					}
-						var tree=btn.ownerCt.ownerCt;
-						var commbox=tree.down("basecombobox[ref=vicombobox]");
-						 var vid=commbox.getValue();
-						 if(!vid){
-						 	system.errorInfo("请选择小区再进行添加操作","错误提示");
-						 	return;
-						 }
-					var parent=records[0];
-				alert(parent.get("id"));
-	               Ext.MessageBox.prompt('设置楼宇', '请输入楼层', function(btn, leveName) {
-                         if(btn=="ok"){
-         	            var params={vid:vid,leveName:leveName,level:"1",parent:parent.get("id")}
-         	            var resObj=self.ajax({url:"/102/A001.action",params:params});
-         	            var store=tree.getStore();
-                     	var proxy=store.getProxy();
-											proxy.extraParams.vid=vid;
-											store.load();	
-                       } });
-				}
-			},
-		  "container[xtype=fees.gridModue]  button[ref=seting]": {
-   		     click:function(btn){
-   		     	       var tree= btn.ownerCt.ownerCt.ownerCt.down("container[xtype=resident.levelTree]");
-   		     	      	var commbox=tree.down("basecombobox[ref=vicombobox]");
-   		     	      	var vid=commbox.getValue();
-   		     	      	var grid= btn.ownerCt.ownerCt;
-   		     	      	var sm= grid.getSelectionModel().getSelection();
-   		     	      	if(sm.length==0){
-   		     	      		system.warnInfo("请选择至少一条业主信息进行操作!")
-   		     	      	 return;
-   		     	      	}
-   		     	      	var ids=[];
-   		     	      	for(var index in sm){
-   		     	      		  ids.push(sm[index].get("tf_residentId"));
-   		     	      	}
-   		     	       if(!vid){
-						 	system.errorInfo("请选择小区再进行添加操作","错误提示");
-						 	return;
-						 }
-               		    var window= Ext.create("Ext.window.Window",{
-               		    	items:[{xtype:"resident.feesettingfrom",tag:{vid:vid,ids:ids}}]
-               		    });   
-               		    window.show();
-   		     
-   		     
-   		     }
-		  },
-		  
-		  
-			"container[xtype=fees.levelTree] button[ref=treeDel]":{
-				click:function(btn){
-				var tree=btn.up("container[xtype=resident.levelTree]");
-				var records=tree.getSelectionModel().getSelection();
-			    if(records.length<=0){
-				system.warnInfo('请选中节点！')
-				return;
-			    }
-						Ext.MessageBox.confirm('确定删除', '确定要删除 ' + records[0].get("text"),
-					function(btn) {
-						if (btn == 'yes') {
-			 var params={
-			 tf_leveId:records[0].get("id")
-			 };
-			    var resObj=self.ajax({url:"/102/D001.action",params:params});
-			    var tree=btn.ownerCt.ownerCt;
-				var commbox=tree.down("basecombobox[ref=vicombobox]");
-				var vid=commbox.getValue();
-			    var store=tree.getStore();
-                var proxy=store.getProxy();
-				proxy.extraParams.vid=vid;
-			    store.load();	
-							
-						}
-					});
-				}
-			},
-			/**
-			 * 设置收费项目
-			 */
-				"form[xtype=resident.feesettingfrom] button[ref=settingBtan]":{
-				click:function(btn){
-					   var form= btn.ownerCt.ownerCt;
-					   var grid=form.down("gridpanel[xtype=resident.feesettinggrid]");
-                       var store=grid.getStore();
-                       var data=[];
-                         var newRecords= grid.getStore().getNewRecords();
-                           console.log(newRecords);
-                            Ext.Array.each(newRecords,function(model){
-                            	var obj={};
-                            	obj["itemName"]=model.get("itemName");
-                            	obj["itemId"]=model.get("itemId");
-                            	obj["startdate"]=Ext.util.Format.date(model.get("startdate"), 'Y-m-d');
-                            	obj["enddate"]=Ext.util.Format.date(model.get("enddate"), 'Y-m-d');
-                            	obj["hasEndDate"]=obj["enddate"]==""||obj["enddate"]==null?false:true;
-                             data.push(obj);
-                             obj={};
-                      });
-                     var dataStr=Ext.encode(data); 
-                     var ids=form.tag.ids;
-                     var params={dataStr:dataStr,ids:ids};
-                     var resObj=self.ajax({url:"/102/setting.action",params:params});
-				}
 			}
+		  
 
 
 		});
@@ -326,6 +194,7 @@ init:function(){
 	'core.prop.fees.view.MainLayout',
 	'core.prop.fees.view.LevelTree',
 	"core.prop.fees.view.FeesGrid",
+	"core.prop.fees.view.FeeWinodw"
 	],
 	stores:[
 	'core.prop.fees.store.LevelStore',

@@ -28,6 +28,7 @@ import com.ufo.framework.common.core.ext.model.JSONTreeNode;
 import com.ufo.framework.common.core.properties.PropUtil;
 import com.ufo.framework.common.core.web.ModuleServiceFunction;
 import com.ufo.framework.common.log.LogerManager;
+import com.ufo.framework.system.controller.BasisController;
 import com.ufo.framework.system.ebi.Ebi;
 import com.ufo.framework.system.ebi.ModelEbi;
 import com.ufo.framework.system.irepertory.IModelRepertory;
@@ -35,7 +36,7 @@ import com.ufo.framework.system.shared.module.DataDeleteResponseInfo;
 import com.ufo.framework.system.shared.module.DataInsertResponseInfo;
 @Controller
 @RequestMapping("/102")
-public class ResidentController implements LogerManager {
+public class ResidentController   extends  BasisController implements LogerManager {
 	@Resource(name="ebo")
 	private Ebi ebi;
 
@@ -296,47 +297,7 @@ public class ResidentController implements LogerManager {
 	
 	
 	
-	public void getInsertException(String modeuName,String msg,int code) throws InsertException{
-		 InsertException exception=	 new InsertException(); 
-		 ResponseErrorInfo errorInfo= new ResponseErrorInfo();
-		 errorInfo.setModueName("LevelInfo");
-		 errorInfo.getErrorMessage().put("error", msg);
-		 errorInfo.setResultCode(code);
-		 exception.setErrorInfo(errorInfo);
-		 throw exception;
-		 
-	}
-	public void getInsertException(String modeuName,String msg,int code,Exception e) throws InsertException{
-		 InsertException exception=	 new InsertException(e); 
-		 ResponseErrorInfo errorInfo= new ResponseErrorInfo();
-		 errorInfo.setModueName(modeuName);
-		 errorInfo.getErrorMessage().put("error", msg);
-		 errorInfo.setResultCode(code);
-		 exception.setErrorInfo(errorInfo);
-		 throw exception;
-		 
-	}
-	
-	public void getDeleteException(String modeuName,String msg,int code) throws InsertException{
-		 InsertException exception=	 new InsertException(); 
-		 ResponseErrorInfo errorInfo= new ResponseErrorInfo();
-		 errorInfo.setModueName(modeuName);
-		 errorInfo.getErrorMessage().put("error", msg);
-		 errorInfo.setResultCode(code);
-		 exception.setErrorInfo(errorInfo);
-		 throw exception;
-		 
-	}
-	public void getDeleteException(String modeuName,String msg,int code,Exception e) throws DeleteException{
-		DeleteException exception=	 new DeleteException(e); 
-		 ResponseErrorInfo errorInfo= new ResponseErrorInfo();
-		 errorInfo.setModueName(modeuName);
-		 errorInfo.getErrorMessage().put("error", msg);
-		 errorInfo.setResultCode(code);
-		 exception.setErrorInfo(errorInfo);
-		 throw exception;
-		 
-	}
+
 	
 	
 }

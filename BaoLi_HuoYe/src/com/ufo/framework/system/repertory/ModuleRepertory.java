@@ -118,8 +118,6 @@ public class ModuleRepertory extends HibernateRepertory implements IModelReperto
 	public void updateValueToBean(String moduleName, Object record, JSONObject keyValue)
 			throws OgnlException {
 		//_Module module = ApplicationService.getModuleWithName(moduleName);
-		System.out.println("key=======================");
-		System.out.println(keyValue.size());
 		Iterator<String> keyIterator = keyValue.keys();
 		while (keyIterator.hasNext()) {
 			String key = keyIterator.next();
@@ -146,14 +144,8 @@ public class ModuleRepertory extends HibernateRepertory implements IModelReperto
 		List<SqlModuleFilter> treeAndParentFilters=dsRequest.getModuleFilters();
 		addParentModuleFiltToSQLFilters(module, gridFilterData.getParentModuleFilter(),
 				treeAndParentFilters);
-		System.out.println("==========treeAndParentFilters;=============");
-		System.out.println(treeAndParentFilters.size());
 		SqlGenerator generator = new SqlGenerator(module);
 		generator.setModuleFilters(treeAndParentFilters);
-		System.out.println("==========generator.setModuleFilters(treeAndParentFilters);=============");
-		System.out.println(generator.getModuleFilters().size());
-		
-		
 		generator.setGridColumnNames(gridFilterData.getGridColumnNames());
 		generator.setSearchText(gridFilterData.getSearchText());
 		generator.setSorts(dsRequest.getSorts());
