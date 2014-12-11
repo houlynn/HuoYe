@@ -258,6 +258,9 @@ Ext.define('core.app.module.factory.ColumnsFactory', {
 						field.minWidth = 120;
 						field.maxWidth = 600;
 					}
+					if(fd.tf_isDisable&&fd.tf_isDisable==true){
+					field.editor=null;
+					}
 					console.log(field);
 					return field;
 				}

@@ -72,8 +72,9 @@ Ext.define('core.app.store.GridStore', {
 				},
 				// buffered = true ,执行的是 prefetch
 				prefetch : function(store, records, successful) {
-					for (var i in store.extraParams)
+					for (var i in store.extraParams){
 						delete store.proxy.extraParams[i];
+					}
 				},
 
 				// buffered = false ,执行的是 load
@@ -87,8 +88,9 @@ Ext.define('core.app.store.GridStore', {
 				load : function(store) {
 					//console.log(this.modulePanel.down('modulegrid'));
 					//this.modulePanel.down('gridModue').columnAutoSize();
-					for (var i in store.extraParams)
+					for (var i in store.extraParams){
 						delete store.proxy.extraParams[i];
+					}
 				}
 
 			}

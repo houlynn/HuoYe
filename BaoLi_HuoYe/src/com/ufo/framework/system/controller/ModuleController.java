@@ -288,6 +288,21 @@ public class ModuleController implements LogerManager {
 
 	@RequestMapping(value = "/removerecords.do")
 	public @ResponseBody
+	DataDeleteResponseInfo removeRecords(String moduleName, String[] titles,
+			@RequestParam(value="ids",required=false) int[] ids,
+			HttpServletRequest request) {
+		DataDeleteResponseInfo 	result = new DataDeleteResponseInfo();
+		
+		
+		
+		for(int id : ids){
+			DataDeleteResponseInfo recordDeleteResult = moduleService.remove(moduleName, id+"",
+					request);
+		}
+		
+		return result;
+	}
+/*	public @ResponseBody
 	DataDeleteResponseInfo removeRecords(String moduleName, String ids, String titles,
 			HttpServletRequest request) {
 		DataDeleteResponseInfo result = null;
@@ -322,7 +337,7 @@ public class ModuleController implements LogerManager {
 		result.setResultCode(result.getErrorMessageList().size());
 		return result;
 	}
-	
+	*/
 	
 	
 	

@@ -101,6 +101,11 @@ Ext.define("core.prop.fees.view.FeesGrid", {
 					this.down('toolbar button#delete')[selected.length > 0
 							? 'enable'
 							: 'disable']();
+							
+							// 设置删除按钮的状态
+					this.down('toolbar button#edit')[selected.length > 0
+							? 'enable'
+							: 'disable']();
 					// 下面将组织选中的记录的name显示在title上，有二种方案可供选择，一种是用下面的MVVM特性，第二种是调用refreshTitle()
 					var selectedNames ='抄表信息'
 					if (selected.length > 0) {
@@ -195,6 +200,7 @@ Ext.define("core.prop.fees.view.FeesGrid", {
 					text : '修改',
 					glyph : 0xf044,
 					itemId : 'edit',
+					disabled : true,
 					ref : "editButton"
 				}, {
 					text : '删除',

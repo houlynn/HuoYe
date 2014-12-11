@@ -24,10 +24,17 @@ Ext.define('core.app.view.region.BaseForm', {
 								button.up('form').updateRecord();
 							    var store= self.up("basewindow").grid.getStore();
 							      if (form.isValid()) {
-							    		 button.up('form').getForm().getRecord().save();
-									     store.reload();
+							    		var model= button.up('form').getForm().getRecord().save();
+							    		var task = new Ext.util.DelayedTask(function() {
+							    			if(model.getProxy().errorInfo){
+								    			return;
+								    		}
+								    		delete model.getProxy().errorInfo;
+								    		system.smileInfo("保存成功!")
+								    		store.reload();
+							    	});
+							    	task.delay(500);
 							      }
-							
 							}
 						},{
 							text : '关闭',

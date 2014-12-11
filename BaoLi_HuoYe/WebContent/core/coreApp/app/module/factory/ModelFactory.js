@@ -21,6 +21,7 @@ Ext.define('core.app.module.factory.ModelFactory', {
 				proxy : {
 					type : 'rest',
 					batchActions : true,
+				    isSynchronous: true,
 					extraParams : {
 						moduleName : module.tf_moduleName
 					},
@@ -45,8 +46,8 @@ Ext.define('core.app.module.factory.ModelFactory', {
 					listeners : {
 						exception : function(proxy, response, operation) {
 							var  errorInfo = Ext.decode(response.responseText, true);
-							  proxy.errorInfo=errorInfo;
-							   system.errorAlertInfo(errorInfo.errorInfo.errorMessage.error,"错误提示")
+							   proxy.errorInfo=errorInfo;
+							   system.errorAlertInfo(errorInfo.errorInfo.errorMessage.error,"错误提示");
 						}
 					}
 				},

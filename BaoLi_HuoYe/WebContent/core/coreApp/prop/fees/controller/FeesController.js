@@ -1,12 +1,14 @@
 Ext.define("core.prop.fees.controller.FeesController",{
 	extend:"Ext.app.Controller",
 	mixins: {
-		suppleUtil:"core.util.SuppleUtil"
+		suppleUtil:"core.util.SuppleUtil",
 	},
 init:function(){
-		var self=this
-		//事件注册
+	var self=this
 	this.control({
+		/**
+		 * 添加
+		 */
 			"container[xtype=fees.gridModue] button[ref=addButton]":{
 							click : function (btn){
 							 var modulegrid = btn.up("grid[xtype=fees.gridModue]");	
@@ -28,7 +30,8 @@ init:function(){
                 	          }
 							 
 						     var model = Ext.create(modulegrid.getStore().model);
-			                 model.set(model.idProperty, null); // 设置主键为null,可自动
+			                 model.set(model.idProperty, null); 
+			                 model.set("tf_mtype","001");
 			                 var  window=  Ext.createWidget("fees.window",{
 			                   viewModel:viewModel,
 				                grid:modulegrid
@@ -37,22 +40,17 @@ init:function(){
 			                    var title=selection[0].get("text")+" 水表信息录入";
 			                    window.setTitle(title);
 	                            window.show();
-								}, // 这里不要用handler，而要用click,因为下面要发送click事件
-								// 删除按钮在渲染后加入可以Drop的功能
+								}, 
 								render : function(btn) {
-									// 可以使Grid中选中的记录拖到到此按钮上来进行复制新增
 									var modulegrid= btn.up("resident.gridModue");
 									btn.dropZone = new Ext.dd.DropZone(btn.getEl(), {
-												// 此处的ddGroup需要与Grid中设置的一致
 												ddGroup : 'DD_grid_' + viewModel.get('tf_moduleName'),
 												getTargetFromEvent : function(e) {
 													return e.getTarget('');
 												},
-												// 用户拖动选中的记录经过了此按钮
 												onNodeOver : function(target, dd, e, data) {
 													return Ext.dd.DropZone.prototype.dropAllowed;
 												},
-												// 用户放开了鼠标键，删除记录
 												onNodeDrop : function(target, dd, e, data) {
 													var b = btn.menu.down('#newwithcopy');
 													b.fireEvent('click', b);
@@ -60,20 +58,28 @@ init:function(){
 											})
 								}
 				},
+			/**
+			 * 编辑
+			 */	
 				
 			"container[xtype=fees.gridModue]  button[ref=editButton] ":{
 		   click:function(btn){
 			var modulegrid = btn.up("grid[xtype=fees.gridModue]");	
-			var viewModel=modulegrid.viewModel;
-			var window = Ext.create('core.app.view.region.BaseWindow', {
-				viewModel:viewModel,
-				grid:modulegrid
-			});
+			 var viewModel=system.getViewModel(201);
+			var  window=  Ext.createWidget("fees.window",{
+			                   viewModel:viewModel,
+				                grid:modulegrid
+			                 });
 	       window.down('baseform').setData(modulegrid.getSelectionModel().getSelection()[0]);
+	          var title=selection[0].get("text")+" 水表信息录入";
+			                    window.setTitle(title);
+	                            window.show();
 	       window.show();
 				}
 			},	
-			
+			/**
+			 * 删除
+			 */
 		"container[xtype=fees.gridModue]  button[ref=removeButton] ":{
 			click:function(btn){
 			var modulegrid=btn.up("grid[xtype=fees.gridModue]");
@@ -81,10 +87,10 @@ init:function(){
 			var selection=modulegrid.getSelectionModel().getSelection();
 			var message='';
 			var infoMessage='';
-			if (selection.length == 1) { // 如果只选择了一条
+			if (selection.length == 1) { 
 				message = ' 『' + selection[0].getNameValue() + '』 吗?';
 				infoMessage = '『' + selection[0].getNameValue() + '』';
-			} else { // 选择了多条记录
+			} else { 
 				message = '<ol>';
 				Ext.Array.each(selection, function(record) {
 							message += '<li>' + record.getNameValue() + '</li>';
@@ -98,8 +104,21 @@ init:function(){
 			Ext.MessageBox.confirm('确定删除', '确定要删除 ' + moduletitle + ' 中的' + message,
 					function(btn) {
 						if (btn == 'yes') {
-							modulegrid.getStore().remove(modulegrid.getSelectionModel().getSelection());
+							 if(modulegrid.getSelectionModel().getSelection().length>1){
+							 	var ids=new Array();
+							   Ext.each(modulegrid.getSelectionModel().getSelection(),function(rec){
+								var pkValue=rec.get(rec.idProperty);
+								ids.push(pkValue);
+							  });
+							  console.log(ids);
+							 var resObj=self.ajax({url:"rest/module/removerecords.do",params:{ids:ids,moduleName:"MeterInfo"}});
+							 modulegrid.getStore().reload();
+							 modulegrid.setTitle("抄表信息");
+							 return;
+							 }
+							modulegrid.getStore().remove(modulegrid.getSelectionModel().getSelection()[0]);
 							modulegrid.getStore().sync();
+							 modulegrid.setTitle("抄表信息");
 							 Ext.toast({
 										title : '删除成功',
 										html : moduletitle + infoMessage + '已成功删除！',
@@ -127,26 +146,23 @@ init:function(){
 					
 				},
 					render : function(button) {
-									// 可以使Grid中选中的记录拖到到此按钮上来进行删除
 									button.dropZone = new Ext.dd.DropZone(button.getEl(), {
-												// 此处的ddGroup需要与Grid中设置的一致
 												ddGroup : 'DD_grid_' + viewModel.get('tf_moduleName'),
-												// 这个函数没弄明白是啥意思,没有还不行
 												getTargetFromEvent : function(e) {
 													return e.getTarget('');
 												},
-												// 用户拖动选中的记录经过了此按钮
 												onNodeOver : function(target, dd, e, data) {
 													return Ext.dd.DropZone.prototype.dropAllowed;
 												},
-												// 用户放开了鼠标键，删除记录
 												onNodeDrop : function(target, dd, e, data) {
-													button.fireEvent('click', button); // 执行删除按钮的click事件
+													button.fireEvent('click', button); 
 												}
 											})
 								}
 				},
-				
+				/**
+				 * 点击
+				 */
 			"container[xtype=fees.levelTree]":{
 				itemclick:function(treeview,node,item,index,e,eOpts){
 					var tree=treeview.ownerCt;
@@ -174,6 +190,9 @@ init:function(){
 					store.load();	  
 				}
 			},
+			/**
+			 * 加载节点
+			 */
 			"container[xtype=fees.levelTree] basecombobox[ref=vicombobox]":{
 				 select:function(combo,record,opts) {  
 				 	 var  vid=record[0].get("itemCode");
