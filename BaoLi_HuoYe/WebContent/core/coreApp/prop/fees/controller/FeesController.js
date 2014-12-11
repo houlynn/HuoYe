@@ -77,6 +77,31 @@ init:function(){
 	       window.show();
 				}
 			},	
+			
+		"container[xtype=fees.gridModue]  button[ref=seting] ":{
+           click:function(btn){
+           	 var window= Ext.createWidget("window",{
+           	  title:"结束抄表",
+           	  width:300,
+           	  height:60,
+           	  items:[{xtype:"fees.settingform"}]
+           	 	
+           	 });
+           	 window.show();
+           	
+           	/*
+           	      Ext.MessageBox.prompt('结束抄表', '请填入日期', function(btn, leveName) {
+                         if(btn=="ok"){
+         	            var params={vid:vid,leveName:leveName,level:"1",parent:parent.get("id")}
+         	            var resObj=self.ajax({url:"/102/A001.action",params:params});
+         	            var store=tree.getStore();
+                     	var proxy=store.getProxy();
+											proxy.extraParams.vid=vid;
+											store.load();	
+                       } });
+           */
+           }			
+		},	
 			/**
 			 * 删除
 			 */
@@ -213,7 +238,8 @@ init:function(){
 	'core.prop.fees.view.MainLayout',
 	'core.prop.fees.view.LevelTree',
 	"core.prop.fees.view.FeesGrid",
-	"core.prop.fees.view.FeeWinodw"
+	"core.prop.fees.view.FeeWinodw",
+	"core.prop.fees.view.SettingForm"
 	],
 	stores:[
 	'core.prop.fees.store.LevelStore',

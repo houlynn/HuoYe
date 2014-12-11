@@ -231,7 +231,6 @@ init:function(){
 						 	return;
 						 }
 					var parent=records[0];
-				alert(parent.get("id"));
 	               Ext.MessageBox.prompt('设置楼宇', '请输入楼层', function(btn, leveName) {
                          if(btn=="ok"){
          	            var params={vid:vid,leveName:leveName,level:"1",parent:parent.get("id")}
