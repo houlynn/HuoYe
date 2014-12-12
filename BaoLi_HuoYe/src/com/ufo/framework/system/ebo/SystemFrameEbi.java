@@ -1,7 +1,5 @@
 package com.ufo.framework.system.ebo;
 
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import com.ufo.framework.annotation.TableInfo;
 import com.ufo.framework.system.irepertory.IModelRepertory;

@@ -70,22 +70,34 @@ init:function(){
 			                   viewModel:viewModel,
 				                grid:modulegrid
 			                 });
-	       window.down('baseform').setData(modulegrid.getSelectionModel().getSelection()[0]);
-	          var title=selection[0].get("text")+" 水表信息录入";
+			var selection= modulegrid.getSelectionModel().getSelection()                 
+	       window.down('baseform').setData(selection[0]);
+	          var title="修改录入信息";
 			                    window.setTitle(title);
 	                            window.show();
 	       window.show();
 				}
 			},	
+		"form[xtype=fees.settingform] #save":{
+		  click:function(btn){
+		   	 var form= btn.up("form[xtype=fees.settingform]");
+		   	 var rendField=form.down("#reddate");
+		   	 var reddate=rendField.getValue();
+		   	 var resObj=self.ajax({url:"/201/acount.action",params:{rendate:reddate,type:"001"}});
+		   	 form.grid.reloade();
+
+		  }
+		},
+			
 			
 		"container[xtype=fees.gridModue]  button[ref=seting] ":{
            click:function(btn){
+           	var modulegrid=btn.up("grid[xtype=fees.gridModue]");
            	 var window= Ext.createWidget("window",{
            	  title:"结束抄表",
            	  width:300,
-           	  height:60,
-           	  items:[{xtype:"fees.settingform"}]
-           	 	
+           	  height:100,
+           	  items:[{xtype:"fees.settingform", grid:modulegrid}]
            	 });
            	 window.show();
            	

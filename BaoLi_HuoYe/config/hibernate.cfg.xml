@@ -38,6 +38,7 @@
 		  <mapping class="com.model.hibernate.property.FeesInfo"/>
 		  <mapping class="com.model.hibernate.property.FeesTypeItem"/>
 		  <mapping class="com.model.hibernate.property.MeterInfo"/>
+		  <mapping class="com.model.hibernate.property.SettingRendInfo"/>
 		  
 		  
 		  

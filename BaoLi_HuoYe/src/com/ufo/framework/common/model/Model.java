@@ -6,11 +6,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ufo.framework.annotation.FieldInfo;
+import com.ufo.framework.system.web.SecurityUserHolder;
 
 
 public interface Model  extends Serializable{
-/*	public String getXcode();
-	public void setXcode(String xcode);*/
+	default  void  addXcode() throws Exception{
+		      BaseEntity baseEntity=(BaseEntity)this;
+		      baseEntity.setXcode(SecurityUserHolder.getIdentification());
+	}
 	
 	default List<Field> fielsColection(final Class<?> clazz,  final List<Field> list) {
 		for (Field field : clazz.getDeclaredFields()) {
@@ -99,5 +102,7 @@ public interface Model  extends Serializable{
 		}
 		return buf.toString();
 	}
+	
+	
 
 }

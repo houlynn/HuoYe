@@ -28,7 +28,7 @@ import com.ufo.framework.common.core.ext.model.JSONTreeNode;
 import com.ufo.framework.common.core.properties.PropUtil;
 import com.ufo.framework.common.core.web.ModuleServiceFunction;
 import com.ufo.framework.common.log.LogerManager;
-import com.ufo.framework.system.controller.BasisController;
+import com.ufo.framework.system.ebi.CommonException;
 import com.ufo.framework.system.ebi.Ebi;
 import com.ufo.framework.system.ebi.ModelEbi;
 import com.ufo.framework.system.irepertory.IModelRepertory;
@@ -36,7 +36,7 @@ import com.ufo.framework.system.shared.module.DataDeleteResponseInfo;
 import com.ufo.framework.system.shared.module.DataInsertResponseInfo;
 @Controller
 @RequestMapping("/102")
-public class ResidentController   extends  BasisController implements LogerManager {
+public class ResidentController    implements LogerManager,CommonException {
 	@Resource(name="ebo")
 	private Ebi ebi;
 

@@ -42,6 +42,10 @@ public class ExceptionHandler extends HandlerExceptionResolverComposite implemen
 			WebAppException appException=(WebAppException)e;
 			errorInfo=appException.getErrorInfo();
 			error("回话过期!");
+		}else if(e instanceof CustomException){
+			WebAppException appException=(WebAppException)e;
+			errorInfo=appException.getErrorInfo();
+			error("其他业务异常!");
 		}
 		else{
 			errorInfo.setResultCode(ResponseErrorInfo.STATUS_FAILURE);

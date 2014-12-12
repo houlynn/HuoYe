@@ -21,6 +21,7 @@ public class ResponseErrorInfo implements Serializable {
 	public static final int STATUS_TIME_OUT = -1000;
 	
 	public static final int STATUS_VALIDATION_ERROR = -4;
+	public static final int STATUS_APP_BAN = -22;
 	
 	   private Integer resultCode;
 	    private Map<String, String> errorMessage;

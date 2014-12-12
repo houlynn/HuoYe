@@ -22,9 +22,14 @@ Ext.define('core.prop.fees.view.SettingForm', {
 			},
 			items:[{
 		    fieldLabel:"选择抄表周期",
-		      name:"url",	
-			 xtype:"datefield",
-			 dateType:"month",
+		       name:"reddate",
+		       margin:"3 3 0 0 0",
+		       xtype:"datetimefield",
+		       format : 'Y-m',
+		       border:!1,
+		       emptyText :'抄表周期不能为空',
+		       itemId:"reddate",
+		      allowBlank : false,
 			  width:"100%"
 			}]
 			

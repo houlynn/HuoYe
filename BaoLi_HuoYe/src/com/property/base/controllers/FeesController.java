@@ -27,7 +27,7 @@ import com.ufo.framework.common.core.exception.ResponseErrorInfo;
 import com.ufo.framework.common.core.ext.model.JSONTreeNode;
 import com.ufo.framework.common.core.properties.PropUtil;
 import com.ufo.framework.common.log.LogerManager;
-import com.ufo.framework.system.controller.BasisController;
+import com.ufo.framework.system.ebi.CommonException;
 import com.ufo.framework.system.ebi.Ebi;
 import com.ufo.framework.system.ebo.ApplicationService;
 import com.ufo.framework.system.repertory.SqlModuleFilter;
@@ -37,7 +37,7 @@ import com.ufo.framework.system.web.SecurityUserHolder;
 
 @Controller
 @RequestMapping("/201")
-public class FeesController extends BasisController  implements LogerManager {
+public class FeesController   implements LogerManager,CommonException {
 	@Resource(name="ebo")
 	private Ebi ebi;
 
@@ -60,12 +60,13 @@ public class FeesController extends BasisController  implements LogerManager {
 
 	/**
 	 * 根据前台的请求取得数据
+	 * @throws Exception 
 	 */
 	@RequestMapping(value = "/fetchdata", method = RequestMethod.GET)
 	public @ResponseBody
 	Map<String, Object> fetchData(String moduleName, Integer start, Integer limit, String sort,
 			String query, String columns, String navigates, String parentFilter,String nodeInfoType,
-			HttpServletRequest request) {
+			HttpServletRequest request) throws Exception {
 		DataFetchResponseInfo response =feeEbi.fetchData(moduleName, start, limit, sort, query, navigates,nodeInfoType);
 		Map<String, Object> result = new HashMap<String, Object>();
 		result.put("records", response.getMatchingObjects());
@@ -170,6 +171,17 @@ public class FeesController extends BasisController  implements LogerManager {
 		}
 		return lists;
 	}
+	
+	@RequestMapping("/acount")
+	public @ResponseBody  DataInsertResponseInfo setAcount(
+			@RequestParam(value="rendate",required=true)	String rendate,
+			@RequestParam(value="type",required=true) String type
+			) throws Exception{
+		DataInsertResponseInfo resutl=new DataInsertResponseInfo();
+		feeEbi.updateAcount(rendate, type);
+		return resutl;
+	}
+	
 	
 
 	

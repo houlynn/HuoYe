@@ -17,6 +17,7 @@ import org.hibernate.annotations.GenericGenerator;
 
 import com.ufo.framework.annotation.FieldInfo;
 import com.ufo.framework.annotation.TableInfo;
+import com.ufo.framework.common.core.ext.ExtFieldType;
 import com.ufo.framework.common.model.BaseEntity;
 
 @SuppressWarnings("serial")
@@ -28,7 +29,7 @@ public class MeterInfo extends BaseEntity {
 	@Id
 	@GeneratedValue(generator = "increment")
 	@GenericGenerator(name = "increment", strategy = "increment")
-	@FieldInfo(title = "ID号", number = 10, hidden = true)
+	@FieldInfo(title = "ID号", number = 10, hidden = true,type=ExtFieldType.ID)
 	private  int tf_MeterId;
 	
 	@Transient
@@ -61,9 +62,8 @@ public class MeterInfo extends BaseEntity {
 	@FieldInfo(title = "种类", number =80)
 	private String tf_mtype;
 	
-	
-	
-
+	@FieldInfo(title = "抄表周期", number =80)
+	private String tf_rendDate;
 	
 
 	public int getTf_MeterId() {
@@ -152,6 +152,14 @@ public class MeterInfo extends BaseEntity {
 
 	public void setTf_residenNub(String tf_residenNub) {
 		this.tf_residenNub = tf_residenNub;
+	}
+
+	public String getTf_rendDate() {
+		return tf_rendDate;
+	}
+
+	public void setTf_rendDate(String tf_rendDate) {
+		this.tf_rendDate = tf_rendDate;
 	}
 	
 }

@@ -7,8 +7,9 @@ import org.hibernate.jdbc.Work;
 
 import com.ufo.framework.common.log.LogerManager;
 import com.ufo.framework.common.model.Model;
+import com.ufo.framework.system.irepertory.XcodeInterface;
 
-public interface Ebi extends LogerManager {
+public interface Ebi extends LogerManager,XcodeInterface {
 
 	/**
 	 * 根据ID加载一个实体

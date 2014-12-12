@@ -65,6 +65,7 @@ public class Ebo implements Ebi {
 	@Override
 	public List<?> queryByHql(String hql) throws Exception {
 		// TODO Auto-generated method stub
+		System.out.println("select:"+hql);
 		return repertory.queryByHql(hql);
 	}
 	@Override

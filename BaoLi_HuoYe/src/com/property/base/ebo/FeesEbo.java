@@ -1,46 +1,35 @@
 package com.property.base.ebo;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-
-
 import javax.annotation.Resource;
 
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.FetchType;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Transient;
-
-import org.codehaus.jackson.annotate.JsonIgnore;
 import org.springframework.stereotype.Service;
-
-
 
 import net.sf.json.JSONArray;
 import net.sf.json.JSONSerializer;
 import net.sf.json.JsonConfig;
 
-
-
 import com.model.hibernate.property.MeterInfo;
-import com.model.hibernate.property.ResidentInfo;
+import com.model.hibernate.property.SettingRendInfo;
 import com.property.base.ebi.FeesEbi;
-import com.ufo.framework.annotation.FieldInfo;
+import com.ufo.framework.common.core.exception.InsertException;
+import com.ufo.framework.common.core.exception.ResponseErrorInfo;
+import com.ufo.framework.common.core.utils.AppUtils;
 import com.ufo.framework.common.core.web.SortParameter;
+import com.ufo.framework.system.ebi.CommonException;
 import com.ufo.framework.system.ebi.Ebi;
 import com.ufo.framework.system.repertory.SqlModuleFilter;
 import com.ufo.framework.system.shared.module.DataFetchResponseInfo;
 
 @Service
-public class FeesEbo implements FeesEbi {
+public class FeesEbo implements FeesEbi,CommonException {
 	
 	
 	private static final String  FEES_TYPE_WATER="001";//水费
@@ -56,11 +45,11 @@ public class FeesEbo implements FeesEbi {
 	}
 	
 	public  DataFetchResponseInfo fetchData(String moduleName, Integer start, Integer limit, String sort,String query, String navigates,String nodeInfoType
-			) {
+			) throws Exception {
 		DataFetchResponseInfo responseInfo=new DataFetchResponseInfo();
 		SortParameter sorts[] = SortParameter.changeToSortParameters(sort);
 		List<SqlModuleFilter> navigateFilters=  changeToNavigateFilters(navigates);
-		String hql=" from MeterInfo where 1=1 and tf_mtype='"+FEES_TYPE_WATER+"'";
+		String hql=" from MeterInfo where 1=1 and tf_mtype='"+FEES_TYPE_WATER+"'"+getCurrentXcodeSql();
 		String whereSql="";
 		if("0".equals(nodeInfoType)){
 			SqlModuleFilter nav=navigateFilters.get(0);
@@ -105,6 +94,43 @@ public class FeesEbo implements FeesEbi {
 		
 		
 	}
+	
+	public void updateAcount(String rendate,String type) throws Exception{
+		SimpleDateFormat datefd=new SimpleDateFormat("yyyy-MM-dd");
+		SimpleDateFormat datefm=new SimpleDateFormat("yyyy-MM");
+		Date  rdate=datefd.parse(rendate);
+		Date startDate=AppUtils.getMonthStart(rdate);
+		Date endDate=AppUtils.getMonthEnd(rdate);
+		String startStr=datefd.format(startDate);
+		String endStr=datefd.format(endDate);
+	    String setHsql=" select count(*) from SettingRendInfo where 1=1 and tf_rendDate='"+datefm.format(rdate)+"' and tf_mtype='"+type+"'"+getCurrentXcodeSql();
+	    Integer count= ebi.getCount(setHsql);
+	    if(count==0){
+	    	SettingRendInfo  settingRendInfo=new SettingRendInfo();
+	    	settingRendInfo.addXcode();
+	    	settingRendInfo.setTf_rendDate(datefm.format(rdate));
+	    	settingRendInfo.setTf_mtype(type);
+	    	ebi.save(settingRendInfo);
+	    }else{
+	    	getAppException("fees", datefm.format(rdate)+"已经结束抄表，请不要重复操作", ResponseErrorInfo.STATUS_APP_BAN);
+	    	
+	    }
+		String hql=" from MeterInfo where 1=1 and  tf_mtype='"+type+"' and tf_meterdate between '"+startStr+"' and '"+endStr+"'"+getCurrentXcodeSql();
+	    List<MeterInfo> list= (List<MeterInfo>) ebi.queryByHql(hql);
+	    list.parallelStream().forEach(item->{
+	    	  double startM=item.getTf_startnumber();
+	    	  double endN=item.getTf_endnumber();
+	    	  double acount=endN-startM;
+	    	  item.setTf_acount(acount);
+	    	  item.setTf_rendDate(datefm.format(rdate));
+	    	  item.setTf_state("1");
+	    	  try {
+				ebi.update(item);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+	    });
+	}
 	private List<SqlModuleFilter> changeToNavigateFilters(String str) {
 		List<SqlModuleFilter> result = new ArrayList<SqlModuleFilter>();
 		if (str != null && str.length() > 5) {
@@ -119,8 +145,11 @@ public class FeesEbo implements FeesEbi {
 		}
 		result.parallelStream().forEach(item->System.out.println(item.getFilterSql()));
 		return result;
-
 	}
+	
+	
+	
+	
 
 
 }

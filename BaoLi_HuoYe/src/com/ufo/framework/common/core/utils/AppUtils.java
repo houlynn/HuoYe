@@ -36,6 +36,7 @@ import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
+import com.sun.org.apache.bcel.internal.generic.GETSTATIC;
 import com.ufo.framework.common.constant.CommConstants;
 import com.ufo.framework.common.core.Dto;
 import com.ufo.framework.common.core.properties.PropertiesFactory;
@@ -1062,5 +1063,21 @@ public class AppUtils {
 	    	}
 	    	}
 	    	
+	    	
+	   	  public static Date getMonthStart(Date date) {
+	  	        Calendar calendar = Calendar.getInstance();
+	  	        calendar.setTime(date);
+	  	        int index = calendar.get(Calendar.DAY_OF_MONTH);
+	  	        calendar.add(Calendar.DATE, (1 - index));
+	  	        return calendar.getTime();
+	  	    }
+	    public static Date getMonthEnd(Date date) {
+	    	        Calendar calendar = Calendar.getInstance();
+	    	        calendar.setTime(date);
+	    	        calendar.add(Calendar.MONTH, 1);
+	    	        int index = calendar.get(Calendar.DAY_OF_MONTH);
+	    	        calendar.add(Calendar.DATE, (-index));
+	    	        return calendar.getTime();
+	    	    }
 
 }
